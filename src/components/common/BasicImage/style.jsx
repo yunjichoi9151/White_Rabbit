@@ -5,7 +5,4 @@ export const BasicImage = styled.img`
   height: ${(props) => props.size || '100%'};
   border-radius: ${(props) => props.radius || '1'}rem;
   object-fit: cover;
-  animation: ${rotate} 10s linear infinite;
-  animation-play-state: ${(props) => (props.isRotate ? 'running' : 'paused')};
-  animation-fill-mode: forwards;
 `;
