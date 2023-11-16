@@ -29,17 +29,17 @@ export const GlobalStyle = createGlobalStyle`
   --font-paragraph-large: 24px/1.6 'NanumGothic';
   --font-paragraph-XL: 32px/1.6 'NanumGothic';
 
-  --font-label-small: 12px/1.6 'NanumBarunGothic';
-  --font-label-medium: 16px/1.6 'NanumBarunGothic';
-  --font-label-large: 24px/1.6 'NanumBarunGothic';
-  --font-label-XL: 32px/1.6 'NanumBarunGothic';
-  --font-label-XXL: 40px/1.6 'NanumBarunGothic';
+  --font-label-small: bold 12px/1.5 'NanumBarunGothic';
+  --font-label-medium: bold 16px/1.5 'NanumBarunGothic';
+  --font-label-large: bold 24px/1.5 'NanumBarunGothic';
+  --font-label-XL: bold 32px/1.5 'NanumBarunGothic';
+  --font-label-XXL: bold 40px/1.5 'NanumBarunGothic';
 
-  --font-heading-medium: 16px/1.6 'NanumBarunGothic';
-  --font-heading-large: 24px/1.6 'NanumBarunGothic';
-  --font-heading-XL: 32px/1.6 'NanumBarunGothic';
-  --font-heading-XXL: 40px/1.6 'NanumBarunGothic';
-  --font-heading-XXXL: 48px/1.6 'NanumBarunGothic';
+  --font-heading-medium: bold 16px/1.4 'NanumBarunGothic';
+  --font-heading-large: bold 24px/1.4 'NanumBarunGothic';
+  --font-heading-XL: bold 32px/1.4 'NanumBarunGothic';
+  --font-heading-XXL: bold 40px/1.4 'NanumBarunGothic';
+  --font-heading-XXXL: bold 48px/1.4 'NanumBarunGothic';
 }
 
 * {
