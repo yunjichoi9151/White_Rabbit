@@ -1,19 +1,24 @@
 import * as S from './style';
+import React from 'react';
 
 const BasicText = ({
   text,
   size = '100%',
-  color = '#ffffff',
+  color = '#000000',
+  bold = 'normal',
   background = 'transparent',
-  clipText,
-  font,
+  radius = '1rem',
+  padding = 'auto',
+  font = '',
 }) => {
   return (
     <S.Text
       size={size}
       color={color}
-      background={background}
-      clipText={clipText}
+      $bold={bold}
+      $background={background}
+      radius={radius}
+      padding={padding}
       font={font}
     >
       {text}
