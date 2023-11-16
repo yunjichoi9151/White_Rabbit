@@ -5,17 +5,17 @@ export const BasicButton = styled.button`
   text-align: center;
   align-items: center;
   justify-content: center;
-  flex-direction: ${(props) => props.$way || 'row'};
-  width: ${(props) => props.size || '100%'};
-  height: ${(props) => props.size || '100%'};
-  border: ${(props) => props.border || 'none'};
-  border-radius: ${(props) => props.radius || 1};
+  flex-direction: ${({ way }) => way || 'row'};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border: ${({ border }) => border};
+  border-radius: ${({ radius }) => radius};
+  font-size: ${({ fontSize }) => fontSize};
   padding: 0rem;
-  background-color: ${(props) => props.color};
-  pointer-events: ${(props) => (props.isDisabled ? 'none' : 'auto')};
-  cursor: ${(props) => (props.isDisabled ? 'default' : 'pointer')};
+  background-color: ${({ color }) => color};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   &:active {
-    border-radius: 100%;
-    background: rgba(255, 255, 255, 0.15);
+    filter: brightness(0.9);
   }
 `;
