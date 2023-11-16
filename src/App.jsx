@@ -5,11 +5,20 @@ import router from './router/routes';
 import BasicText from './components/common/BasicText';
 import BasicImage from './components/common/BasicImage';
 import BasicInput from './components/common/BasicInput';
+import TabBar from './components/Profile/TabBar';
 
 const App = () => {
+  const texts = ['팔로워', '팔로잉'];
+  const isCountables = [true, true];
+
   const [name, setName] = useState('');
   const changeData = (e) => {
     setName(e.target.value);
+  };
+
+  const [currentTab, setCurrentTab] = useState('0');
+  const handleTabClick = (tabKey) => {
+    setCurrentTab(tabKey);
   };
 
   return (
@@ -27,6 +36,12 @@ const App = () => {
     //     />
     //   </div>
     // </div>
+    // <TabBar
+    //   texts={texts}
+    //   isCountables={isCountables}
+    //   currentTab={currentTab}
+    //   onTabClick={handleTabClick}
+    // />
     <>
       <GlobalStyle />
       <RouterProvider router={router} />
