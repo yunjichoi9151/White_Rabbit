@@ -3,7 +3,7 @@ import { GlobalStyle } from './styles/GlobalStyles';
 import BasicText from './components/common/BasicText';
 import BasicImage from './components/common/BasicImage';
 import BasicInput from './components/common/BasicInput';
-import TabBar from './components/common/TabBar';
+import TabBar from './components/Profile/TabBar';
 
 const App = () => {
   const texts = ['팔로워', '팔로잉'];

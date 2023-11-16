@@ -9,6 +9,8 @@ export const Tab = styled.div`
   align-items: center;
   justify-content: center;
   border-bottom: ${(props) =>
-    props.isActive ? '2px solid #000000' : '1px solid #ccc'};
+    props.isActive
+      ? '2px solid var(--color-border-opaque)'
+      : '1px solid var(--color-border-transparent)'};
   cursor: pointer;
 `;

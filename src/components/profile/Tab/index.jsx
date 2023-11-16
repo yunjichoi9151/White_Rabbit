@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './style';
-import BasicText from '../BasicText';
+import BasicText from '../../common/BasicText';
 
 const Tab = ({ text, isCountable, isActive, onClick }) => {
   return (
@@ -8,12 +8,16 @@ const Tab = ({ text, isCountable, isActive, onClick }) => {
       <S.Tab onClick={onClick} isActive={isActive}>
         <BasicText
           text={text}
-          color={isActive ? 'black' : 'var(--color-content-tertiary)'}
+          color={
+            isActive ? 'var(--color-black)' : 'var(--color-content-tertiary)'
+          }
         />
         {isCountable && (
           <BasicText
             text={'0'}
-            color={isActive ? 'black' : 'var(--color-content-tertiary)'}
+            color={
+              isActive ? 'var(--color-black)' : 'var(--color-content-tertiary)'
+            }
           />
         )}
       </S.Tab>
