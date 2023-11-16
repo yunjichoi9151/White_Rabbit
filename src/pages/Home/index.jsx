@@ -1,10 +1,11 @@
 import React from 'react';
+import * as S from './style';
 
 const Home = () => {
   return (
-    <div>
-      <div>Hello</div>
-    </div>
+    <S.HomeWrap>
+      <div>hi</div>
+    </S.HomeWrap>
   );
 };
 

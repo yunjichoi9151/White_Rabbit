@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CustomIconButton = styled.button`
+export const BasicButton = styled.button`
   display: flex;
   text-align: center;
   align-items: center;
