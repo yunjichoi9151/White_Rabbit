@@ -4,47 +4,59 @@ import React from 'react';
 
 const BasicButton = ({
   text = '',
-  size = '100%',
+  fontSize = '16px',
+  fontColor = 'var(--color-white)',
   font = '',
-  fontColor = '',
   border = 'none',
   way = 'row',
   iconDirection = '',
   backgroundColor = 'transparent',
-  isDisabled = false,
+  disabled = false,
   handleOnClickButton,
-  size = '100%',
   iconChildren,
   existIcon = false,
-  existText = false,
-  radius = 1,
+  existText = true,
+  radius = '1px',
+  width = '100%',
+  height = '57px',
 }) => {
   return (
     <S.BasicButton
       color={backgroundColor}
-      size={size}
+      fontSize={fontSize}
       border={border}
-      $way={way}
-      $iconDirection={iconDirection}
-      isDisabled={isDisabled}
+      way={way}
+      disabled={disabled}
       radius={radius}
       onClick={handleOnClickButton}
+      width={width}
+      height={height}
     >
       {iconDirection === 'left' && (
         <>
           {iconChildren}
-          <BasicText text={text} size={size} font={font} color={fontColor} />
+          <BasicText
+            text={text}
+            size={fontSize}
+            font={font}
+            color={fontColor}
+          />
         </>
       )}
       {iconDirection === 'right' && (
         <>
-          <BasicText text={text} size={size} font={font} color={fontColor} />
+          <BasicText
+            text={text}
+            size={fontSize}
+            font={font}
+            color={fontColor}
+          />
           {iconChildren}
         </>
       )}
       {existIcon ? { iconChildren } : <></>}
       {existText ? (
-        <BasicText text={text} size={size} font={font} color={fontColor} />
+        <BasicText text={text} size={fontSize} font={font} color={fontColor} />
       ) : (
         <></>
       )}
