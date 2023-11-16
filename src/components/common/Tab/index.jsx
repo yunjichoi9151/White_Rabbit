@@ -8,16 +8,12 @@ const Tab = ({ text, isCountable, isActive, onClick }) => {
       <S.Tab onClick={onClick} isActive={isActive}>
         <BasicText
           text={text}
-          color={
-            isActive ? 'black' : ({ theme }) => theme.colors.content.tertiary
-          }
+          color={isActive ? 'black' : 'var(--color-content-tertiary)'}
         />
         {isCountable && (
           <BasicText
             text={'0'}
-            color={
-              isActive ? 'black' : ({ theme }) => theme.colors.content.tertiary
-            }
+            color={isActive ? 'black' : 'var(--color-content-tertiary)'}
           />
         )}
       </S.Tab>
