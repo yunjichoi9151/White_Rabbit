@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import InputBox from '../../components/common/InputBox';
 import * as S from './style';
+import InputBox from '../../components/common/InputBox';
 
 function Link_Edit() {
   const [inputLinkValue, setInputLinkValue] = useState('');

@@ -1,8 +1,8 @@
 import React from 'react';
-import BasicText from '../../common/BasicText';
-import * as S from './style';
 import { PiMagicWand, PiPencilSimpleLight } from 'react-icons/pi';
 import { FiGithub } from 'react-icons/fi';
+import * as S from './style';
+import BasicText from '../../common/BasicText';
 
 function IntroHeader({ type, empty }) {
   return (

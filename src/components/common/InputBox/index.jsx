@@ -1,6 +1,6 @@
 import React from 'react';
-import BasicText from '../BasicText';
 import * as S from './style';
+import BasicText from '../BasicText';
 import BasicInput from '../BasicInput';
 import BasicButton from '../BasicButton';
 
@@ -18,6 +18,7 @@ function InputBox({
     placeholder,
     isReadOnly = false,
     id = undefined,
+    name,
   } = inputProps;
   return (
     <>
@@ -41,6 +42,7 @@ function InputBox({
           <BasicInput
             id={id ? id : undefined}
             value={value}
+            name={name}
             handleOnChangeValue={handleOnChangeValue}
             placeholder={placeholder}
             isReadOnly={isReadOnly}

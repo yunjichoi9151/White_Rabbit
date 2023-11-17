@@ -1,7 +1,7 @@
 import React from 'react';
-import BasicText from '../../common/BasicText';
-import * as S from './style';
 import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
+import * as S from './style';
+import BasicText from '../../common/BasicText';
 
 function LinkIntro({ href, content }) {
   const text = content && content.trim().length > 0 ? content.trim()[0] : '';

@@ -1,6 +1,6 @@
 import React from 'react';
-import BasicText from '../BasicText';
 import * as S from './style';
+import BasicText from '../BasicText';
 
 function CheckBox({ checked, onChange, text }) {
   return (
