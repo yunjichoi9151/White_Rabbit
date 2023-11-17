@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ROUTER_LINK } from '../../../router/routes';
 import BasicText from '../../common/BasicText';
 import * as S from './style';
 import { PiMagicWand, PiPencilSimpleLight } from 'react-icons/pi';
@@ -26,14 +28,14 @@ function IntroHeader({ type, empty }) {
         {empty === true ? (
           <PiPencilSimpleLight style={{ display: 'none' }} />
         ) : (
-          <a href="/newlink">
+          <Link to={ROUTER_LINK.NEWLINK.link}>
             <PiPencilSimpleLight
               style={{
                 cursor: 'pointer',
                 color: 'var(--color-content-tertiary)',
               }}
             />
-          </a>
+          </Link>
         )}
       </S.Container>
     </>

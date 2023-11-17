@@ -1,6 +1,6 @@
-import BasicText from '../BasicText';
-import * as S from './style';
 import React from 'react';
+import * as S from './style';
+import BasicText from '../BasicText';
 
 const BasicButton = ({
   text = '',
