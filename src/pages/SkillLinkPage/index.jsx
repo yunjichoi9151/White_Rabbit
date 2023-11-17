@@ -1,8 +1,8 @@
 import React from 'react';
-import IntroHeader from '../../components/Skill_Link_Intro/IntroHeader';
-import EmptyIntro from '../../components/Skill_Link_Intro/EmptyIntro';
-import SkillIntro from '../../components/Skill_Link_Intro/SkillIntro';
-import LinkIntro from '../../components/Skill_Link_Intro/LinkIntro';
+import IntroHeader from '../../components/SkillLinkIntro/IntroHeader';
+import EmptyIntro from '../../components/SkillLinkIntro/EmptyIntro';
+import SkillIntro from '../../components/SkillLinkIntro/SkillIntro';
+import LinkIntro from '../../components/SkillLinkIntro/LinkIntro';
 import * as S from './style';
 
 function Skill_Link_Page() {
