@@ -8,6 +8,7 @@ const BasicInput = ({
   handleOnChangeValue,
   placeholder = '',
   isReadOnly = false,
+  style,
 }) => {
   return (
     <S.Input
@@ -17,6 +18,7 @@ const BasicInput = ({
       onChange={handleOnChangeValue}
       placeholder={placeholder}
       readOnly={isReadOnly}
+      style={style}
     />
   );
 };
