@@ -45,9 +45,10 @@ const ProfileTag = ({
         <S.Container direction={'column'}>
           <BasicText text={name} font="var(--font-label-small)" />
           <S.Container direction={'row'}>
-            <BasicText text={rate} font="var(--font-paragraph-small)" />
-            <BasicText text={'･'} font="var(--font-paragraph-small)" />
-            <BasicText text={timeAgo} font="var(--font-paragraph-small)" />
+            <BasicText
+              text={rate + '･' + timeAgo}
+              font="var(--font-paragraph-small)"
+            />
           </S.Container>
         </S.Container>
         {existFollow && (
@@ -60,11 +61,12 @@ const ProfileTag = ({
             {isFollow ? (
               <BasicButton
                 text="팔로잉"
-                backgroundColor="var(--color-accent)"
-                font="var(--font-label-small)"
-                radius="4px"
-                width="100%"
-                height="100%"
+                btnStyle={'backgroundColor : var(--color-accent)'}
+                //
+                // font="var(--font-label-small)"
+                // radius="4px"
+                // width="100%"
+                // height="100%"
               />
             ) : (
               <BasicButton
