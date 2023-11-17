@@ -6,6 +6,8 @@ import QNA from '../pages/QNA';
 import Recruitment from '../pages/Recruitment';
 import MyPage from '../pages/MyPage';
 import Landing from '../pages/Landing';
+import IntroLinkEdit from '../pages/IntroLinkEdit';
+import IntroNewLink from '../pages/IntroNewLink';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
   {
     path: 'mypage',
     element: <MyPage />,
+  },
+  {
+    path: '/linkedit',
+    element: <IntroLinkEdit />,
+  },
+  {
+    path: '/newlink',
+    element: <IntroNewLink />,
   },
   // {
   //   path: "",
