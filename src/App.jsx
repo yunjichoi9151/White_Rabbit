@@ -6,6 +6,7 @@ import BasicText from './components/common/BasicText';
 import BasicImage from './components/common/BasicImage';
 import BasicInput from './components/common/BasicInput';
 import TabBar from './components/Profile/TabBar';
+import ProfileTag from './components/profile/ProfileTag';
 
 const App = () => {
   const texts = ['팔로워', '팔로잉'];
@@ -42,6 +43,13 @@ const App = () => {
     //   currentTab={currentTab}
     //   onTabClick={handleTabClick}
     // />
+
+    //   <ProfileTag
+    //   name={'백엔드개발자'}
+    //   rate={'레이서'}
+    //   createdAt={'2023-11-17 11:58:00'}
+    // />
+
     <>
       <GlobalStyle />
       <RouterProvider router={router} />
