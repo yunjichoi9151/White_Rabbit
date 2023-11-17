@@ -8,7 +8,6 @@ export const Container = styled.div`
 `;
 export const ContentWrap = styled.div`
   display: flex;
-
   align-items: center;
 `;
 
