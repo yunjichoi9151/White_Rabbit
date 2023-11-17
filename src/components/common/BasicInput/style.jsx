@@ -9,9 +9,4 @@ export const Input = styled.input`
   margin-bottom: 0.75rem;
   padding-bottom: 0.875rem;
   text-align: center;
-  /* border-bottom: ${(props) => `2px solid ${props.color}`};
-  &:focus {
-    border-bottom: ${(props) => `3px solid ${props.color}`};
-    outline: none;
-  } */
 `;

@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom';
-// import MainPage from "../pages/MainPage";
 import React from 'react';
 import Home from '../pages/Home';
 import QNA from '../pages/QNA';
@@ -9,43 +8,45 @@ import Landing from '../pages/Landing';
 import IntroLinkEdit from '../pages/IntroLinkEdit';
 import IntroNewLink from '../pages/IntroNewLink';
 
+export const ROUTER_LINK = {
+  LANDING: { path: '/', link: '/' },
+  HOME: { path: '/home', link: '/home' },
+  QNA: { path: '/qna', link: '/qna' },
+  RECRUITMENT: { path: '/recruitment', link: '/recruitment' },
+  MYPAGE: { path: '/mypage', link: '/mypage' },
+  LINKEDIT: { path: '/linkedit', link: '/linkedit' },
+  NEWLINK: { path: '/newlink', link: '/newlink' },
+};
+
 const router = createBrowserRouter([
   {
-    path: '',
+    path: ROUTER_LINK.LANDING.path,
     element: <Landing />,
   },
   {
-    path: '/home',
+    path: ROUTER_LINK.HOME.path,
     element: <Home />,
   },
   {
-    path: 'qna',
+    path: ROUTER_LINK.QNA.path,
     element: <QNA />,
   },
   {
-    path: 'recruitment',
+    path: ROUTER_LINK.RECRUITMENT.path,
     element: <Recruitment />,
   },
   {
-    path: 'mypage',
+    path: ROUTER_LINK.MYPAGE.path,
     element: <MyPage />,
   },
   {
-    path: '/linkedit',
+    path: ROUTER_LINK.LINKEDIT.path,
     element: <IntroLinkEdit />,
   },
   {
-    path: '/newlink',
+    path: ROUTER_LINK.NEWLINK.path,
     element: <IntroNewLink />,
   },
-  // {
-  //   path: "",
-  //   element: <LandingPage />,
-  // },
-  // {
-  //   path: "main",
-  //   element: <MainPage />,
-  // },
 ]);
 
 export default router;
