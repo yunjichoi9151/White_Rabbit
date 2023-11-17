@@ -1,6 +1,7 @@
 import React from 'react';
 import BasicText from '../BasicText';
 import * as S from './style';
+import * as CS from '../../../styles/CommonStyles';
 import BasicInput from '../BasicInput';
 import BasicButton from '../BasicButton';
 
@@ -25,7 +26,7 @@ function InputBox({
         <S.ContentWrap>
           <BasicText
             text={text}
-            style={{ color: 'var(--color-black)', fontWeight: 600 }}
+            style={{ color: CS.color.black, fontWeight: 600 }}
           />
           <S.SignText />
           <BasicText
@@ -33,7 +34,7 @@ function InputBox({
             style={
               type === 'none'
                 ? { display: 'none' }
-                : { color: 'var(--color-content-tertiary)', fontSize: 12 }
+                : { color: CS.color.contentTertiary, fontSize: 12 }
             }
           />
         </S.ContentWrap>
@@ -49,7 +50,7 @@ function InputBox({
               fontSize: 16,
               textAlign: 'left',
               outline: 'none',
-              border: '1px solid var(--color-secondary)',
+              border: '1px solid ' + CS.color.secondary,
               borderRadius: 10,
               marginRight: 8,
               marginBottom: 0,
@@ -62,11 +63,11 @@ function InputBox({
               onClick={onClickButton}
               text="인증"
               textStyle={{
-                color: 'var(--color-white)',
+                color: CS.color.white,
                 size: 16,
               }}
               btnStyle={{
-                backgroundColor: 'var(--color-primary)',
+                backgroundColor: CS.color.white,
                 width: 92,
                 height: 42,
                 borderRadius: 10,

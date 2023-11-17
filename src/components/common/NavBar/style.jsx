@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import * as CS from '../../../styles/CommonStyles';
 
 export const NavigationWrapper = styled.div`
   display: flex;
-  background-color: var(--color-white);
+  background-color: ${CS.color.white};
   width: 100%;
   max-width: 900px;
   height: 100px;
-  border-top: 0.2px solid var(--color-content-tertiary);
+  border-top: 0.2px solid ${CS.color.contentTertiary};
   align-items: center;
   justify-content: space-around;
 

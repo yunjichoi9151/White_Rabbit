@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as CS from '../../../styles/CommonStyles';
 
 export const Tab = styled.div`
   width: 100%;
@@ -10,7 +11,7 @@ export const Tab = styled.div`
   justify-content: center;
   border-bottom: ${(props) =>
     props.isActive
-      ? '2px solid var(--color-border-opaque)'
-      : '1px solid var(--color-border-transparent)'};
+      ? '2px solid ' + CS.color.borderOpaque
+      : '1px solid ' + CS.color.borderTransparent};
   cursor: pointer;
 `;
