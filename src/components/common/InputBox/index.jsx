@@ -50,7 +50,7 @@ function InputBox({
               fontSize: 16,
               textAlign: 'left',
               outline: 'none',
-              border: '1px solid ' + CS.color.secondary,
+              border: `1px solid ${CS.color.secondary}`,
               borderRadius: 10,
               marginRight: 8,
               marginBottom: 0,

@@ -11,7 +11,7 @@ export const Tab = styled.div`
   justify-content: center;
   border-bottom: ${(props) =>
     props.isActive
-      ? '2px solid ' + CS.color.borderOpaque
-      : '1px solid ' + CS.color.borderTransparent};
+      ? `2px solid ${CS.color.borderOpaque}`
+      : `1px solid ${CS.color.borderTransparent}`};
   cursor: pointer;
 `;
