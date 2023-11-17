@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTER_LINK } from '../../../router/routes';
-import BasicText from '../../common/BasicText';
+import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
-import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
+import BasicText from '../../common/BasicText';
 
 function LinkIntro({ href, content }) {
   const text = content && content.trim().length > 0 ? content.trim()[0] : '';
