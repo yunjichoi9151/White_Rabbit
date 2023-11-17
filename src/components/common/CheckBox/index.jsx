@@ -1,21 +1,23 @@
-import React from "react";
-import BasicText from "../BasicText";
-import styled from "styled-components";
+import React from 'react';
+import BasicText from '../BasicText';
+import * as S from './style';
+import * as CS from '../../../styles/CommonStyles';
 
-const Container = styled.div`
-  display: flex;
-`;
-
-const StyledInput = styled.input`
-  margin-right: 8px;
-`;
-
-function CheckBox({ checked, onChange, text, color }) {
+function CheckBox({ checked, onChange, text }) {
   return (
-    <Container>
-      <StyledInput checked={checked} type="checkbox" onChange={onChange} />
-      {text ? <BasicText text={text} color={color} /> : <></>}
-    </Container>
+    <S.Container>
+      <S.StyledInput checked={checked} type="checkbox" onChange={onChange} />
+      {text ? (
+        <BasicText
+          text={text}
+          style={{
+            color: CS.color.black,
+          }}
+        />
+      ) : (
+        <></>
+      )}
+    </S.Container>
   );
 }
 
