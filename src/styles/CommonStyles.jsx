@@ -3,7 +3,7 @@ export const color = {
   white: '#FFFFFF',
   primary: '#ab98dc',
   secondary: '#e3e7f0',
-  accent: '#e3e7f0',
+  accent: '#495466',
   accent2: '#7ea3db',
   accent3: '#F5B477',
   accent4: '#85B699',
