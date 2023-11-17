@@ -3,14 +3,16 @@ import * as S from './style';
 import InputBox from '../../components/common/InputBox';
 
 function Link_Edit() {
-  const [inputLinkValue, setInputLinkValue] = useState('');
-  const [inputTitleValue, setInputTitleValue] = useState('');
+  const [form, setForm] = useState({
+    inputLinkValue: '',
+    inputTitleValue: '',
+  });
 
-  const handleOnChangeLinkValue = (e) => {
-    setInputLinkValue(e.target.value);
-  };
-  const handleOnChangeTitleValue = (e) => {
-    setInputTitleValue(e.target.value);
+  const onChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -23,9 +25,10 @@ function Link_Edit() {
           type: 'none',
         }}
         inputProps={{
-          value: inputLinkValue,
-          handleOnChangeValue: handleOnChangeLinkValue,
-          placeholder: 'https://', //기존 링크
+          value: form.name,
+          handleOnChangeValue: onChange,
+          placeholder: 'https://',
+          name: 'inputLinkValue',
         }}
         buttonElement={false}
       />
@@ -36,9 +39,10 @@ function Link_Edit() {
           type: 'none',
         }}
         inputProps={{
-          value: inputTitleValue,
-          handleOnChangeValue: handleOnChangeTitleValue,
-          placeholder: '', //기존 제목
+          value: form.name,
+          handleOnChangeValue: onChange,
+          placeholder: '',
+          name: 'inputTitleValue',
         }}
         buttonElement={false}
       />

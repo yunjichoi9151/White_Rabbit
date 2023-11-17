@@ -43,7 +43,7 @@ function InputBox({
             id={id ? id : undefined}
             value={value}
             name={name}
-            handleOnChangeValue={handleOnChangeValue}
+            onChange={handleOnChangeValue}
             placeholder={placeholder}
             isReadOnly={isReadOnly}
             style={{
