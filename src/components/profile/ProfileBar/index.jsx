@@ -13,19 +13,20 @@ const ProfileSize = {
 };
 
 const ProfileTag = ({
-  name,
+  src,
+  username,
   rate,
-  existGeneration,
+  existGeneration = false,
   genType,
   genNum,
-  existTimeAgo,
+  existTimeAgo = false,
   createdAt,
-  existFollow,
+  existFollow = false,
   followers,
   followings,
-  existFollowBtn,
+  existFollowBtn = false,
   isFollow,
-  existMore,
+  existMoreBtn = false,
   profileSize,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
@@ -57,9 +58,9 @@ const ProfileTag = ({
   return (
     <>
       <S.Container direction={'row'}>
-        <ProfileImg style={{ width: ProfileSize[profileSize] }} />
+        <ProfileImg src={src} style={{ width: ProfileSize[profileSize] }} />
         <S.Container direction={'column'} padding={'0 10px'}>
-          <BasicText text={name} style={{ font: CS.font.labelSmall }} />
+          <BasicText text={username} style={{ font: CS.font.labelSmall }} />
           {existGeneration && (
             <BasicText
               text={`${genType} ${genNum}`}
@@ -76,7 +77,7 @@ const ProfileTag = ({
           )}
           {existFollow && (
             <BasicText
-              text={`팔로워 ${followers} 팔로잉 ${followers}`}
+              text={`팔로워 ${followers} 팔로잉 ${followings}`}
               style={{ font: CS.font.paragraphSmall }}
             />
           )}
@@ -113,7 +114,7 @@ const ProfileTag = ({
               />
             ))}
         </S.Container>
-        {existMore && (
+        {existMoreBtn && (
           <S.Container width="16px">
             <BsThreeDotsVertical size="16px" color={CS.color.contentTertiary} />
           </S.Container>
