@@ -20,18 +20,17 @@ function EmptyIntro({ text, onClickButton, type }) {
       />
 
       <BasicButton
-        fontColor="var(--color-black)"
-        fontSize="10px"
-        backgroundColor="var(--color-white)"
-        onClick={onClickButton}
         text={type === 'skill' ? '+ 스킬 추가' : '+ 링크 추가'}
-        width="90px"
-        height="20px"
-        radius="10px"
-        border="1px solid var(--color-border-transparent)"
-        style={{
+        textStyle={{ fontColor: 'var(--color-black)', fontSize: '10px' }}
+        btnStyle={{
+          backgroundColor: 'var(--color-white)',
+          width: '90px',
+          height: '20px',
+          radius: '10px',
+          border: '1px solid var(--color-border-transparent)',
           marginTop: 12,
         }}
+        onClick={onClickButton}
       />
     </>
   );

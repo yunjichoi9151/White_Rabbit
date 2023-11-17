@@ -34,12 +34,14 @@ function IntroHeader({ type, empty }) {
         {empty === true ? (
           <PiPencilSimpleLight style={{ display: 'none' }} />
         ) : (
-          <PiPencilSimpleLight
-            style={{
-              cursor: 'pointer',
-              color: 'var(--color-content-tertiary)',
-            }}
-          />
+          <a href="/newlink">
+            <PiPencilSimpleLight
+              style={{
+                cursor: 'pointer',
+                color: 'var(--color-content-tertiary)',
+              }}
+            />
+          </a>
         )}
       </Container>
     </>

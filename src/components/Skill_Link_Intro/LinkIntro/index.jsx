@@ -3,13 +3,6 @@ import BasicText from '../../common/BasicText';
 import BasicButton from '../../common/BasicButton';
 import styled from 'styled-components';
 import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
-// import { Link } from 'react-router-dom';
-
-// const navigate = useNavigate();
-
-// const navigateToApp = () => {
-//   navigate('/skill_Edit');
-// };
 
 const Container = styled.div`
   display: flex;
@@ -55,21 +48,24 @@ function LinkIntro({ href, content }) {
           </a>
         </ContentWrap>
         <IconButtonWrap>
-          {/* <Link to="/skill_edit"> */}
-          <PiPencilSimpleLight
-            style={{
-              cursor: 'pointer',
-              color: 'var(--color-content-tertiary)',
-            }}
-          />
-          {/* </Link> */}
-          <PiMinusCircle
-            style={{
-              marginLeft: 4,
-              cursor: 'pointer',
-              color: 'var(--color-content-tertiary)',
-            }}
-          />
+          <a href="/linkedit">
+            <PiPencilSimpleLight
+              style={{
+                cursor: 'pointer',
+                color: 'var(--color-content-tertiary)',
+              }}
+            />
+          </a>
+
+          <a>
+            <PiMinusCircle
+              style={{
+                marginLeft: 4,
+                cursor: 'pointer',
+                color: 'var(--color-content-tertiary)',
+              }}
+            />
+          </a>
         </IconButtonWrap>
       </Container>
     </>

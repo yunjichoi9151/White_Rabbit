@@ -1,6 +1,6 @@
 import React from 'react';
 import BasicText from '../BasicText';
-import SubText from './SubText';
+
 import styled from 'styled-components';
 import BasicInput from '../BasicInput';
 import BasicButton from '../BasicButton';
@@ -8,8 +8,8 @@ import BasicButton from '../BasicButton';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 28px;
-  margin-right: 28px;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
 const ContentWrap = styled.div`
   display: flex;
@@ -34,14 +34,13 @@ const SignText = styled.p`
 `;
 
 function InputBox({
-  textProps,
+  text,
   subTextProps,
   inputProps,
   buttonElement,
   onClickButton,
 }) {
-  const { text, color } = textProps;
-  const { subText, subColor } = subTextProps;
+  const { text: subText, style: subStyle, type } = subTextProps;
   const {
     value,
     handleOnChangeValue,
@@ -53,9 +52,19 @@ function InputBox({
     <>
       <Container>
         <ContentWrap>
-          <BasicText text={text} color={color} />
+          <BasicText
+            text={text}
+            style={{ color: 'var(--color-black)', fontWeight: 600 }}
+          />
           <SignText />
-          <SubText subText={subText} subColor={subColor} />
+          <BasicText
+            text={subText}
+            style={
+              type === 'none'
+                ? { display: 'none' }
+                : { color: 'var(--color-content-tertiary)', fontSize: 12 }
+            }
+          />
         </ContentWrap>
         <InputWrap>
           <BasicInput
@@ -67,19 +76,25 @@ function InputBox({
             style={{
               width: 200,
               fontSize: 16,
+              textAlign: 'left',
               outline: 'none',
               border: '1px solid var(--color-secondary)',
               borderRadius: 10,
               marginRight: 8,
+              marginBottom: 0,
+              paddingBottom: 0,
+              paddingLeft: 16,
             }}
           />
           {buttonElement ? (
             <BasicButton
               onClick={onClickButton}
               text="인증"
-              style={{
-                fontColor: 'var(--color-white)',
-                fontSize: 16,
+              textStyle={{
+                color: 'var(--color-white)',
+                size: 16,
+              }}
+              btnStyle={{
                 backgroundColor: 'var(--color-primary)',
                 width: 92,
                 height: 42,

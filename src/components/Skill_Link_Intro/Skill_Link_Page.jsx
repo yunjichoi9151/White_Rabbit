@@ -34,7 +34,7 @@ function Skill_Link_Page() {
           empty={true}
           style={{ display: 'none' }}
         />
-        <EmptyIntro text="자신의 스킬을 추가해 주세요." />
+        <EmptyIntro text="자신의 스킬을 추가해 주세요." type="skill" />
       </Container>
       <UnderLine />
 
