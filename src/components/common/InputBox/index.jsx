@@ -2,6 +2,7 @@ import React from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicInput from '../BasicInput';
+import BasicText from '../BasicText';
 import BasicButton from '../BasicButton';
 
 function InputBox({
