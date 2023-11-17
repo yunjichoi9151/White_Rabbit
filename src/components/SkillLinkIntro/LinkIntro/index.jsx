@@ -1,6 +1,7 @@
 import React from 'react';
 import BasicText from '../../common/BasicText';
 import * as S from './style';
+import * as CS from '../../../styles/CommonStyles';
 import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
 
 function LinkIntro({ href, content }) {
@@ -12,7 +13,7 @@ function LinkIntro({ href, content }) {
           <BasicText
             text={text}
             style={{
-              backgroundColor: 'var(--color-secondary)',
+              backgroundColor: CS.color.secondary,
               border: '1rem',
               display: 'flex',
               alignItems: 'center',
@@ -35,7 +36,7 @@ function LinkIntro({ href, content }) {
             <PiPencilSimpleLight
               style={{
                 cursor: 'pointer',
-                color: 'var(--color-content-tertiary)',
+                color: CS.color.contentTertiary,
               }}
             />
           </a>
@@ -45,7 +46,7 @@ function LinkIntro({ href, content }) {
               style={{
                 marginLeft: 4,
                 cursor: 'pointer',
-                color: 'var(--color-content-tertiary)',
+                color: CS.color.contentTertiary,
               }}
             />
           </a>
