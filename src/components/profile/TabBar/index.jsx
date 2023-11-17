@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as S from './style';
 import Tab from '../Tab';
 
-const TabBar = ({ texts, existCounter }) => {
+const TabBar = ({ texts, existCounter, countNum }) => {
   const [currentTab, setCurrentTab] = useState('0');
 
   const handleTabClick = (tabKey) => {
@@ -17,6 +17,7 @@ const TabBar = ({ texts, existCounter }) => {
             key={index}
             text={texts[key]}
             existCounter={existCounter[key]}
+            countNum={countNum[key]}
             isActive={currentTab === key}
             onClick={() => handleTabClick(key)}
           />
