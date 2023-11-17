@@ -5,16 +5,16 @@ export const BasicButton = styled.button`
   text-align: center;
   align-items: center;
   justify-content: center;
-  flex-direction: ${({ way }) => way || 'row'};
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  border: ${({ border }) => border};
-  border-radius: ${({ radius }) => radius};
-  font-size: ${({ fontSize }) => fontSize};
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 1rem;
+  font-size: 100%;
   padding: 0rem;
-  background-color: ${({ color }) => color};
-  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  background-color: transparent;
+  pointer-events: auto;
+  cursor: pointer;
   &:active {
     filter: brightness(0.9);
   }
