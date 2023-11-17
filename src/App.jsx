@@ -9,17 +9,9 @@ import TabBar from './components/Profile/TabBar';
 import ProfileTag from './components/profile/ProfileTag';
 
 const App = () => {
-  const texts = ['팔로워', '팔로잉'];
-  const isCountables = [true, true];
-
   const [name, setName] = useState('');
   const changeData = (e) => {
     setName(e.target.value);
-  };
-
-  const [currentTab, setCurrentTab] = useState('0');
-  const handleTabClick = (tabKey) => {
-    setCurrentTab(tabKey);
   };
 
   return (
@@ -37,17 +29,15 @@ const App = () => {
     //     />
     //   </div>
     // </div>
-    // <TabBar
-    //   texts={texts}
-    //   isCountables={isCountables}
-    //   currentTab={currentTab}
-    //   onTabClick={handleTabClick}
-    // />
 
-    //   <ProfileTag
+    // <TabBar texts={['팔로워', '팔로잉']} existCounter={[true, true]} />
+    // <ProfileTag
     //   name={'백엔드개발자'}
     //   rate={'레이서'}
     //   createdAt={'2023-11-17 11:58:00'}
+    //   existFollow={true}
+    //   isFollow={false}
+    //   existMore={true}
     // />
 
     <>
