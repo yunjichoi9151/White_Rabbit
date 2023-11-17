@@ -60,7 +60,7 @@ const ProfileTag = ({
             {isFollow ? (
               <BasicButton
                 text="팔로잉"
-                backgroundColor="var(--color-primary)"
+                backgroundColor="var(--color-accent)"
                 font="var(--font-label-small)"
                 radius="4px"
                 width="100%"
@@ -69,7 +69,7 @@ const ProfileTag = ({
             ) : (
               <BasicButton
                 text="팔로우"
-                backgroundColor="var(--color-accent)"
+                backgroundColor="var(--color-primary)"
                 font="var(--font-label-small)"
                 radius="4px"
                 width="100%"

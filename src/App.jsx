@@ -7,6 +7,7 @@ import BasicImage from './components/common/BasicImage';
 import BasicInput from './components/common/BasicInput';
 import TabBar from './components/Profile/TabBar';
 import ProfileTag from './components/profile/ProfileTag';
+import ProfileDetail from './components/profile/ProfileDetail';
 
 const App = () => {
   const [name, setName] = useState('');
@@ -43,6 +44,17 @@ const App = () => {
     <>
       <GlobalStyle />
       <RouterProvider router={router} />
+      <ProfileDetail
+        name={'김엘리스'}
+        genType={'SW 엔지니어 트랙'}
+        genNum={'6기'}
+        rate={'레이서'}
+        followers={30}
+        followings={30}
+        existFollow={true}
+        isFollow={false}
+        isList={false}
+      />
     </>
   );
 };
