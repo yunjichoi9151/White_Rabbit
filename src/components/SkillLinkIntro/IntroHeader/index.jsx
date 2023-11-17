@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ROUTER_LINK } from '../../../router/routes';
 import { PiMagicWand, PiPencilSimpleLight } from 'react-icons/pi';
 import { FiGithub } from 'react-icons/fi';
 import * as S from './style';
+import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 
 function IntroHeader({ type, empty }) {
@@ -18,7 +21,7 @@ function IntroHeader({ type, empty }) {
             text={type === 'skill' ? '스킬' : '링크'}
             style={{
               size: 16,
-              color: 'var(--content-primary)',
+              color: CS.color.primary,
               fontWeight: 600,
             }}
           />
@@ -26,14 +29,14 @@ function IntroHeader({ type, empty }) {
         {empty === true ? (
           <PiPencilSimpleLight style={{ display: 'none' }} />
         ) : (
-          <a href="/newlink">
+          <Link to={ROUTER_LINK.NEWLINK.link}>
             <PiPencilSimpleLight
               style={{
                 cursor: 'pointer',
-                color: 'var(--color-content-tertiary)',
+                color: CS.color.contentTertiary,
               }}
             />
-          </a>
+          </Link>
         )}
       </S.Container>
     </>

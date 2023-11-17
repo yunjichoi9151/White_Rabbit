@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ROUTER_LINK } from '../../../router/routes';
 import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
 import * as S from './style';
+import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 
 function LinkIntro({ href, content }) {
@@ -12,7 +15,7 @@ function LinkIntro({ href, content }) {
           <BasicText
             text={text}
             style={{
-              backgroundColor: 'var(--color-secondary)',
+              backgroundColor: CS.color.secondary,
               border: '1rem',
               display: 'flex',
               alignItems: 'center',
@@ -31,21 +34,21 @@ function LinkIntro({ href, content }) {
           </a>
         </S.ContentWrap>
         <S.IconButtonWrap>
-          <a href="/linkedit">
+          <Link to={ROUTER_LINK.LINKEDIT.link}>
             <PiPencilSimpleLight
               style={{
                 cursor: 'pointer',
-                color: 'var(--color-content-tertiary)',
+                color: CS.color.contentTertiary,
               }}
             />
-          </a>
+          </Link>
 
           <a>
             <PiMinusCircle
               style={{
                 marginLeft: 4,
                 cursor: 'pointer',
-                color: 'var(--color-content-tertiary)',
+                color: CS.color.contentTertiary,
               }}
             />
           </a>

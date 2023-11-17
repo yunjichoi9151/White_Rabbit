@@ -7,7 +7,6 @@ const Home = () => {
   return (
     <S.HomeWrap>
       <div>home</div>
-      <SelectBar style={{ width: '50px' }} />
       <NavBar />
     </S.HomeWrap>
   );

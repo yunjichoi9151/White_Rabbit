@@ -1,5 +1,5 @@
-import * as S from './style';
 import React from 'react';
+import * as S from './style';
 
 const BasicText = ({ text, style }) => {
   return <S.Text style={style}>{text}</S.Text>;

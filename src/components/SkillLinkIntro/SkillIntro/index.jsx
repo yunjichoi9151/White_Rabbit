@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './style';
-import BasicText from '../../common/BasicText';
+import * as CS from '../../../styles/CommonStyles';
 
 function SkillIntro({ text }) {
   return (
@@ -9,13 +9,13 @@ function SkillIntro({ text }) {
         <BasicText
           text={text}
           style={{
-            color: 'var(--color-black)',
+            color: CS.color.black,
             fontSize: 12,
             fontWeight: 600,
 
             padding: '8px 12px',
 
-            border: '1px solid var(--color-secondary)',
+            border: `1px solid ${CS.color.secondary}`,
             borderRadius: 20,
             display: 'flex',
             alignItems: 'center',

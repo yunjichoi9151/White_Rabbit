@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import * as CS from '../../../styles/CommonStyles';
 
 export const ProfileImage = styled.div`
   width: 100%;
   border-radius: 50%;
-  border: 0.125rem solid var(--color-primary);
+  border: 0.125rem solid ${CS.color.primary};
   aspect-ratio: 1 / 1;
 
   background-size: cover;

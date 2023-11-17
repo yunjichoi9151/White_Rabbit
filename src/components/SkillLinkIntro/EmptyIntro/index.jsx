@@ -1,4 +1,5 @@
 import React from 'react';
+import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 import BasicButton from '../../common/BasicButton';
 
@@ -8,7 +9,7 @@ function EmptyIntro({ text, onClickButton, type }) {
       <BasicText
         text={text}
         style={{
-          color: 'var(--color-content-secondary)',
+          color: CS.color.contentSecondary,
           fontSize: 12,
           marginTop: 12,
         }}
@@ -16,13 +17,13 @@ function EmptyIntro({ text, onClickButton, type }) {
 
       <BasicButton
         text={type === 'skill' ? '+ 스킬 추가' : '+ 링크 추가'}
-        textStyle={{ fontColor: 'var(--color-black)', fontSize: '10px' }}
+        textStyle={{ fontColor: CS.color.black, fontSize: '10px' }}
         btnStyle={{
-          backgroundColor: 'var(--color-white)',
+          backgroundColor: CS.color.white,
           width: '90px',
           height: '20px',
           radius: '10px',
-          border: '1px solid var(--color-border-transparent)',
+          border: `1px solid ${CS.color.borderTransparent}`,
           marginTop: 12,
         }}
         onClick={onClickButton}

@@ -1,7 +1,7 @@
+import React from 'react';
 import { Fragment } from 'react';
 import * as S from './style';
 import { MdModeEdit } from 'react-icons/md';
-import React from 'react';
 
 const ProfileImg = ({
   src = '/assets/img/elice_icon.png',
