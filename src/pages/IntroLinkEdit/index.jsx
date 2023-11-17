@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import InputBox from '../../components/common/InputBox';
-import styled from 'styled-components';
-
-const Header = styled.div`
-  width: 393px;
-  height: 46px;
-`;
+import * as S from './style';
 
 function Link_Edit() {
   const [inputLinkValue, setInputLinkValue] = useState('');
@@ -20,7 +15,7 @@ function Link_Edit() {
 
   return (
     <>
-      <Header></Header>
+      <S.Header></S.Header>
 
       <InputBox
         text="링크 연결"
@@ -30,7 +25,7 @@ function Link_Edit() {
         inputProps={{
           value: inputLinkValue,
           handleOnChangeValue: handleOnChangeLinkValue,
-          placeholder: 'https://',
+          placeholder: 'https://', //기존 링크
         }}
         buttonElement={false}
       />
@@ -43,7 +38,7 @@ function Link_Edit() {
         inputProps={{
           value: inputTitleValue,
           handleOnChangeValue: handleOnChangeTitleValue,
-          placeholder: '',
+          placeholder: '', //기존 제목
         }}
         buttonElement={false}
       />

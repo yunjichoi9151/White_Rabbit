@@ -1,37 +1,8 @@
 import React from 'react';
 import BasicText from '../BasicText';
-
-import styled from 'styled-components';
+import * as S from './style';
 import BasicInput from '../BasicInput';
 import BasicButton from '../BasicButton';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 20px;
-  margin-right: 20px;
-`;
-const ContentWrap = styled.div`
-  display: flex;
-
-  align-items: center;
-`;
-
-const InputWrap = styled.div`
-  display: flex;
-
-  input {
-    flex: 1;
-  }
-`;
-
-const SignText = styled.p`
-  &::before {
-    content: '*';
-    color: #ff7171;
-  }
-  margin-right: 5px;
-`;
 
 function InputBox({
   text,
@@ -50,13 +21,13 @@ function InputBox({
   } = inputProps;
   return (
     <>
-      <Container>
-        <ContentWrap>
+      <S.Container>
+        <S.ContentWrap>
           <BasicText
             text={text}
             style={{ color: 'var(--color-black)', fontWeight: 600 }}
           />
-          <SignText />
+          <S.SignText />
           <BasicText
             text={subText}
             style={
@@ -65,8 +36,8 @@ function InputBox({
                 : { color: 'var(--color-content-tertiary)', fontSize: 12 }
             }
           />
-        </ContentWrap>
-        <InputWrap>
+        </S.ContentWrap>
+        <S.InputWrap>
           <BasicInput
             id={id ? id : undefined}
             value={value}
@@ -104,8 +75,8 @@ function InputBox({
           ) : (
             <></>
           )}
-        </InputWrap>
-      </Container>
+        </S.InputWrap>
+      </S.Container>
     </>
   );
 }

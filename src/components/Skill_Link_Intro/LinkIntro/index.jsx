@@ -1,31 +1,14 @@
 import React from 'react';
 import BasicText from '../../common/BasicText';
-import BasicButton from '../../common/BasicButton';
-import styled from 'styled-components';
+import * as S from './style';
 import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
-
-const Container = styled.div`
-  display: flex;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  align-items: center;
-  justify-content: space-between;
-`;
-const ContentWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const IconButtonWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 function LinkIntro({ href, content }) {
   const text = content && content.trim().length > 0 ? content.trim()[0] : '';
   return (
     <>
-      <Container>
-        <ContentWrap>
+      <S.Container>
+        <S.ContentWrap>
           <BasicText
             text={text}
             style={{
@@ -46,8 +29,8 @@ function LinkIntro({ href, content }) {
           <a href={href} style={{ fontSize: 12, fontWeight: 600 }}>
             {content}
           </a>
-        </ContentWrap>
-        <IconButtonWrap>
+        </S.ContentWrap>
+        <S.IconButtonWrap>
           <a href="/linkedit">
             <PiPencilSimpleLight
               style={{
@@ -66,8 +49,8 @@ function LinkIntro({ href, content }) {
               }}
             />
           </a>
-        </IconButtonWrap>
-      </Container>
+        </S.IconButtonWrap>
+      </S.Container>
     </>
   );
 }

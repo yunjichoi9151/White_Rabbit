@@ -1,24 +1,14 @@
 import React from 'react';
 import BasicText from '../../common/BasicText';
-import styled from 'styled-components';
+import * as S from './style';
 import { PiMagicWand, PiPencilSimpleLight } from 'react-icons/pi';
 import { FiGithub } from 'react-icons/fi';
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-const HeaderWrap = styled.div`
-  display: flex;
-  align-items: center;
-`;
 
 function IntroHeader({ type, empty }) {
   return (
     <>
-      <Container>
-        <HeaderWrap>
+      <S.Container>
+        <S.HeaderWrap>
           {type === 'skill' ? (
             <PiMagicWand style={{ marginRight: '4px' }} />
           ) : (
@@ -26,11 +16,13 @@ function IntroHeader({ type, empty }) {
           )}
           <BasicText
             text={type === 'skill' ? '스킬' : '링크'}
-            size={'16px'}
-            color={'var(--content-primary)'}
-            bold={'600'}
+            style={{
+              size: 16,
+              color: 'var(--content-primary)',
+              fontWeight: 600,
+            }}
           />
-        </HeaderWrap>
+        </S.HeaderWrap>
         {empty === true ? (
           <PiPencilSimpleLight style={{ display: 'none' }} />
         ) : (
@@ -43,7 +35,7 @@ function IntroHeader({ type, empty }) {
             />
           </a>
         )}
-      </Container>
+      </S.Container>
     </>
   );
 }

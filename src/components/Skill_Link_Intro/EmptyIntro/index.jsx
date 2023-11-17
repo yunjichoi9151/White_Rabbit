@@ -1,20 +1,15 @@
 import React from 'react';
 import BasicText from '../../common/BasicText';
 import BasicButton from '../../common/BasicButton';
-import styled from 'styled-components';
-
-// const Container = styled.div`
-//   border-bottom: 1px solid var(--color-border-transparent);
-// `;
 
 function EmptyIntro({ text, onClickButton, type }) {
   return (
     <>
       <BasicText
         text={text}
-        color="var(--color-content-secondary)"
-        size="12px"
         style={{
+          color: 'var(--color-content-secondary)',
+          fontSize: 12,
           marginTop: 12,
         }}
       />
