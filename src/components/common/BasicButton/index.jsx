@@ -4,62 +4,30 @@ import React from 'react';
 
 const BasicButton = ({
   text = '',
-  fontSize = '16px',
-  fontColor = 'var(--color-white)',
-  font = '',
-  border = 'none',
-  way = 'row',
   iconDirection = '',
-  backgroundColor = 'transparent',
-  disabled = false,
+  textStyle,
+  btnStyle,
   handleOnClickButton,
-  iconChildren,
+  children,
   existIcon = false,
   existText = true,
-  radius = '1px',
-  width = '100%',
-  height = '57px',
 }) => {
   return (
-    <S.BasicButton
-      color={backgroundColor}
-      fontSize={fontSize}
-      border={border}
-      way={way}
-      disabled={disabled}
-      radius={radius}
-      onClick={handleOnClickButton}
-      width={width}
-      height={height}
-    >
+    <S.BasicButton onClick={handleOnClickButton} style={btnStyle}>
       {iconDirection === 'left' && (
         <>
-          {iconChildren}
-          <BasicText
-            text={text}
-            size={fontSize}
-            font={font}
-            color={fontColor}
-          />
+          {children}
+          <BasicText text={text} style={textStyle} />
         </>
       )}
       {iconDirection === 'right' && (
         <>
-          <BasicText
-            text={text}
-            size={fontSize}
-            font={font}
-            color={fontColor}
-          />
-          {iconChildren}
+          <BasicText text={text} style={textStyle} />
+          {children}
         </>
       )}
-      {existIcon ? { iconChildren } : <></>}
-      {existText ? (
-        <BasicText text={text} size={fontSize} font={font} color={fontColor} />
-      ) : (
-        <></>
-      )}
+      {existIcon ? children : <></>}
+      {existText ? <BasicText text={text} style={textStyle} /> : <></>}
     </S.BasicButton>
   );
 };
