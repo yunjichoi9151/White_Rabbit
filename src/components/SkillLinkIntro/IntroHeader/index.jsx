@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTER_LINK } from '../../../router/routes';
-import BasicText from '../../common/BasicText';
-import * as S from './style';
-import * as CS from '../../../styles/CommonStyles';
 import { PiMagicWand, PiPencilSimpleLight } from 'react-icons/pi';
 import { FiGithub } from 'react-icons/fi';
+import * as S from './style';
+import * as CS from '../../../styles/CommonStyles';
+import BasicText from '../../common/BasicText';
 
 function IntroHeader({ type, empty }) {
   return (

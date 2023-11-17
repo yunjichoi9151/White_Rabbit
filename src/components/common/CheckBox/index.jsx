@@ -1,5 +1,4 @@
 import React from 'react';
-import BasicText from '../BasicText';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 
