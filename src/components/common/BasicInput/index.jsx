@@ -1,5 +1,5 @@
-import * as S from './style';
 import React from 'react';
+import * as S from './style';
 
 const BasicInput = ({
   id,
@@ -9,6 +9,7 @@ const BasicInput = ({
   placeholder = '',
   isReadOnly = false,
   style,
+  name,
 }) => {
   return (
     <S.Input
@@ -19,6 +20,7 @@ const BasicInput = ({
       placeholder={placeholder}
       readOnly={isReadOnly}
       style={style}
+      name={name}
     />
   );
 };
