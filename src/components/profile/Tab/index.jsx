@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './style';
 import BasicText from '../../common/BasicText';
 
-const Tab = ({ text, isCountable, isActive, onClick }) => {
+const Tab = ({ text, existCounter, isActive, onClick }) => {
   return (
     <>
       <S.Tab onClick={onClick} isActive={isActive}>
@@ -12,7 +12,7 @@ const Tab = ({ text, isCountable, isActive, onClick }) => {
             isActive ? 'var(--color-black)' : 'var(--color-content-tertiary)'
           }
         />
-        {isCountable && (
+        {existCounter && (
           <BasicText
             text={'0'}
             color={

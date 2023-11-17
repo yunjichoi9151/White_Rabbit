@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
   --color-white: #FFFFFF;
   --color-primary: #ab98dc;
   --color-secondary: #e3e7f0;
-  --color-accent: #e3e7f0;
+  --color-accent: #495466;
   --color-accent2: #7ea3db;
   --color-accent3: #F5B477;
   --color-accent4: #85B699;
