@@ -1,5 +1,5 @@
-import * as S from './style';
 import React from 'react';
+import * as S from './style';
 import BasicInput from '../BasicInput';
 
 const InputBar = ({
