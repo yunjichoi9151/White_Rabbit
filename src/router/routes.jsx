@@ -6,8 +6,8 @@ import QNA from '../pages/QNA';
 import Recruitment from '../pages/Recruitment';
 import MyPage from '../pages/MyPage';
 import Landing from '../pages/Landing';
-import Link_Edit from '../pages/Intro_Link_Edit/Link_Edit';
-import New_Link_Edit from '../pages/Intro_Link_Edit/New_Link_Edit';
+import IntroLinkEdit from '../pages/IntroLinkEdit';
+import IntroNewLink from '../pages/IntroNewLink';
 
 const router = createBrowserRouter([
   {
@@ -32,11 +32,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/linkedit',
-    element: <Link_Edit />,
+    element: <IntroLinkEdit />,
   },
   {
     path: '/newlink',
-    element: <New_Link_Edit />,
+    element: <IntroNewLink />,
   },
   // {
   //   path: "",
