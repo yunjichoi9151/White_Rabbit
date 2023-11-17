@@ -56,12 +56,7 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 html {
-  /* max-width: 900px; */
-  /* --color-background: #191919; */
-  /* --color-primary: #cca4fc;/ */
-  /* --color-light: #e3dfff; */
   height: calc(var(--vh, 1vh) * 100);
-  /* background-color: white; */
 }
 
 @media (min-width: 901px) {
@@ -78,7 +73,6 @@ body {
   margin: 0rem;
   padding: 0;
   overflow-x: hidden;
-  /* background: var(--color-background); */
 }
 
 .scrollable {
