@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ROUTER_LINK } from '../../../router/routes';
 import BasicText from '../../common/BasicText';
 import * as S from './style';
+import * as CS from '../../../styles/CommonStyles';
 import { PiMagicWand, PiPencilSimpleLight } from 'react-icons/pi';
 import { FiGithub } from 'react-icons/fi';
 
@@ -20,7 +21,7 @@ function IntroHeader({ type, empty }) {
             text={type === 'skill' ? '스킬' : '링크'}
             style={{
               size: 16,
-              color: 'var(--content-primary)',
+              color: CS.color.primary,
               fontWeight: 600,
             }}
           />
@@ -32,7 +33,7 @@ function IntroHeader({ type, empty }) {
             <PiPencilSimpleLight
               style={{
                 cursor: 'pointer',
-                color: 'var(--color-content-tertiary)',
+                color: CS.color.contentTertiary,
               }}
             />
           </Link>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as CS from '../../styles/CommonStyles';
 
 export const Container = styled.div`
   margin-top: 20px;
@@ -8,7 +9,7 @@ export const Container = styled.div`
 `;
 
 export const UnderLine = styled.div`
-  border-bottom: 1px solid var(--color-border-transparent);
+  border-bottom: 1px solid ${CS.color.borderTransparent};
 `;
 
 export const Introwrap = styled.div`
