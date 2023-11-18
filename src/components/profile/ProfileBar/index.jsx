@@ -12,7 +12,7 @@ const ProfileImgSize = {
   3: '128px',
 };
 
-const ProfileTag = ({
+const ProfileBar = ({
   src,
   username,
   rate,
@@ -28,6 +28,9 @@ const ProfileTag = ({
   isFollow,
   existMoreBtn = false,
   profileSize,
+  handleOnClickBar,
+  handleOnClickFollow,
+  handleOnClickDots,
   style,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
@@ -59,8 +62,14 @@ const ProfileTag = ({
   return (
     <>
       <S.Container style={style}>
-        <ProfileImg src={src} style={{ width: ProfileImgSize[profileSize] }} />
+        <div onClick={handleOnClickBar}>
+          <ProfileImg
+            src={src}
+            style={{ width: ProfileImgSize[profileSize] }}
+          />
+        </div>
         <S.Container
+          onClick={handleOnClickBar}
           style={{
             flexDirection: 'column',
             alignItems: 'flex-start',
@@ -92,6 +101,7 @@ const ProfileTag = ({
         {existFollowBtn && (
           <BasicButton
             text={isFollow ? '팔로잉' : '팔로우'}
+            handleOnClickButton={handleOnClickFollow}
             btnStyle={{
               width: '70px',
               height: '35px',
@@ -106,6 +116,7 @@ const ProfileTag = ({
         )}
         {existMoreBtn && (
           <S.Container
+            onClick={handleOnClickDots}
             style={{
               width: '24px',
             }}
@@ -118,4 +129,4 @@ const ProfileTag = ({
   );
 };
 
-export default ProfileTag;
+export default ProfileBar;

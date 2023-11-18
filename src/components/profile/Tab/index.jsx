@@ -3,10 +3,17 @@ import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 
-const Tab = ({ text, existCounter, countNum, isActive, onClick, style }) => {
+const Tab = ({
+  text,
+  existCounter = false,
+  countNum,
+  isActive,
+  handleOnClick,
+  style,
+}) => {
   return (
     <>
-      <S.Tab onClick={onClick} isActive={isActive} style={style}>
+      <S.Tab onClick={handleOnClick} isActive={isActive} style={style}>
         <BasicText
           text={text}
           style={{
