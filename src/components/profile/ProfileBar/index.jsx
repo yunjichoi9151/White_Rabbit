@@ -6,8 +6,8 @@ import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-const ProfileSize = {
-  1: '48px',
+const ProfileImgSize = {
+  1: '56px',
   2: '72px',
   3: '128px',
 };
@@ -28,6 +28,7 @@ const ProfileTag = ({
   isFollow,
   existMoreBtn = false,
   profileSize,
+  style,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
 
@@ -57,9 +58,15 @@ const ProfileTag = ({
 
   return (
     <>
-      <S.Container direction={'row'}>
-        <ProfileImg src={src} style={{ width: ProfileSize[profileSize] }} />
-        <S.Container direction={'column'} padding={'0 10px'}>
+      <S.Container style={style}>
+        <ProfileImg src={src} style={{ width: ProfileImgSize[profileSize] }} />
+        <S.Container
+          style={{
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '0 10px',
+          }}
+        >
           <BasicText text={username} style={{ font: CS.font.labelSmall }} />
           {existGeneration && (
             <BasicText
@@ -82,41 +89,28 @@ const ProfileTag = ({
             />
           )}
         </S.Container>
-        <S.Container width="70px" height="35px">
-          {existFollowBtn &&
-            (isFollow ? (
-              <BasicButton
-                text="팔로잉"
-                btnStyle={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '4px',
-                  backgroundColor: CS.color.accent,
-                }}
-                textStyle={{
-                  font: CS.font.labelSmall,
-                  color: CS.color.white,
-                }}
-              />
-            ) : (
-              <BasicButton
-                text="팔로우"
-                btnStyle={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '4px',
-                  backgroundColor: CS.color.primary,
-                }}
-                textStyle={{
-                  font: CS.font.labelSmall,
-                  color: CS.color.white,
-                }}
-              />
-            ))}
-        </S.Container>
+        {existFollowBtn && (
+          <BasicButton
+            text={isFollow ? '팔로잉' : '팔로우'}
+            btnStyle={{
+              width: '70px',
+              height: '35px',
+              borderRadius: '4px',
+              backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
+            }}
+            textStyle={{
+              font: CS.font.labelSmall,
+              color: CS.color.white,
+            }}
+          />
+        )}
         {existMoreBtn && (
-          <S.Container width="16px">
-            <BsThreeDotsVertical size="16px" color={CS.color.contentTertiary} />
+          <S.Container
+            style={{
+              width: '24px',
+            }}
+          >
+            <BsThreeDotsVertical size="24px" color={CS.color.contentTertiary} />
           </S.Container>
         )}
       </S.Container>
