@@ -110,7 +110,7 @@ const Post = ({
           <S.Container style={{ padding: '4px 20px 20px 20px' }}>
             <BasicText
               text={substrContent}
-              style={{ font: CS.font.paragraphSmall }}
+              style={{ font: CS.font.paragraphMedium }}
             />
           </S.Container>
         </div>
