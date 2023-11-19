@@ -4,7 +4,7 @@ import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 
 const Tab = ({
-  text,
+  tabName,
   existCounter = false,
   countNum,
   isActive,
@@ -15,7 +15,7 @@ const Tab = ({
     <>
       <S.Tab onClick={handleOnClick} isActive={isActive} style={style}>
         <BasicText
-          text={text}
+          text={tabName}
           style={{
             color: isActive ? CS.color.black : CS.color.contentTertiary,
           }}

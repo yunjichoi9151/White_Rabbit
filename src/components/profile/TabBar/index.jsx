@@ -2,26 +2,25 @@ import React, { useState } from 'react';
 import * as S from './style';
 import Tab from '../Tab';
 
-const TabBar = ({
-  texts,
-  existCounter,
-  countNum,
-  currentTabKey,
-  handleOnClick,
-  style,
-}) => {
+const TabBar = ({ tabNames, existCounter, countNum, style }) => {
+  const [currentTabKey, setCurrentTabKey] = useState('0');
+
+  const handleTabClick = (tabKey) => {
+    setCurrentTabKey(tabKey);
+  };
+
   return (
     <>
       <S.TabBar style={style}>
-        {Object.keys(texts).map((key, index) => (
+        {Object.keys(tabNames).map((key, index) => (
           <>
             <Tab
               key={index}
-              text={texts[key]}
+              tabName={tabNames[key]}
               existCounter={existCounter[key]}
               countNum={countNum[key]}
-              isActive={currentTabKey == key}
-              handleOnClick={handleOnClick}
+              isActive={currentTabKey === key}
+              handleOnClick={() => handleTabClick(key)}
             />
           </>
         ))}
