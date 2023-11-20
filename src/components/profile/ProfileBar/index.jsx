@@ -5,14 +5,15 @@ import BasicText from '../../common/BasicText';
 import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { convertTimeAgo } from '../../../utils/convertTimeAgo';
 
-const ProfileSize = {
+const ProfileImgSize = {
   1: '48px',
   2: '72px',
   3: '128px',
 };
 
-const ProfileTag = ({
+const ProfileBar = ({
   src,
   username,
   rate,
@@ -28,38 +29,34 @@ const ProfileTag = ({
   isFollow,
   existMoreBtn = false,
   profileSize,
+  handleOnClickBar,
+  handleOnClickFollow,
+  handleOnClickDots,
+  style,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
 
   useEffect(() => {
-    const createdDate = new Date(createdAt);
-    const currentDate = new Date();
-
-    const timeDifference = currentDate - createdDate;
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    let timeAgoString = '';
-    if (days > 0) {
-      timeAgoString = `${days}일 전`;
-    } else if (hours > 0) {
-      timeAgoString = `${hours}시간 전`;
-    } else if (minutes > 0) {
-      timeAgoString = `${minutes}분 전`;
-    } else {
-      timeAgoString = '방금 전';
-    }
-
-    setTimeAgo(timeAgoString);
+    setTimeAgo(convertTimeAgo(createdAt));
   }, [createdAt]);
 
   return (
     <>
-      <S.Container direction={'row'}>
-        <ProfileImg src={src} style={{ width: ProfileSize[profileSize] }} />
-        <S.Container direction={'column'} padding={'0 10px'}>
+      <S.Container style={style}>
+        <div onClick={handleOnClickBar}>
+          <ProfileImg
+            src={src}
+            style={{ width: ProfileImgSize[profileSize] }}
+          />
+        </div>
+        <S.Container
+          onClick={handleOnClickBar}
+          style={{
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            padding: '0 10px',
+          }}
+        >
           <BasicText text={username} style={{ font: CS.font.labelSmall }} />
           {existGeneration && (
             <BasicText
@@ -82,41 +79,30 @@ const ProfileTag = ({
             />
           )}
         </S.Container>
-        <S.Container width="70px" height="35px">
-          {existFollowBtn &&
-            (isFollow ? (
-              <BasicButton
-                text="팔로잉"
-                btnStyle={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '4px',
-                  backgroundColor: CS.color.accent,
-                }}
-                textStyle={{
-                  font: CS.font.labelSmall,
-                  color: CS.color.white,
-                }}
-              />
-            ) : (
-              <BasicButton
-                text="팔로우"
-                btnStyle={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '4px',
-                  backgroundColor: CS.color.primary,
-                }}
-                textStyle={{
-                  font: CS.font.labelSmall,
-                  color: CS.color.white,
-                }}
-              />
-            ))}
-        </S.Container>
+        {existFollowBtn && (
+          <BasicButton
+            text={isFollow ? '팔로잉' : '팔로우'}
+            handleOnClickButton={handleOnClickFollow}
+            btnStyle={{
+              width: '70px',
+              height: '35px',
+              borderRadius: '4px',
+              backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
+            }}
+            textStyle={{
+              font: CS.font.labelSmall,
+              color: CS.color.white,
+            }}
+          />
+        )}
         {existMoreBtn && (
-          <S.Container width="16px">
-            <BsThreeDotsVertical size="16px" color={CS.color.contentTertiary} />
+          <S.Container
+            onClick={handleOnClickDots}
+            style={{
+              width: '24px',
+            }}
+          >
+            <BsThreeDotsVertical size="24px" color={CS.color.contentTertiary} />
           </S.Container>
         )}
       </S.Container>
@@ -124,4 +110,4 @@ const ProfileTag = ({
   );
 };
 
-export default ProfileTag;
+export default ProfileBar;
