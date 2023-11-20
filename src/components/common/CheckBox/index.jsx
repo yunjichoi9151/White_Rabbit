@@ -1,6 +1,7 @@
 import React from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
+import BasicText from '../BasicText';
 
 function CheckBox({ checked, onChange, text }) {
   return (
@@ -11,6 +12,8 @@ function CheckBox({ checked, onChange, text }) {
           text={text}
           style={{
             color: CS.color.black,
+            fontWeight: 600,
+            fontSize: 12,
           }}
         />
       ) : (
