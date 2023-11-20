@@ -4,10 +4,10 @@ import * as CS from '../../styles/CommonStyles';
 import NavBar from '../../components/common/NavBar';
 import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
+import WriteButton from '../../components/board/WriteButton';
 import CheckBox from '../../components/common/CheckBox';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
-import { AiFillEdit } from 'react-icons/ai';
 
 const QNA = () => {
   const [selectedFilter, setSelectedFilter] = useState('latest');
@@ -80,7 +80,7 @@ const QNA = () => {
         <CheckBox
           text={'내 질문만 보기'}
           textColor={CS.color.contentSecondary}
-          style={{ padding: '4px', justifyContent: 'flex-end' }}
+          style={{ padding: '4px', justifyContent: 'flex-end', margin: 0 }}
           onChange={handleCheckBoxChange}
         />
       </S.FilterBar>
@@ -142,13 +142,7 @@ const QNA = () => {
             comments={0}
           />
         </S.PostWrap>
-        <S.FixedButton>
-          <BasicButton
-            existText={false}
-            existIcon={true}
-            children={<AiFillEdit size={20} />}
-          />
-        </S.FixedButton>
+        <WriteButton />
       </S.PostList>
       <NavBar />
     </S.QNAWrap>

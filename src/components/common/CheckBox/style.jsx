@@ -7,5 +7,5 @@ export const Container = styled.div`
 `;
 
 export const StyledInput = styled.input`
-  margin-right: 8px;
+  margin: 0 8px 0 0;
 `;

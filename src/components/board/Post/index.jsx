@@ -25,8 +25,8 @@ const labelColor = {
 const labelText = {
   BOARD: '자유게시판',
   REVIEW: '취업후기',
-  QNA: '개발Q&A',
-  PROJECT: '사이드 프로젝트',
+  QNA: '개발 Q&A',
+  PROJECT: '프로젝트',
   STUDY: '스터디',
 };
 
