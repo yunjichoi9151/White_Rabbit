@@ -42,21 +42,14 @@ const ProfileBar = ({
 
   return (
     <>
-      <S.Container style={style}>
+      <S.Wrapper style={style}>
         <div onClick={handleOnClickBar}>
           <ProfileImg
             src={src}
             style={{ width: ProfileImgSize[profileSize] }}
           />
         </div>
-        <S.Container
-          onClick={handleOnClickBar}
-          style={{
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            padding: '0 10px',
-          }}
-        >
+        <S.InfoBox onClick={handleOnClickBar}>
           <BasicText text={username} style={{ font: CS.font.labelSmall }} />
           {existGeneration && (
             <BasicText
@@ -78,7 +71,7 @@ const ProfileBar = ({
               style={{ font: CS.font.paragraphSmall }}
             />
           )}
-        </S.Container>
+        </S.InfoBox>
         {existFollowBtn && (
           <BasicButton
             text={isFollow ? '팔로잉' : '팔로우'}
@@ -96,16 +89,11 @@ const ProfileBar = ({
           />
         )}
         {existMoreBtn && (
-          <S.Container
-            onClick={handleOnClickDots}
-            style={{
-              width: '24px',
-            }}
-          >
+          <S.MoreBtn onClick={handleOnClickDots} style={{}}>
             <BsThreeDotsVertical size="24px" color={CS.color.contentTertiary} />
-          </S.Container>
+          </S.MoreBtn>
         )}
-      </S.Container>
+      </S.Wrapper>
     </>
   );
 };

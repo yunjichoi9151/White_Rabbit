@@ -24,22 +24,15 @@ const QNA = () => {
   };
 
   return (
-    <S.QNAWrap style={{ flexDirection: 'column' }}>
+    <S.QNAWrap>
       <Header
-        text="개발자Q&A"
+        text="개발Q&A"
         existText={true}
         existRight={true}
         headerStyle={{ backgroundColor: CS.color.white }}
       />
-      <S.QNAWrap
-        style={{
-          width: '100%',
-          padding: '68px 24px 12px 24px',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <S.QNAWrap>
+      <S.FilterBar>
+        <S.ButtonWrap>
           <BasicButton
             text="최근 등록 순"
             textStyle={{
@@ -82,22 +75,16 @@ const QNA = () => {
             }
             handleOnClickButton={() => handleFilterButtonClick('reply')}
           />
-        </S.QNAWrap>
+        </S.ButtonWrap>
         <CheckBox
           text={'내 질문만 보기'}
           textColor={CS.color.contentSecondary}
           style={{ padding: '4px', justifyContent: 'flex-end' }}
           onChange={handleCheckBoxChange}
         />
-      </S.QNAWrap>
-      <S.QNAWrap
-        style={{
-          flexDirection: 'column',
-          backgroundColor: CS.color.secondary,
-          paddingBottom: '100px',
-        }}
-      >
-        <S.QNAWrap style={{ padding: '12px 0' }}>
+      </S.FilterBar>
+      <S.PostList>
+        <S.PostWrap>
           <Post
             src={''}
             username="UserName"
@@ -115,8 +102,8 @@ const QNA = () => {
             likes={0}
             comments={0}
           />
-        </S.QNAWrap>
-        <S.QNAWrap style={{ padding: '12px 0' }}>
+        </S.PostWrap>
+        <S.PostWrap>
           <Post
             src={''}
             username="UserName"
@@ -134,8 +121,8 @@ const QNA = () => {
             likes={0}
             comments={0}
           />
-        </S.QNAWrap>
-        <S.QNAWrap style={{ padding: '12px 0' }}>
+        </S.PostWrap>
+        <S.PostWrap>
           <Post
             src={''}
             username="UserName"
@@ -153,8 +140,8 @@ const QNA = () => {
             likes={0}
             comments={0}
           />
-        </S.QNAWrap>
-      </S.QNAWrap>
+        </S.PostWrap>
+      </S.PostList>
       <NavBar />
     </S.QNAWrap>
   );
