@@ -11,7 +11,7 @@ export const NavigationWrapper = styled.div`
   align-items: center;
   justify-content: space-around;
 
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
