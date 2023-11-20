@@ -7,6 +7,7 @@ import BasicButton from '../../components/common/BasicButton';
 import CheckBox from '../../components/common/CheckBox';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
+import { AiFillEdit } from 'react-icons/ai';
 
 const QNA = () => {
   const [selectedFilter, setSelectedFilter] = useState('latest');
@@ -141,6 +142,13 @@ const QNA = () => {
             comments={0}
           />
         </S.PostWrap>
+        <S.FixedButton>
+          <BasicButton
+            existText={false}
+            existIcon={true}
+            children={<AiFillEdit size={20} />}
+          />
+        </S.FixedButton>
       </S.PostList>
       <NavBar />
     </S.QNAWrap>
