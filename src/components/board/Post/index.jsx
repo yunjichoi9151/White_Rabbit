@@ -76,44 +76,45 @@ const Post = ({
           handleOnClickDots={handleOnClickDots}
           style={{ padding: '12px 20px' }}
         />
-        <div onClick={handleOnClickPost}>
-          <S.Container style={{ padding: '12px 20px' }}>
-            <BasicText
-              text={labelText[category]}
-              style={{
-                color: CS.color.white,
-                font: CS.font.labelSmall,
-                padding: '4px 12px',
-                borderRadius: '4px',
-                backgroundColor: labelColor[category],
-              }}
-            />
-            <BasicText
-              text={title}
-              style={{ font: CS.font.headingMedium, padding: '4px 12px' }}
-            />
-            {isHot && (
-              <>
-                <FaFireAlt size={16} color={CS.color.negative} />
-                <BasicText
-                  text={'HOT'}
-                  style={{
-                    font: CS.font.labelSmall,
-                    color: CS.color.negative,
-                    padding: '4px',
-                  }}
-                />
-              </>
-            )}
-          </S.Container>
+        <S.Container
+          onClick={handleOnClickPost}
+          style={{ padding: '12px 20px' }}
+        >
+          <BasicText
+            text={labelText[category]}
+            style={{
+              color: CS.color.white,
+              font: CS.font.labelSmall,
+              padding: '4px 12px',
+              borderRadius: '4px',
+              backgroundColor: labelColor[category],
+            }}
+          />
+          <BasicText
+            text={title}
+            style={{ font: CS.font.headingMedium, padding: '4px 12px' }}
+          />
+          {isHot && (
+            <>
+              <FaFireAlt size={16} color={CS.color.negative} />
+              <BasicText
+                text={'HOT'}
+                style={{
+                  font: CS.font.labelSmall,
+                  color: CS.color.negative,
+                  padding: '4px',
+                }}
+              />
+            </>
+          )}
+        </S.Container>
 
-          <S.Container style={{ padding: '4px 20px 20px 20px' }}>
-            <BasicText
-              text={substrContent}
-              style={{ font: CS.font.paragraphMedium }}
-            />
-          </S.Container>
-        </div>
+        <S.Container style={{ padding: '4px 20px 20px 20px' }}>
+          <BasicText
+            text={substrContent}
+            style={{ font: CS.font.paragraphMedium }}
+          />
+        </S.Container>
         <S.Container
           style={{
             justifyContent: 'space-between',

@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import * as S from './style';
 import Tab from '../Tab';
 
-const TabBar = ({ tabNames, existCounter, countNum, style }) => {
+const TabBar = ({ tabNames, existCounter, countNum, onTabClick, style }) => {
   const [currentTabKey, setCurrentTabKey] = useState('0');
 
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
+
+    if (onTabClick) {
+      onTabClick(tabKey);
+    }
   };
 
   return (

@@ -1,16 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
+import BasicText from '../BasicText';
 
-function CheckBox({ checked, onChange, text }) {
+function CheckBox({
+  checked = false,
+  onChange,
+  text,
+  textColor = CS.color.black,
+  style,
+}) {
+  const [isChecked, setIsChecked] = useState(checked);
+
+  const handleOnChange = (e) => {
+    setIsChecked(e.target.checked);
+
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
   return (
-    <S.Container>
-      <S.StyledInput checked={checked} type="checkbox" onChange={onChange} />
+    <S.Container style={style}>
+      <S.StyledInput
+        checked={isChecked}
+        type="checkbox"
+        onChange={handleOnChange}
+      />
       {text ? (
         <BasicText
           text={text}
           style={{
-            color: CS.color.black,
+            color: textColor,
+            font: CS.font.labelSmall,
           }}
         />
       ) : (

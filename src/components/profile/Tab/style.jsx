@@ -9,8 +9,8 @@ export const Tab = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom: ${(props) =>
-    props.isActive
+  border-bottom: ${({ isActive }) =>
+    isActive
       ? `2px solid ${CS.color.borderOpaque}`
       : `1px solid ${CS.color.borderTransparent}`};
   cursor: pointer;
