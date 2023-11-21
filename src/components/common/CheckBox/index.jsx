@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../BasicText';
 
-function CheckBox({ checked, onChange, text }) {
   return (
-    <S.Container>
-      <S.StyledInput checked={checked} type="checkbox" onChange={onChange} />
+    <S.Container style={style}>
+      <S.StyledInput
+        checked={isChecked}
+        type="checkbox"
+        onChange={handleOnChange}
+      />
       {text ? (
         <BasicText
           text={text}

@@ -25,8 +25,8 @@ const labelColor = {
 const labelText = {
   BOARD: '자유게시판',
   REVIEW: '취업후기',
-  QNA: '코치님Q&A',
-  PROJECT: '사이드 프로젝트',
+  QNA: '개발 Q&A',
+  PROJECT: '프로젝트',
   STUDY: '스터디',
 };
 
@@ -56,11 +56,10 @@ const Post = ({
     contentLength !== 'ALL' && content.length > length[contentLength]
       ? `${content.substring(0, length[contentLength])}...`
       : content;
+
   return (
     <>
-      <S.Container
-        style={{ flexDirection: 'column', backgroundColor: CS.color.white }}
-      >
+      <S.Wrapper>
         <ProfileBar
           src={src}
           username={username}
@@ -76,52 +75,43 @@ const Post = ({
           handleOnClickDots={handleOnClickDots}
           style={{ padding: '12px 20px' }}
         />
-        <div onClick={handleOnClickPost}>
-          <S.Container style={{ padding: '12px 20px' }}>
-            <BasicText
-              text={labelText[category]}
-              style={{
-                color: CS.color.white,
-                font: CS.font.labelSmall,
-                padding: '4px 12px',
-                borderRadius: '4px',
-                backgroundColor: labelColor[category],
-              }}
-            />
-            <BasicText
-              text={title}
-              style={{ font: CS.font.headingMedium, padding: '4px 12px' }}
-            />
-            {isHot && (
-              <>
-                <FaFireAlt size={16} color={CS.color.negative} />
-                <BasicText
-                  text={'HOT'}
-                  style={{
-                    font: CS.font.labelSmall,
-                    color: CS.color.negative,
-                    padding: '4px',
-                  }}
-                />
-              </>
-            )}
-          </S.Container>
-
-          <S.Container style={{ padding: '4px 20px 20px 20px' }}>
-            <BasicText
-              text={substrContent}
-              style={{ font: CS.font.paragraphMedium }}
-            />
-          </S.Container>
-        </div>
-        <S.Container
-          style={{
-            justifyContent: 'space-between',
-            padding: '4px 24px',
-            border: `solid 1px ${CS.color.borderTransparent}`,
-          }}
-        >
-          <S.Container>
+        <S.TitleWrapper onClick={handleOnClickPost}>
+          <BasicText
+            text={labelText[category]}
+            style={{
+              color: CS.color.white,
+              font: CS.font.labelSmall,
+              padding: '4px 12px',
+              borderRadius: '4px',
+              backgroundColor: labelColor[category],
+            }}
+          />
+          <BasicText
+            text={title}
+            style={{ font: CS.font.headingMedium, padding: '4px 12px' }}
+          />
+          {isHot && (
+            <>
+              <FaFireAlt size={16} color={CS.color.negative} />
+              <BasicText
+                text={'HOT'}
+                style={{
+                  font: CS.font.labelSmall,
+                  color: CS.color.negative,
+                  padding: '4px',
+                }}
+              />
+            </>
+          )}
+        </S.TitleWrapper>
+        <S.ContentWrapper>
+          <BasicText
+            text={substrContent}
+            style={{ font: CS.font.paragraphMedium }}
+          />
+        </S.ContentWrapper>
+        <S.IconBar>
+          <S.IconWrapper>
             <BasicButton
               existIcon={true}
               children={isLike ? <BiSolidLike /> : <BiLike />}
@@ -132,16 +122,16 @@ const Post = ({
               text={likes}
               style={{ font: CS.font.labelSmall, padding: '4px' }}
             />
-          </S.Container>
-          <S.Container style={{ flexDirection: 'row-reverse' }}>
+          </S.IconWrapper>
+          <S.IconWrapper style={{ flexDirection: 'row-reverse' }}>
             <BasicText
               text={comments}
               style={{ font: CS.font.labelSmall, padding: '4px' }}
             />
             <TbMessage2 />
-          </S.Container>
-        </S.Container>
-      </S.Container>
+          </S.IconWrapper>
+        </S.IconBar>
+      </S.Wrapper>
     </>
   );
 };

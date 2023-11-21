@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 html {
+  max-width: 900px;
   height: calc(var(--vh, 1vh) * 100);
 }
 
