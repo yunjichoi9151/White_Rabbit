@@ -12,8 +12,7 @@ function CheckBox({ checked, onChange, text }) {
           text={text}
           style={{
             color: CS.color.black,
-            fontWeight: 600,
-            fontSize: 12,
+            font: CS.font.labelSmall,
           }}
         />
       ) : (
