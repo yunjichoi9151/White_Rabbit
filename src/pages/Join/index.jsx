@@ -37,7 +37,6 @@ function Join({ onClickButton }) {
   };
   return (
     <>
-      <S.Header></S.Header>
       <InputBox
         label="이름"
         subTextProps={{
@@ -45,7 +44,7 @@ function Join({ onClickButton }) {
           text: '0/20',
         }}
         inputProps={{
-          value: form.name,
+          value: form['inputNameValue'],
           handleOnChangeValue: onChange,
           placeholder: '프로필 이름',
           name: 'inputNameValue',
@@ -58,7 +57,7 @@ function Join({ onClickButton }) {
           type: 'none',
         }}
         inputProps={{
-          value: form.name,
+          value: form['inputIdValue'],
           handleOnChangeValue: onChange,
           placeholder: 'example@elice.com',
           name: 'inputIdValue',
@@ -71,7 +70,7 @@ function Join({ onClickButton }) {
           type: 'none',
         }}
         inputProps={{
-          value: form.name,
+          value: form['inputPwValue'],
           handleOnChangeValue: onChange,
           placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
           name: 'inputPwValue',
@@ -84,7 +83,7 @@ function Join({ onClickButton }) {
           type: 'none',
         }}
         inputProps={{
-          value: form.name,
+          value: form['inputPwCheckValue'],
           handleOnChangeValue: onChange,
           placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
           name: 'inputPwCheckValue',
@@ -98,7 +97,7 @@ function Join({ onClickButton }) {
             text="기수"
             style={{
               color: CS.color.black,
-              fontWeight: 600,
+              font: CS.font.labelMedium,
               marginTop: 16,
               marginBottom: 16,
             }}
@@ -110,23 +109,38 @@ function Join({ onClickButton }) {
             style={{
               display: 'flex',
               flex: 2,
-              height: '2.75rem',
-              fontSize: 16,
+              height: 50,
+
+              font: CS.font.labelMedium,
               textAlign: 'left',
               outline: 'none',
               border: `1px solid ${CS.color.secondary}`,
               borderRadius: 10,
               marginBottom: 0,
+              marginRight: 4,
               paddingBottom: 0,
               paddingLeft: 16,
             }}
+            options={[
+              {
+                key: 'trackChoice',
+                value: '',
+                name: '트랙 선택',
+                style: { display: 'none' },
+              },
+              { key: 'SW', value: 'SW', name: 'SW 엔지니어 트랙' },
+              { key: 'AI', value: 'AI', name: '웹 풀스택 X AI 트랙 ' },
+              { key: 'Cloud', value: 'Cloud', name: 'Cloud 트랙 ' },
+              { key: 'IoT', value: 'IoT', name: 'IoT 트랙 ' },
+            ]}
+            onChange={handleChangeSelect}
           />
           <SelectBar
             style={{
               display: 'flex',
               flex: 1,
-              height: '2.75rem',
-              fontSize: 16,
+              height: 50,
+              font: CS.font.labelMedium,
               textAlign: 'left',
               outline: 'none',
               border: `1px solid ${CS.color.secondary}`,
@@ -136,9 +150,19 @@ function Join({ onClickButton }) {
               paddingLeft: 16,
             }}
             options={[
-              { key: 'apple', value: 'apple', name: '사과' },
-              { key: 'banana', value: 'banana', name: '바나나' },
-              { key: 'orange', value: 'orange', name: '오렌지' },
+              {
+                key: 'stageChoice',
+                value: '',
+                name: '기수 선택',
+                style: { display: 'none' },
+              },
+              { key: '1', value: '1', name: '1기' },
+              { key: '2', value: '2', name: '2기' },
+              { key: '3', value: '3', name: '3기' },
+              { key: '4', value: '4', name: '4기' },
+              { key: '5', value: '5', name: '5기' },
+              { key: '6', value: '6', name: '6기' },
+              { key: '7', value: '7', name: '7기' },
             ]}
             onChange={handleChangeSelect}
           />
@@ -150,15 +174,10 @@ function Join({ onClickButton }) {
             text="등급"
             style={{
               color: CS.color.black,
-              fontWeight: 600,
+              font: CS.font.labelMedium,
               marginTop: 16,
               marginBottom: 16,
             }}
-            options={[
-              { key: 'apple', value: 'apple', name: '사과' },
-              { key: 'banana', value: 'banana', name: '바나나' },
-              { key: 'orange', value: 'orange', name: '오렌지' },
-            ]}
           />
           <S.SignText />
         </S.TextWrap>
@@ -166,9 +185,9 @@ function Join({ onClickButton }) {
         <SelectBar
           style={{
             display: 'flex',
-            flex: 2,
-            height: '2.75rem',
-            fontSize: 16,
+            flex: 1,
+            height: 50,
+            font: CS.font.labelMedium,
             textAlign: 'left',
             outline: 'none',
             border: `1px solid ${CS.color.secondary}`,
@@ -178,9 +197,14 @@ function Join({ onClickButton }) {
             paddingLeft: 16,
           }}
           options={[
-            { key: 'apple', value: 'apple', name: '사과' },
-            { key: 'banana', value: 'banana', name: '바나나' },
-            { key: 'orange', value: 'orange', name: '오렌지' },
+            {
+              key: 'ratingChoice',
+              value: '',
+              name: '등급 선택',
+              style: { display: 'none' },
+            },
+            { key: 'racer', value: 'racer', name: '레이서' },
+            { key: 'coach', value: 'coach', name: '코치' },
           ]}
         />
       </S.SelectContainer>
@@ -220,6 +244,9 @@ function Join({ onClickButton }) {
             height: 50,
             borderRadius: 15,
             flex: 1,
+
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
           <BasicButton
@@ -227,8 +254,7 @@ function Join({ onClickButton }) {
             text="회원가입"
             textStyle={{
               color: CS.color.white,
-              fontSize: 14,
-              fontWeight: 600,
+              font: CS.font.labelMedium,
             }}
             btnStyle={{}}
           />

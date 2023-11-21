@@ -86,6 +86,7 @@ const Header = ({
               font: CS.font.labelSmall,
               color: CS.color.primary,
             }}
+            handleOnClickButton={btnOnClickEvent}
           />
         </S.HeaderWrap>
       )}

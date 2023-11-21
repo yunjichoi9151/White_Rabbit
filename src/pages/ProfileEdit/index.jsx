@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InputBox from '../../components/common/InputBox';
 import ProfileImg from '../../components/common/ProfileImg';
+import { useOutletContext } from 'react-router-dom';
 
 function ProfileEdit() {
   const [form, setForm] = useState({
@@ -16,6 +17,24 @@ function ProfileEdit() {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const test = () => {
+    console.log('test');
+  };
+
+  const chatLogProps = useOutletContext();
+  console.log('chatLogProps', chatLogProps);
+
+  useEffect(() => {
+    if (chatLogProps) {
+      chatLogProps.btnOnClickEvent = test;
+
+      // cleanup 함수
+      return () => {
+        chatLogProps.btnOnClickEvent = undefined;
+      };
+    }
+  }, [chatLogProps]);
 
   return (
     <>

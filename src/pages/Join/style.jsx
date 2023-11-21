@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const Header = styled.div`
-  height: 50px;
-`;
-
 export const SelectContainer = styled.div`
   margin-left: 20px;
   margin-right: 20px;

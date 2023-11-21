@@ -35,6 +35,7 @@ function InputBox({
             {...inputProps}
             style={{
               width: 200,
+              height: 44,
               fontSize: 16,
               textAlign: 'left',
               outline: 'none',

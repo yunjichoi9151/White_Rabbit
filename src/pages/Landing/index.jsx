@@ -22,7 +22,7 @@ const Landing = ({ onClickButton }) => {
   return (
     <>
       <S.Container>
-        <S.LandingImg src="/assets/img/elice_icon.png" alt="logo image" />
+        <S.LandingImg src="/assets/img/elice_rabbit.png" alt="logo image" />
         <S.LandingText>
           신입 개발자가 되고싶은
           <br />
