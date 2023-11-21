@@ -8,7 +8,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { convertTimeAgo } from '../../../utils/convertTimeAgo';
 
 const ProfileImgSize = {
-  1: '48px',
+  1: '40px',
   2: '72px',
   3: '128px',
 };

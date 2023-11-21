@@ -6,7 +6,6 @@ export const Header = styled.div`
   font-weight: normal;
   font-family: 'NanumBarunGothic';
   background-color: transparent;
-  border-radius: 1rem;
   padding: 1rem;
   display: flex;
   width: 100%;

@@ -40,7 +40,7 @@ const Reply = ({
           <BasicText
             text={comment}
             style={{
-              font: CS.font.paragraphMedium,
+              font: CS.font.paragraphSmall,
               backgroundColor: CS.color.secondary,
               width: '100%',
               borderRadius: '8px',
