@@ -9,6 +9,9 @@ import LinkEdit from '../pages/IntroLinkEdit';
 import NewLink from '../pages/IntroNewLink';
 import Join from '../pages/Join';
 import FindPW from '../pages/FindPW';
+import NewSkill from '../pages/IntroNewSkill';
+import RootContainer from '../pages/RootContainer/RootContainer';
+import ProfileEdit from '../pages/ProfileEdit';
 
 export const ROUTER_LINK = {
   LANDING: { path: '/', link: '/' },
@@ -20,44 +23,60 @@ export const ROUTER_LINK = {
   NEWLINK: { path: '/newlink', link: '/newlink' },
   JOIN: { path: '/join', link: '/join' },
   FINDPW: { path: '/findpw', link: '/findpw' },
+  NEWSKILL: { path: '/newskill', link: '/newskill' },
+  PROFILEEDIT: { path: '/profileedit', link: '/profileedit' },
 };
 
 const router = createBrowserRouter([
   {
-    path: ROUTER_LINK.LANDING.path,
-    element: <Landing />,
-  },
-  {
-    path: ROUTER_LINK.HOME.path,
-    element: <Home />,
-  },
-  {
-    path: ROUTER_LINK.QNA.path,
-    element: <QNA />,
-  },
-  {
-    path: ROUTER_LINK.RECRUITMENT.path,
-    element: <Recruitment />,
-  },
-  {
-    path: ROUTER_LINK.MYPAGE.path,
-    element: <MyPage />,
-  },
-  {
-    path: ROUTER_LINK.LINKEDIT.path,
-    element: <LinkEdit />,
-  },
-  {
-    path: ROUTER_LINK.NEWLINK.path,
-    element: <NewLink />,
-  },
-  {
-    path: ROUTER_LINK.JOIN.path,
-    element: <Join />,
-  },
-  {
-    path: ROUTER_LINK.FINDPW.path,
-    element: <FindPW />,
+    path: '/',
+    element: <RootContainer />,
+    children: [
+      {
+        path: ROUTER_LINK.LANDING.path,
+        element: <Landing />,
+      },
+      {
+        path: ROUTER_LINK.HOME.path,
+        element: <Home />,
+      },
+      {
+        path: ROUTER_LINK.QNA.path,
+        element: <QNA />,
+      },
+      {
+        path: ROUTER_LINK.RECRUITMENT.path,
+        element: <Recruitment />,
+      },
+      {
+        path: ROUTER_LINK.MYPAGE.path,
+        element: <MyPage />,
+      },
+      {
+        path: ROUTER_LINK.LINKEDIT.path,
+        element: <LinkEdit />,
+      },
+      {
+        path: ROUTER_LINK.NEWLINK.path,
+        element: <NewLink />,
+      },
+      {
+        path: ROUTER_LINK.JOIN.path,
+        element: <Join />,
+      },
+      {
+        path: ROUTER_LINK.FINDPW.path,
+        element: <FindPW />,
+      },
+      {
+        path: ROUTER_LINK.NEWSKILL.path,
+        element: <NewSkill />,
+      },
+      {
+        path: ROUTER_LINK.PROFILEEDIT.path,
+        element: <ProfileEdit />,
+      },
+    ],
   },
 ]);
 
