@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
@@ -11,21 +11,27 @@ import { FiSend } from 'react-icons/fi';
 import Post from '../../components/board/Post';
 import boardData from '../../test/board.json';
 import userData from '../../test/user.json';
+import { postApi } from '../../../api/utils/Post';
 
 const Home = () => {
-  const [active, setActive] = useState('ALL');
-  const posts = boardData.data.posts;
+  const [active, setActive] = useState('all');
+  // const posts = boardData.data.posts;
+  const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const postList = async () => {
+    try {
+      const res = await postApi.getAllPosts();
+      setPosts(res.data.data);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
   const user = userData.data;
   const navigate = useNavigate();
 
-  const filteredPosts = posts.filter((post) => {
-    if (active === 'ALL') return true;
-    if (active === 'HOT') return post.isHot === true;
-    return post.category === active;
-  });
-
   const handleClick = (category) => {
-    setActive(active === category ? 'ALL' : category);
+    setActive(active === category ? 'all' : category);
   };
 
   const buttonStyle = (category) => ({
@@ -36,10 +42,23 @@ const Home = () => {
     marginRight: '0.5rem',
   });
 
+  useEffect(() => {
+    postList();
+  }, []);
+
+  useEffect(() => {
+    const filtered = posts.filter((post) => {
+      if (active === 'all') return true;
+      // if (active === 'HOT') return post.isHot === true;
+      return post.category === active;
+    });
+    setFilteredPosts(filtered);
+  }, [posts, active]);
+
   return (
     <S.HomeWrap>
       <S.TopBtnWrap>
-        <BasicButton
+        {/* <BasicButton
           handleOnClickButton={() => handleClick('HOT')}
           existIcon={true}
           existText={true}
@@ -51,29 +70,29 @@ const Home = () => {
           }}
         >
           <FaFire style={{ marginRight: '0.5rem' }} />
-        </BasicButton>
+        </BasicButton> */}
         <BasicButton
-          handleOnClickButton={() => handleClick('BOARD')}
+          handleOnClickButton={() => handleClick('fb')}
           existIcon={true}
           existText={true}
           text="자유게시판"
-          btnStyle={buttonStyle('BOARD')}
+          btnStyle={buttonStyle('fb')}
           textStyle={{
             font: CS.font.labelSmall,
-            color: active === 'BOARD' ? CS.color.white : CS.color.accent,
+            color: active === 'fb' ? CS.color.white : CS.color.accent,
           }}
         >
           <IoDocumentTextOutline style={{ marginRight: '0.5rem' }} />
         </BasicButton>
         <BasicButton
-          handleOnClickButton={() => handleClick('REVIEW')}
+          handleOnClickButton={() => handleClick('review')}
           existIcon={true}
           existText={true}
           text="취업후기"
-          btnStyle={buttonStyle('REVIEW')}
+          btnStyle={buttonStyle('review')}
           textStyle={{
             font: CS.font.labelSmall,
-            color: active === 'REVIEW' ? CS.color.white : CS.color.accent,
+            color: active === 'review' ? CS.color.white : CS.color.accent,
           }}
         >
           <FiSend style={{ marginRight: '0.5rem' }} />
@@ -94,7 +113,7 @@ const Home = () => {
             category={post.category}
             username={post.author}
             rate={user.roles}
-            isHot={post.isHot}
+            // isHot={post.isHot}
             createdAt={post.createdAt}
             contentLength="SHORT"
             comments={2}
