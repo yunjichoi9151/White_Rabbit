@@ -32,29 +32,29 @@ const RootContainer = () => {
         background: CS.color.white,
       },
     },
-    [ROUTER_LINK.PROFILEEDIT.link]: {
-      text: '프로필 편집',
-      existText: true,
-      existLeft: true,
-      existRight: true,
-      BtnText: '완료',
-      headerStyle: {
-        borderBottom: `1px solid ${CS.color.contentTertiary}`,
-        borderRadius: 0,
-        background: CS.color.white,
-      },
-    },
-    [ROUTER_LINK.NEWSKILL.link]: {
-      text: '스킬',
-      existText: true,
-      existLeft: true,
-      existRight: true,
-      BtnText: '등록',
-      headerStyle: {
-        borderBottom: `1px solid ${CS.color.contentTertiary}`,
-        background: CS.color.white,
-      },
-    },
+    // [ROUTER_LINK.PROFILEEDIT.link]: {
+    //   text: '프로필 편집',
+    //   existText: true,
+    //   existLeft: true,
+    //   existRight: true,
+    //   BtnText: '완료',
+    //   headerStyle: {
+    //     borderBottom: `1px solid ${CS.color.contentTertiary}`,
+    //     borderRadius: 0,
+    //     background: CS.color.white,
+    //   },
+    // },
+    // [ROUTER_LINK.NEWSKILL.link]: {
+    //   text: '스킬',
+    //   existText: true,
+    //   existLeft: true,
+    //   existRight: true,
+    //   BtnText: '등록',
+    //   headerStyle: {
+    //     borderBottom: `1px solid ${CS.color.contentTertiary}`,
+    //     background: CS.color.white,
+    //   },
+    // },
     [ROUTER_LINK.JOIN.link]: {
       text: '회원가입',
       existText: true,
@@ -120,7 +120,7 @@ const RootContainer = () => {
         <></>
       )}
 
-      {routerNav.includes(location.pathname) ? <NavBar /> : <></>}
+      {/* {routerNav.includes(location.pathname) ? <NavBar /> : <></>} */}
       <Outlet />
     </Container>
   );
