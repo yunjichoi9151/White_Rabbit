@@ -6,12 +6,13 @@ export const QNAWrap = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 64px;
 `;
 
 export const FilterBar = styled.div`
   width: 100%;
-  height: 100%;
-  padding: 68px 24px 12px 24px;
+  min-height: 64px;
+  padding: 0px 24px 0px 24px;
   display: flex;
   justify-content: space-between;
 `;
@@ -25,7 +26,6 @@ export const PostList = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${CS.color.secondary};
-  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
 `;

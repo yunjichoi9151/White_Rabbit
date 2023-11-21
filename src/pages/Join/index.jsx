@@ -8,6 +8,7 @@ import SelectBar from '../../components/common/SelectBar';
 import BasicText from '../../components/common/BasicText';
 import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
+import Header from '../../components/common/Header';
 
 function Join({ onClickButton }) {
   const [checked, setChecked] = useState(false);
@@ -36,7 +37,17 @@ function Join({ onClickButton }) {
     setSelected(e.target.value);
   };
   return (
-    <>
+    <div style={{ paddingTop: 64 }}>
+      <Header
+        text={'회원가입'}
+        existText={true}
+        existLeft={true}
+        BtnText={'등록'}
+        headerStyle={{
+          borderBottom: `1px solid ${CS.color.contentTertiary}`,
+          background: CS.color.white,
+        }}
+      />
       <InputBox
         label="이름"
         subTextProps={{
@@ -260,7 +271,7 @@ function Join({ onClickButton }) {
           />
         </Link>
       </S.ButtonWrap>
-    </>
+    </div>
   );
 }
 

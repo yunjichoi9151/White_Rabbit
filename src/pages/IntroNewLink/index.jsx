@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import * as S from './style';
+import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
+import Header from '../../components/common/Header';
 
 function NewLink() {
   const [form, setForm] = useState({
@@ -16,7 +18,18 @@ function NewLink() {
   };
 
   return (
-    <>
+    <div style={{ paddingTop: 64 }}>
+      <Header
+        text={'링크'}
+        existText={true}
+        existLeft={true}
+        existRight={true}
+        BtnText={'등록'}
+        headerStyle={{
+          borderBottom: `1px solid ${CS.color.contentTertiary}`,
+          background: CS.color.white,
+        }}
+      />
       <InputBox
         label="링크 연결"
         subTextProps={{
@@ -44,7 +57,7 @@ function NewLink() {
         }}
         buttonElement={false}
       />
-    </>
+    </div>
   );
 }
 

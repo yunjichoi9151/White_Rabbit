@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import * as CS from '../../styles/CommonStyles';
 
 export const HomeWrap = styled.div`
+  padding-top: 64px;
   width: 100%;
   background-color: ${CS.color.contentTertiary};
 `;

@@ -19,8 +19,18 @@ function NewSkill({ inputProps }) {
     }));
   };
   return (
-    <>
-      <Header />
+    <div style={{ paddingTop: 64 }}>
+      <Header
+        text={'스킬'}
+        existText={true}
+        existLeft={true}
+        existRight={true}
+        BtnText={'등록'}
+        headerStyle={{
+          borderBottom: `1px solid ${CS.color.contentTertiary}`,
+          background: CS.color.white,
+        }}
+      />
       <S.ChoiceSkill>
         <BasicText
           text="내 스킬을 선택해 주세요."
@@ -69,7 +79,7 @@ function NewSkill({ inputProps }) {
         <SkillText text="javascript" existIcon={false} choice={true} />
         <SkillText text="java" existIcon={false} choice={false} />
       </S.Search>
-    </>
+    </div>
   );
 }
 

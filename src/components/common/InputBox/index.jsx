@@ -11,6 +11,7 @@ function InputBox({
   inputProps,
   buttonElement,
   onClickButton,
+  signType,
 }) {
   return (
     <>
@@ -18,15 +19,20 @@ function InputBox({
         <S.ContentWrap>
           <BasicText
             text={label}
-            style={{ color: CS.color.black, fontWeight: 600 }}
+            style={{
+              color: CS.color.black,
+              fontWeight: 600,
+              font: CS.font.labelMedium,
+              height: '56px',
+            }}
           />
-          <S.SignText />
+          <S.SignText $signType={signType} />
           <BasicText
             {...subTextProps}
             style={
               subTextProps.type === 'none'
                 ? { display: 'none' }
-                : { color: CS.color.contentTertiary, fontSize: 12 }
+                : { color: CS.color.contentTertiary, font: CS.font.labelSmall }
             }
           />
         </S.ContentWrap>
@@ -35,8 +41,8 @@ function InputBox({
             {...inputProps}
             style={{
               width: 200,
-              height: 44,
-              fontSize: 16,
+              height: 50,
+              font: CS.font.labelMedium,
               textAlign: 'left',
               outline: 'none',
               border: `1px solid ${CS.color.secondary}`,
@@ -53,12 +59,12 @@ function InputBox({
               text="인증"
               textStyle={{
                 color: CS.color.white,
-                size: 12,
+                font: CS.font.labelMedium,
               }}
               btnStyle={{
                 backgroundColor: CS.color.primary,
                 width: 92,
-                height: 42,
+                height: 50,
                 borderRadius: 10,
               }}
             />

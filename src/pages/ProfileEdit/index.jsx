@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import ProfileImg from '../../components/common/ProfileImg';
-import { useOutletContext } from 'react-router-dom';
+import Header from '../../components/common/Header';
 
 function ProfileEdit() {
   const [form, setForm] = useState({
     inputNameValue: '',
     inputIdValue: '',
-    // inputStageValue: '',
-    // inputRatingCheckValue: '',
   });
 
   const onChange = (e) => {
@@ -18,26 +17,25 @@ function ProfileEdit() {
     }));
   };
 
-  const test = () => {
-    console.log('test');
+  const handleClickDone = () => {
+    console.log('완료 클릭');
   };
 
-  const chatLogProps = useOutletContext();
-  console.log('chatLogProps', chatLogProps);
-
-  useEffect(() => {
-    if (chatLogProps) {
-      chatLogProps.btnOnClickEvent = test;
-
-      // cleanup 함수
-      return () => {
-        chatLogProps.btnOnClickEvent = undefined;
-      };
-    }
-  }, [chatLogProps]);
-
   return (
-    <>
+    <div style={{ paddingTop: 64 }}>
+      <Header
+        text={'프로필 편집'}
+        existText={true}
+        existLeft={true}
+        existRight={true}
+        BtnText={'완료'}
+        handleOnClickButton={handleClickDone}
+        headerStyle={{
+          borderBottom: `1px solid ${CS.color.contentTertiary}`,
+          borderRadius: 0,
+          background: CS.color.white,
+        }}
+      />
       <ProfileImg
         src="/assets/img/account.png"
         style={{
@@ -104,7 +102,7 @@ function ProfileEdit() {
         signType="none"
         buttonElement={false}
       />
-    </>
+    </div>
   );
 }
 

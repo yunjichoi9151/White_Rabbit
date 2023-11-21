@@ -142,6 +142,25 @@ const QNA = () => {
             comments={0}
           />
         </S.PostWrap>
+        <S.PostWrap>
+          <Post
+            src={''}
+            username="UserName"
+            rate="레이서"
+            createdAt="2023"
+            existFollowBtn={false}
+            isFollow={false}
+            existMoreBtn={false}
+            category={'QNA'}
+            title={'title'}
+            content={'content'}
+            contentLength="LONG"
+            isHot={false}
+            isLike={false}
+            likes={0}
+            comments={0}
+          />
+        </S.PostWrap>
         <WriteButton />
       </S.PostList>
       <NavBar />

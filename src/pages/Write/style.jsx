@@ -10,6 +10,7 @@ export const WriteWrap = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0.5rem;
+  padding-top: 64px;
   background-color: ${CS.color.white};
 `;
 
