@@ -4,12 +4,13 @@ import * as CS from '../../styles/CommonStyles';
 export const RecruitmentWrap = styled.div`
   width: 100%;
   height: 100%;
+  padding-top: 64px;
 `;
 
 export const FilterBar = styled.div`
   width: 100%;
-  height: 100%;
-  padding: 68px 124px 12px 24px;
+  height: 64px;
+  padding: 0px 24px;
   display: flex;
 `;
 

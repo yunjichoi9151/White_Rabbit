@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as CS from '../../../styles/CommonStyles';
 
 export const Container = styled.div`
   display: flex;
@@ -22,7 +23,9 @@ export const InputWrap = styled.div`
 export const SignText = styled.p`
   &::before {
     content: '*';
-    color: #ff7171;
+    display: ${(props) => (props.$signType === 'none' ? 'none' : '')};
+    color: ${CS.color.negative};
+    font: ${CS.font.labelMedium};
   }
   margin-right: 5px;
 `;

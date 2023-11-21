@@ -11,6 +11,7 @@ import { FiSend } from 'react-icons/fi';
 import Post from '../../components/board/Post';
 import boardData from '../../test/board.json';
 import userData from '../../test/user.json';
+import Header from '../../components/common/Header';
 
 const Home = () => {
   const [active, setActive] = useState('ALL');
@@ -38,6 +39,13 @@ const Home = () => {
 
   return (
     <S.HomeWrap>
+      <Header
+        existLeft={true}
+        existSearch={true}
+        headerStyle={{
+          background: CS.color.white,
+        }}
+      />
       <S.TopBtnWrap>
         <BasicButton
           handleOnClickButton={() => handleClick('HOT')}
