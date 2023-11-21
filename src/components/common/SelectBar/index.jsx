@@ -15,7 +15,7 @@ const SelectBar = ({
   return (
     <S.SelectBar style={style} onChange={onChange} value={value} name={name}>
       {options.map((option) => (
-        <option key={option.key} value={option.value}>
+        <option key={option.key} value={option.value} style={option.style}>
           {option.name}
         </option>
       ))}
