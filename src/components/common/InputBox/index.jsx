@@ -6,34 +6,25 @@ import BasicText from '../BasicText';
 import BasicButton from '../BasicButton';
 
 function InputBox({
-  text,
+  label,
   subTextProps,
   inputProps,
   buttonElement,
   onClickButton,
 }) {
-  const { text: subText, style: subStyle, type } = subTextProps;
-  const {
-    value,
-    handleOnChangeValue,
-    placeholder,
-    isReadOnly = false,
-    id = undefined,
-    name,
-  } = inputProps;
   return (
     <>
       <S.Container>
         <S.ContentWrap>
           <BasicText
-            text={text}
+            text={label}
             style={{ color: CS.color.black, fontWeight: 600 }}
           />
           <S.SignText />
           <BasicText
-            text={subText}
+            {...subTextProps}
             style={
-              type === 'none'
+              subTextProps.type === 'none'
                 ? { display: 'none' }
                 : { color: CS.color.contentTertiary, fontSize: 12 }
             }
@@ -41,12 +32,7 @@ function InputBox({
         </S.ContentWrap>
         <S.InputWrap>
           <BasicInput
-            id={id ? id : undefined}
-            value={value}
-            name={name}
-            onChange={handleOnChangeValue}
-            placeholder={placeholder}
-            isReadOnly={isReadOnly}
+            {...inputProps}
             style={{
               width: 200,
               fontSize: 16,
@@ -54,10 +40,10 @@ function InputBox({
               outline: 'none',
               border: `1px solid ${CS.color.secondary}`,
               borderRadius: 10,
-              marginRight: 8,
               marginBottom: 0,
               paddingBottom: 0,
               paddingLeft: 16,
+              marginRight: 8,
             }}
           />
           {buttonElement ? (
@@ -66,10 +52,10 @@ function InputBox({
               text="인증"
               textStyle={{
                 color: CS.color.white,
-                size: 16,
+                size: 12,
               }}
               btnStyle={{
-                backgroundColor: CS.color.white,
+                backgroundColor: CS.color.primary,
                 width: 92,
                 height: 42,
                 borderRadius: 10,

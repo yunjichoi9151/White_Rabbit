@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { RouterProvider, Routes } from 'react-router-dom';
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
 import router from './router/routes';
+import RootContainer from './pages/RootContainer/RootContainer';
 
 const App = () => {
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <RouterProvider router={router}>
+      <RootContainer />
+    </RouterProvider>
   );
 };
 

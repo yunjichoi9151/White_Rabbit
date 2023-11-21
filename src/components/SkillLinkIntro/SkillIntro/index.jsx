@@ -1,6 +1,7 @@
 import React from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
+import BasicText from '../../common/BasicText';
 
 function SkillIntro({ text }) {
   return (
