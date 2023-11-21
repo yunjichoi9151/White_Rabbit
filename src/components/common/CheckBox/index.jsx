@@ -2,6 +2,22 @@ import React, { useState } from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../BasicText';
+function CheckBox({
+  checked = false,
+  onChange,
+  text,
+  textColor = CS.color.black,
+  style,
+}) {
+  const [isChecked, setIsChecked] = useState(checked);
+
+  const handleOnChange = (e) => {
+    setIsChecked(e.target.checked);
+
+    if (onChange) {
+      onChange(e);
+    }
+  };
 
 function CheckBox({
   checked = false,

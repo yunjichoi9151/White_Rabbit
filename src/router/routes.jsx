@@ -12,6 +12,8 @@ import FindPW from '../pages/FindPW';
 import NewSkill from '../pages/IntroNewSkill';
 import RootContainer from '../pages/RootContainer/RootContainer';
 import ProfileEdit from '../pages/ProfileEdit';
+import Detail from '../pages/Detail';
+import Write from '../pages/Write';
 
 export const ROUTER_LINK = {
   LANDING: { path: '/', link: '/' },
@@ -25,6 +27,8 @@ export const ROUTER_LINK = {
   FINDPW: { path: '/findpw', link: '/findpw' },
   NEWSKILL: { path: '/newskill', link: '/newskill' },
   PROFILEEDIT: { path: '/profileedit', link: '/profileedit' },
+  DETAIL: { path: '/post/:postId', link: '/post' },
+  WRITE: { path: '/write', link: '/write' },
 };
 
 const router = createBrowserRouter([
@@ -67,6 +71,14 @@ const router = createBrowserRouter([
       {
         path: ROUTER_LINK.FINDPW.path,
         element: <FindPW />,
+      },
+      {
+        path: ROUTER_LINK.DETAIL.path,
+        element: <Detail />,
+      },
+      {
+        path: ROUTER_LINK.WRITE.path,
+        element: <Write />,
       },
       {
         path: ROUTER_LINK.NEWSKILL.path,

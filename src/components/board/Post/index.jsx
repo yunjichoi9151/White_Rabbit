@@ -107,7 +107,7 @@ const Post = ({
         <S.ContentWrapper>
           <BasicText
             text={substrContent}
-            style={{ font: CS.font.paragraphMedium }}
+            style={{ font: CS.font.paragraphSmall }}
           />
         </S.ContentWrapper>
         <S.IconBar>

@@ -1,0 +1,86 @@
+{
+  "message": "게시글(65578ba2c2d53628b6ecc81d)의 댓글 목록",
+  "data": [
+    {
+      "_id": "65581b762e2bdd8f98f364d2",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-11T02:03:34.824Z",
+      "updatedAt": "2023-11-18T02:03:34.824Z",
+      "__v": 0
+    },
+    {
+      "_id": "65578ee0c2d53628b6ecc823",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 수정 테스트",
+      "createdAt": "2023-11-12T16:03:44.923Z",
+      "updatedAt": "2023-11-18T02:12:08.160Z",
+      "__v": 0
+    },
+    {
+      "_id": "65578bf5c2d53628b6ecc820",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-13T15:51:17.393Z",
+      "updatedAt": "2023-11-17T15:51:17.393Z",
+      "__v": 0
+    },
+    {
+      "_id": "65581b762e2bdd8f98f364d2",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-14T02:03:34.824Z",
+      "updatedAt": "2023-11-18T02:03:34.824Z",
+      "__v": 0
+    },
+    {
+      "_id": "65581b762e2bdd8f98f364d2",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-15T02:03:34.824Z",
+      "updatedAt": "2023-11-18T02:03:34.824Z",
+      "__v": 0
+    },
+    {
+      "_id": "65581b762e2bdd8f98f364d2",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-16T02:03:34.824Z",
+      "updatedAt": "2023-11-18T02:03:34.824Z",
+      "__v": 0
+    },
+    {
+      "_id": "65581b762e2bdd8f98f364d2",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-17T02:03:34.824Z",
+      "updatedAt": "2023-11-18T02:03:34.824Z",
+      "__v": 0
+    },
+    {
+      "_id": "65581b762e2bdd8f98f364d2",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-18T02:03:34.824Z",
+      "updatedAt": "2023-11-18T02:03:34.824Z",
+      "__v": 0
+    },
+    {
+      "_id": "65581b762e2bdd8f98f364d2",
+      "post": "65578ba2c2d53628b6ecc81d",
+      "author": "65576abc708ef932094e02ae",
+      "content": "댓글 등록 테스트",
+      "createdAt": "2023-11-19T02:03:34.824Z",
+      "updatedAt": "2023-11-18T02:03:34.824Z",
+      "__v": 0
+    }
+  ]
+}

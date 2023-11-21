@@ -13,9 +13,8 @@ const Header = ({
   existSearch = false,
   text = '',
   BtnText = '',
-  iconOnClickEvent,
-  btnOnClickEvent,
-  iconChildren,
+  leftOnClickEvent,
+  rightOnClickEvent,
   headerStyle,
 }) => {
   return (
@@ -41,7 +40,11 @@ const Header = ({
               font: CS.font.headingMedium,
             }}
           />
-          <BasicButton existIcon={true} btnStyle={{ width: '2rem' }}>
+          <BasicButton
+            existIcon={true}
+            btnStyle={{ width: '2rem' }}
+            handleOnClickButton={rightOnClickEvent}
+          >
             <IoSearch color={CS.color.black} size="1.25rem" />
           </BasicButton>
         </S.HeaderWrap>
@@ -49,7 +52,11 @@ const Header = ({
       {/* 글씨와 왼쪽 아이콘 있는 헤더 */}
       {existText && existLeft && !existRight && !existSearch && (
         <S.HeaderWrap>
-          <BasicButton existIcon={true} btnStyle={{ width: '2rem' }}>
+          <BasicButton
+            existIcon={true}
+            btnStyle={{ width: '2rem' }}
+            handleOnClickButton={leftOnClickEvent}
+          >
             <IoArrowBack />
           </BasicButton>
           <BasicText
@@ -66,7 +73,11 @@ const Header = ({
       {/* 글씨와 왼쪽 아이콘, 오른쪽 버튼 있는 헤더 */}
       {existText && existLeft && existRight && !existSearch && (
         <S.HeaderWrap>
-          <BasicButton existIcon={true} btnStyle={{ width: '2rem' }}>
+          <BasicButton
+            existIcon={true}
+            btnStyle={{ width: '2rem' }}
+            handleOnClickButton={leftOnClickEvent}
+          >
             <IoArrowBack color={CS.color.black} />
           </BasicButton>
           <BasicText
@@ -86,7 +97,7 @@ const Header = ({
               font: CS.font.labelSmall,
               color: CS.color.primary,
             }}
-            handleOnClickButton={btnOnClickEvent}
+            handleOnClickButton={rightOnClickEvent}
           />
         </S.HeaderWrap>
       )}
@@ -98,6 +109,7 @@ const Header = ({
             btnStyle={{
               width: '2rem',
             }}
+            handleOnClickButton={leftOnClickEvent}
           >
             <S.LogoImg src="/assets/img/elice_icon.png" alt="logo" />
           </BasicButton>

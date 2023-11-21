@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import * as CS from './CommonStyles';
 import NanumBarunGothic from '../fonts/NanumBarunGothic.woff';
 import NanumBarunGothicBold from '../fonts/NanumBarunGothicBold.woff';
 import NanumBarunGothicLight from '../fonts/NanumBarunGothicLight.woff';
@@ -27,11 +28,18 @@ html,#root {
 
 body {
   font-family: "NanumBarunGothic", "NanumGothic", "NanumBarunGothicBold", "NanumGothicBold", "NanumBarunGothicLight", "NanumGothicLight", "NanumBarunGothicUltraLight", "NanumGothicExtraBold";
-  width: 100%;
+  max-width: 900px;
   height: calc(var(--vh, 1vh) * 100);
-  margin: 0rem;
+  margin: 0 auto;
   padding: 0;
   overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .scrollable {
