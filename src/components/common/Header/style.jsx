@@ -7,9 +7,10 @@ export const Header = styled.div`
   font-family: 'NanumBarunGothic';
   background-color: transparent;
   border-radius: 1rem;
-  padding: 5%;
+  padding: 1rem;
   display: flex;
   width: 100%;
+  max-width: 900px;
   height: 4rem;
   align-items: center;
   position: fixed;

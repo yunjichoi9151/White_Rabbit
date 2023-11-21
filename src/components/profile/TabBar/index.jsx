@@ -7,6 +7,10 @@ const TabBar = ({ tabNames, existCounter, countNum, style, defaultAcitve }) => {
 
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
+
+    if (onTabClick) {
+      onTabClick(tabKey);
+    }
   };
 
   return (
