@@ -9,7 +9,7 @@ import LinkEdit from '../pages/IntroLinkEdit';
 import NewLink from '../pages/IntroNewLink';
 import Join from '../pages/Join';
 import FindPW from '../pages/FindPW';
-// import NewSkill from '../pages/IntroNewSkill';
+import NewSkill from '../pages/IntroNewSkill';
 import RootContainer from '../pages/RootContainer/RootContainer';
 import ProfileEdit from '../pages/ProfileEdit';
 import Detail from '../pages/Detail';
@@ -26,7 +26,7 @@ export const ROUTER_LINK = {
   NEWLINK: { path: '/newlink', link: '/newlink' },
   JOIN: { path: '/join', link: '/join' },
   FINDPW: { path: '/findpw', link: '/findpw' },
-  // NEWSKILL: { path: '/newskill', link: '/newskill' },
+  NEWSKILL: { path: '/newskill', link: '/newskill' },
   PROFILEEDIT: { path: '/profileedit', link: '/profileedit' },
   DETAIL: { path: '/post/:postId', link: '/post' },
   WRITE: { path: '/write', link: '/write' },
@@ -78,14 +78,14 @@ const router = createBrowserRouter([
         path: ROUTER_LINK.FINDPW.path,
         element: <FindPW />,
       },
-      // {
-      //   path: ROUTER_LINK.NEWSKILL.path,
-      //   element: <NewSkill />,
-      // },
-      // {
-      //   path: ROUTER_LINK.PROFILEEDIT.path,
-      //   element: <ProfileEdit />,
-      // },
+      {
+        path: ROUTER_LINK.NEWSKILL.path,
+        element: <NewSkill />,
+      },
+      {
+        path: ROUTER_LINK.PROFILEEDIT.path,
+        element: <ProfileEdit />,
+      },
       {
         path: ROUTER_LINK.DETAIL.path,
         element: <Detail />,

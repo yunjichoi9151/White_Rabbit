@@ -7,10 +7,11 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  margin-top: 50px;
+  padding-top: 50px;
   margin-bottom: 50px;
-  margin-left: 20px;
-  margin-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
 `;
 
 export const LandingImg = styled.img`

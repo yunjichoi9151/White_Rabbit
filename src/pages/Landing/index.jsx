@@ -85,6 +85,8 @@ const Landing = ({ onClickButton }) => {
             width: '48%',
             height: 50,
             borderRadius: 15,
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
           <BasicButton
@@ -100,7 +102,6 @@ const Landing = ({ onClickButton }) => {
       <Link to={ROUTER_LINK.FINDPW.link}>
         <S.PwStyle>비밀번호를 잊어버리셨나요?</S.PwStyle>
       </Link>
-      {/* <Link to="/home">홈으로 이동</Link> */}
     </>
   );
 };

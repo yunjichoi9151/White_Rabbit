@@ -6,6 +6,7 @@ export const MyPageWrap = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 64px;
 `;
 export const ProfileWrap = styled.div`
   display: flex;

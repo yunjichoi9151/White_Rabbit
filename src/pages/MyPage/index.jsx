@@ -9,6 +9,7 @@ import TabBar from '../../components/profile/TabBar';
 import SkillLinkPage from '../SkillLinkPage';
 import BasicButton from '../../components/common/BasicButton';
 import EmptyContent from '../EmptyContent';
+import Header from '../../components/common/Header';
 
 const MyPage = () => {
   const handleOnClickButton = () => {
@@ -24,6 +25,14 @@ const MyPage = () => {
   return (
     <>
       <S.MyPageWrap>
+        <Header
+          text={'내 프로필'}
+          existText={true}
+          headerStyle={{
+            borderBottom: `1px solid ${CS.color.contentTertiary}`,
+            background: CS.color.white,
+          }}
+        />
         <S.ProfileWrap>
           <ProfileBar
             username="김엘리스"
@@ -60,6 +69,7 @@ const MyPage = () => {
             countNum={{ content: 0, reply: 0 }}
             defaultActive={'profile'}
             onTabClick={handleClickTab}
+            currentTabKey={tabName}
           />
         </S.TabWrap>
 

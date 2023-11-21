@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
-import NavBar from '../../components/common/NavBar';
-import Post from '../../components/board/Post';
-import detailData from '../../test/detail.json';
-import userData from '../../test/user.json';
-import commentData from '../../test/comment.json';
 import Header from '../../components/common/Header';
-import Reply from '../../components/board/Reply';
-import ProfileImg from '../../components/common/ProfileImg';
 import InputBar from '../../components/common/InputBar';
 import BasicButton from '../../components/common/BasicButton';
 import SelectBar from '../../components/common/SelectBar';
 import BasicText from '../../components/common/BasicText';
 import TextArea from '../../components/common/TextArea';
 import { FaRegImage } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
 const Write = () => {
+  const navigate = useNavigate();
+
+  const goBack = () => navigate(-1);
   const options = [
     { key: 'BOARD', value: 'BOARD', name: '자유게시판' },
     { key: 'REVIEW', value: 'REVIEW', name: '취업후기' },
@@ -25,8 +21,22 @@ const Write = () => {
     { key: 'PROJECT', value: 'PROJECT', name: '프로젝트 모집' },
     { key: 'STUDY', value: 'STUDY', name: '스터디 모집' },
   ];
+
   return (
     <S.WriteWrap>
+      <Header
+        text={'게시물 작성'}
+        existText={true}
+        existLeft={true}
+        existRight={true}
+        BtnText={'완료'}
+        headerStyle={{
+          borderBottom: `1px solid ${CS.color.contentTertiary}`,
+          background: CS.color.white,
+        }}
+        leftOnClickEvent={{ goBack }}
+        rightOnClickEvent={() => console.log('done')}
+      />
       <SelectBar
         options={options}
         style={{
