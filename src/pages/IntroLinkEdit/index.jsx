@@ -20,7 +20,7 @@ function LinkEdit() {
       <S.Header></S.Header>
 
       <InputBox
-        text="링크 연결"
+        label="링크 연결"
         subTextProps={{
           type: 'none',
         }}
@@ -34,7 +34,7 @@ function LinkEdit() {
       />
 
       <InputBox
-        text="제목"
+        label="제목"
         subTextProps={{
           type: 'none',
         }}

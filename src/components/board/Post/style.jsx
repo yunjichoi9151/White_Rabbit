@@ -15,6 +15,7 @@ export const TitleWrapper = styled.div`
   padding: 12px 20px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 export const ContentWrapper = styled.div`
   width: 100%;
@@ -27,7 +28,7 @@ export const IconBar = styled.div`
   width: 100%;
   height: 100%;
   padding: 4px 24px;
-  border: solid 1px ${CS.color.borderTransparent};
+  border-top: solid 1px ${CS.color.borderTransparent};
   display: flex;
   justify-content: space-between;
   align-items: center;
