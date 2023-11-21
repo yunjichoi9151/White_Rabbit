@@ -10,13 +10,12 @@ export const NavigationWrapper = styled.div`
   border-top: 0.2px solid ${CS.color.contentTertiary};
   align-items: center;
   justify-content: space-around;
-
   position: fixed;
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
-
   padding-bottom: 2rem;
+  z-index: 999;
 `;
 
 export const ButtonWrapper = styled.div`
