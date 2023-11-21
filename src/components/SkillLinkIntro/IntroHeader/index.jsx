@@ -20,9 +20,8 @@ function IntroHeader({ type, empty }) {
           <BasicText
             text={type === 'skill' ? '스킬' : '링크'}
             style={{
-              size: 16,
-              color: CS.color.primary,
-              fontWeight: 600,
+              font: CS.color.headingLarge,
+              color: CS.color.black,
             }}
           />
         </S.HeaderWrap>

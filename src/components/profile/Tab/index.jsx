@@ -13,7 +13,7 @@ const Tab = ({
 }) => {
   return (
     <>
-      <S.Tab onClick={handleOnClick} isActive={isActive} style={style}>
+      <S.Tab onClick={handleOnClick} $isActive={isActive} style={style}>
         <BasicText
           text={tabName}
           style={{

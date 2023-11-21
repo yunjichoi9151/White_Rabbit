@@ -9,8 +9,6 @@ import BasicText from '../../common/BasicText';
 function LinkIntro({ href, content }) {
   const text = content ? content[0] : '';
 
-  console.log('ROUTER_LINK.LINKEDIT.link', ROUTER_LINK.LINKEDIT.link);
-
   return (
     <>
       <S.Container>
@@ -19,7 +17,6 @@ function LinkIntro({ href, content }) {
             text={text}
             style={{
               backgroundColor: CS.color.secondary,
-              border: '1rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -29,10 +26,10 @@ function LinkIntro({ href, content }) {
               width: 24,
               height: 24,
 
-              fontSize: 12,
+              font: CS.font.paragraphSmall,
             }}
           />
-          <a href={href} style={{ fontSize: 12, fontWeight: 600 }}>
+          <a href={href} style={{ font: CS.font.labelSmall }}>
             {content}
           </a>
         </S.ContentWrap>

@@ -120,7 +120,7 @@ const RootContainer = () => {
         <></>
       )}
 
-      {routerNav.includes(location.pathname) ? <NavBar /> : <></>}
+      {/* {routerNav.includes(location.pathname) ? <NavBar /> : <></>} */}
       <Outlet />
     </Container>
   );
