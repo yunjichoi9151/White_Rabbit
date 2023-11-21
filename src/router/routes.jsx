@@ -26,7 +26,7 @@ export const ROUTER_LINK = {
   NEWLINK: { path: '/newlink', link: '/newlink' },
   JOIN: { path: '/join', link: '/join' },
   FINDPW: { path: '/findpw', link: '/findpw' },
-  NEWSKILL: { path: '/newskill', link: '/newskill' },
+  // NEWSKILL: { path: '/newskill', link: '/newskill' },
   PROFILEEDIT: { path: '/profileedit', link: '/profileedit' },
   DETAIL: { path: '/post/:postId', link: '/post' },
   WRITE: { path: '/write', link: '/write' },
@@ -38,6 +38,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootContainer />,
     children: [
+      {
+        path: ROUTER_LINK.ADMIN.path,
+        element: <Admin />,
+      },
       {
         path: ROUTER_LINK.LANDING.path,
         element: <Landing />,
@@ -89,14 +93,6 @@ const router = createBrowserRouter([
       {
         path: ROUTER_LINK.WRITE.path,
         element: <Write />,
-      },
-      {
-        path: ROUTER_LINK.NEWSKILL.path,
-        element: <NewSkill />,
-      },
-      {
-        path: ROUTER_LINK.PROFILEEDIT.path,
-        element: <ProfileEdit />,
       },
     ],
   },

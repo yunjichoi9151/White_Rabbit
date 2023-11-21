@@ -15,7 +15,7 @@ export const GlobalStyle = createGlobalStyle`
   -webkit-tap-highlight-color : transparent !important;
 }
 
-html,#root {
+html {
   height: calc(var(--vh, 1vh) * 100);
 }
 
