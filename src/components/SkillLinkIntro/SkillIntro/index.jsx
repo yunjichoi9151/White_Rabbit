@@ -11,8 +11,7 @@ function SkillIntro({ text }) {
           text={text}
           style={{
             color: CS.color.black,
-            fontSize: 12,
-            fontWeight: 600,
+            font: CS.font.labelSmall,
 
             padding: '8px 12px',
 
