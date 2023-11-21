@@ -26,7 +26,7 @@ const Header = ({
           text={text}
           style={{
             width: '100%',
-            justifyContent: 'center',
+            justifyContent: 'left',
             font: CS.font.headingMedium,
           }}
         />
