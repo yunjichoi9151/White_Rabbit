@@ -7,6 +7,7 @@ import MyPage from '../pages/MyPage';
 import Landing from '../pages/Landing';
 import IntroLinkEdit from '../pages/IntroLinkEdit';
 import IntroNewLink from '../pages/IntroNewLink';
+import Admin from '../pages/Admin';
 
 export const ROUTER_LINK = {
   LANDING: { path: '/', link: '/' },
@@ -16,6 +17,7 @@ export const ROUTER_LINK = {
   MYPAGE: { path: '/mypage', link: '/mypage' },
   LINKEDIT: { path: '/linkedit', link: '/linkedit' },
   NEWLINK: { path: '/newlink', link: '/newlink' },
+  ADMIN: { path: '/admin', link: '/admin' },
 };
 
 const router = createBrowserRouter([
@@ -46,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: ROUTER_LINK.NEWLINK.path,
     element: <IntroNewLink />,
+  },
+  {
+    path: ROUTER_LINK.ADMIN.path,
+    element: <Admin />,
   },
 ]);
 
