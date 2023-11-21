@@ -7,7 +7,10 @@ import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 
 function LinkIntro({ href, content }) {
-  const text = content && content.trim().length > 0 ? content.trim()[0] : '';
+  const text = content ? content[0] : '';
+
+  console.log('ROUTER_LINK.LINKEDIT.link', ROUTER_LINK.LINKEDIT.link);
+
   return (
     <>
       <S.Container>

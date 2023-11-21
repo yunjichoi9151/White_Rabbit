@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as S from './style';
 import InputBox from '../../components/common/InputBox';
 
-function Link_Edit() {
+function NewLink() {
   const [form, setForm] = useState({
     inputLinkValue: '',
     inputTitleValue: '',
@@ -25,7 +25,7 @@ function Link_Edit() {
           type: 'none',
         }}
         inputProps={{
-          value: form.name,
+          value: form['inputLinkValue'],
           handleOnChangeValue: onChange,
           placeholder: 'https://',
           name: 'inputLinkValue',
@@ -39,7 +39,7 @@ function Link_Edit() {
           type: 'none',
         }}
         inputProps={{
-          value: form.name,
+          value: form['inputTitleValue'],
           handleOnChangeValue: onChange,
           placeholder: '',
           name: 'inputTitleValue',
@@ -50,4 +50,4 @@ function Link_Edit() {
   );
 }
 
-export default Link_Edit;
+export default NewLink;

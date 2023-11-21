@@ -5,7 +5,7 @@ import EmptyIntro from '../../components/SkillLinkIntro/EmptyIntro';
 import SkillIntro from '../../components/SkillLinkIntro/SkillIntro';
 import LinkIntro from '../../components/SkillLinkIntro/LinkIntro';
 
-function Skill_Link_Page() {
+function SkillLinkPage() {
   return (
     <>
       <S.Container>
@@ -60,4 +60,4 @@ function Skill_Link_Page() {
   );
 }
 
-export default Skill_Link_Page;
+export default SkillLinkPage;
