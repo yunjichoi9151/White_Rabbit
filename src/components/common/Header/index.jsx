@@ -41,7 +41,7 @@ const Header = ({
               font: CS.font.headingMedium,
             }}
           />
-          <BasicButton existIcon={true} btnStyle={{ width: '10%' }}>
+          <BasicButton existIcon={true} btnStyle={{ width: '2rem' }}>
             <IoSearch color={CS.color.black} size="1.25rem" />
           </BasicButton>
         </S.HeaderWrap>
@@ -49,7 +49,7 @@ const Header = ({
       {/* 글씨와 왼쪽 아이콘 있는 헤더 */}
       {existText && existLeft && !existRight && !existSearch && (
         <S.HeaderWrap>
-          <BasicButton existIcon={true} btnStyle={{ width: '10%' }}>
+          <BasicButton existIcon={true} btnStyle={{ width: '2rem' }}>
             <IoArrowBack />
           </BasicButton>
           <BasicText
@@ -66,7 +66,7 @@ const Header = ({
       {/* 글씨와 왼쪽 아이콘, 오른쪽 버튼 있는 헤더 */}
       {existText && existLeft && existRight && !existSearch && (
         <S.HeaderWrap>
-          <BasicButton existIcon={true} btnStyle={{ width: '10%' }}>
+          <BasicButton existIcon={true} btnStyle={{ width: '2rem' }}>
             <IoArrowBack color={CS.color.black} />
           </BasicButton>
           <BasicText
@@ -95,7 +95,7 @@ const Header = ({
           <BasicButton
             existIcon={true}
             btnStyle={{
-              width: '10%',
+              width: '2rem',
             }}
           >
             <S.LogoImg src="/assets/img/elice_icon.png" alt="logo" />
@@ -108,7 +108,6 @@ const Header = ({
               marginLeft: '0.75rem',
               backgroundColor: CS.color.secondary,
               borderRadius: '1rem',
-              alignItems: 'center',
               display: 'flex',
             }}
             inputStyle={{
