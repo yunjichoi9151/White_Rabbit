@@ -26,8 +26,12 @@ const BasicButton = ({
           {children}
         </>
       )}
-      {existIcon ? children : <></>}
-      {existText ? <BasicText text={text} style={textStyle} /> : <></>}
+      {existIcon && iconDirection === '' ? children : <></>}
+      {existText && iconDirection === '' ? (
+        <BasicText text={text} style={textStyle} />
+      ) : (
+        <></>
+      )}
     </S.BasicButton>
   );
 };
