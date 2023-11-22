@@ -4,7 +4,8 @@ import * as CS from '../../styles/CommonStyles';
 export const HomeWrap = styled.div`
   padding-top: 64px;
   width: 100%;
-  background-color: ${CS.color.contentTertiary};
+  height: 100%;
+  background-color: ${CS.color.secondary};
 `;
 
 export const TopBtnWrap = styled.div`
@@ -23,6 +24,7 @@ export const BoardWrap = styled.div`
   max-width: 900px;
   display: flex;
   flex-direction: column;
+  background-color: ${CS.color.secondary};
   gap: 0.5rem;
   padding-top: 3.5rem;
   padding-bottom: 6.75rem;
