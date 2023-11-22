@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const Empty = styled.div`
   margin-top: 20px;
   background-color: ${CS.color.white};
-  height: 300px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;

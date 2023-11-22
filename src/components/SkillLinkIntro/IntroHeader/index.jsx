@@ -22,6 +22,7 @@ function IntroHeader({ type, empty }) {
             style={{
               font: CS.color.headingLarge,
               color: CS.color.black,
+              fontWeight: 600,
             }}
           />
         </S.HeaderWrap>
