@@ -24,9 +24,10 @@ function ProfileEdit() {
   return (
     <div style={{ paddingTop: 64 }}>
       <Header
-        typeLeft={'TEXT'}
+        typeLeft={'BACK'}
+        typeCenter={'TEXT'}
         typeRight={'TEXT'}
-        textLeft={'프로필 편집'}
+        textCenter={'프로필 편집'}
         textRight={'완료'}
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,

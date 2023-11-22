@@ -41,10 +41,9 @@ function Join({ onClickButton }) {
   return (
     <div style={{ paddingTop: 64 }}>
       <Header
-        text={'회원가입'}
-        existText={true}
-        existLeft={true}
-        BtnText={'등록'}
+        typeLeft={'BACK'}
+        typeCenter={'TEXT'}
+        textCenter={'회원가입'}
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
           background: CS.color.white,
