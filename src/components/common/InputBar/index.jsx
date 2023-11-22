@@ -7,6 +7,7 @@ const InputBar = ({
   type,
   value,
   handleOnChangeValue,
+  handleOnKeyDownValue,
   placeholder = '',
   isReadOnly = false,
   inputStyle,
@@ -23,6 +24,7 @@ const InputBar = ({
         type={type}
         value={value}
         onChange={handleOnChangeValue}
+        onKeyDown={handleOnKeyDownValue}
         placeholder={placeholder}
         readOnly={isReadOnly}
         style={inputStyle}

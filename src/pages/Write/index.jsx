@@ -33,7 +33,7 @@ const Write = () => {
         headerStyle={{
           borderBottom: `1px solid ${CS.color.borderTransparent}`,
         }}
-        leftOnClickEvent={{ goBack }}
+        leftOnClickEvent={goBack}
         rightOnClickEvent={() => console.log('done')}
       />
       <SelectBar
