@@ -73,8 +73,8 @@ const MyPage = () => {
         </S.TabWrap>
 
         {tabName === 'profile' && <SkillLinkPage />}
-        {tabName === 'content' && <EmptyContent />}
-        {/* {tabName === 'content' && <reply />} */}
+        {tabName === 'content' && <EmptyContent type="content" />}
+        {tabName === 'reply' && <EmptyContent type="reply" />}
         <S.LogoutBtn
           style={{
             backgroundColor: CS.color.secondary,

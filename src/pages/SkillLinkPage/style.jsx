@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import * as CS from '../../styles/CommonStyles';
 
 export const Container = styled.div`
-  margin-top: 20px;
+  margin-top: 40px;
   margin-left: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   margin-right: 20px;
 `;
 

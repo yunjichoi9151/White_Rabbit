@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
+import { userApi } from '../../../api/utils/user';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
@@ -36,13 +37,13 @@ function Join({ onClickButton }) {
   const handleChangeSelect = (e) => {
     setSelected(e.target.value);
   };
+
   return (
     <div style={{ paddingTop: 64 }}>
       <Header
-        text={'회원가입'}
-        existText={true}
-        existLeft={true}
-        BtnText={'등록'}
+        typeLeft={'BACK'}
+        typeCenter={'TEXT'}
+        textCenter={'회원가입'}
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
           background: CS.color.white,
@@ -258,6 +259,7 @@ function Join({ onClickButton }) {
 
             display: 'flex',
             justifyContent: 'center',
+            marginBottom: 20,
           }}
         >
           <BasicButton

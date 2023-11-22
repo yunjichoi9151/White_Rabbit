@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
+import { userApi } from '../../../api/utils/user';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import BasicButton from '../../components/common/BasicButton';
 
-const Landing = ({ onClickButton }) => {
+const Landing = () => {
   const [form, setForm] = useState({
     inputIdValue: '',
     inputPwValue: '',
@@ -19,6 +20,25 @@ const Landing = ({ onClickButton }) => {
     }));
   };
 
+  /////// API /////////
+  const handleLogin = () => {
+    const { inputIdValue, inputPwValue } = form;
+
+    userApi
+      .login(inputIdValue, inputPwValue)
+      .then((response) => {
+        // 로그인 성공 시 처리
+        console.log('로그인 성공:', response.data);
+
+        <Link to={ROUTER_LINK.HOME.link} />;
+      })
+      .catch((error) => {
+        // 로그인 실패 시 처리
+        console.error('로그인 실패:', error);
+      });
+  };
+  /////////////////
+
   return (
     <>
       <S.Container>
@@ -26,10 +46,11 @@ const Landing = ({ onClickButton }) => {
         <S.LandingText>
           신입 개발자가 되고싶은
           <br />
-          레이서들의 커뮤니티 Elice
+          레이서들의 커뮤니티 White Rabbit
         </S.LandingText>
         <S.LandingSubText>with elice</S.LandingSubText>
       </S.Container>
+
       <S.InputStyle>
         <InputBox
           label="아이디"
@@ -64,7 +85,7 @@ const Landing = ({ onClickButton }) => {
 
       <S.ButtonWrap>
         <BasicButton
-          onClick={onClickButton}
+          onClick={handleLogin}
           text="로그인"
           textStyle={{
             color: CS.color.white,

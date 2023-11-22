@@ -13,7 +13,7 @@ function EmptyIntro({ text, onClickButton, type }) {
         style={{
           color: CS.color.contentSecondary,
           font: CS.font.paragraphSmall,
-          marginTop: 16,
+          marginTop: 24,
         }}
       />
 
@@ -28,7 +28,7 @@ function EmptyIntro({ text, onClickButton, type }) {
               height: '20px',
               radius: '10px',
               border: `1px solid ${CS.color.borderTransparent}`,
-              marginTop: 16,
+              marginTop: 24,
             }}
             onClick={onClickButton}
           />
@@ -44,7 +44,7 @@ function EmptyIntro({ text, onClickButton, type }) {
               height: '20px',
               radius: '10px',
               border: `1px solid ${CS.color.borderTransparent}`,
-              marginTop: 16,
+              marginTop: 24,
             }}
             onClick={onClickButton}
           />

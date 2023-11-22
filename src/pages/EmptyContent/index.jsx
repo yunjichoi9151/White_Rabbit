@@ -4,12 +4,12 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import BasicText from '../../components/common/BasicText';
 
-function EmptyContent() {
+function EmptyContent({ type }) {
   return (
     <>
       <S.Container>
         <BasicText
-          text="게시물 0개"
+          text={type === 'content' ? '게시물 0개' : '댓글 0개'}
           style={{
             background: CS.color.white,
             height: 40,
@@ -29,7 +29,11 @@ function EmptyContent() {
             }}
           />
           <BasicText
-            text="아직 작성한 게시물이 없어요."
+            text={
+              type === 'content'
+                ? '아직 작성한 게시물이 없어요.'
+                : '아직 작성한 댓글이 없어요.'
+            }
             style={{ color: CS.color.contentTertiary }}
           />
         </S.Empty>
