@@ -11,7 +11,7 @@ export const QNAWrap = styled.div`
 
 export const FilterBar = styled.div`
   width: 100%;
-  min-height: 64px;
+  min-height: 36px;
   padding: 0px 24px 0px 24px;
   display: flex;
   justify-content: space-between;
