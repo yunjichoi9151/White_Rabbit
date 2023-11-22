@@ -3,13 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
-import NavBar from '../../components/common/NavBar';
 import BasicButton from '../../components/common/BasicButton';
 import { FaFire } from 'react-icons/fa6';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { FiSend } from 'react-icons/fi';
 import Post from '../../components/board/Post';
-import boardData from '../../test/board.json';
 import userData from '../../test/user.json';
 import { postApi } from '../../../api/utils/Post';
 import Header from '../../components/common/Header';
@@ -17,14 +15,17 @@ import WriteButton from '../../components/board/WriteButton';
 
 const Home = () => {
   const [active, setActive] = useState('all');
-  // const posts = boardData.data.posts;
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
 
   const postList = async () => {
     try {
       const res = await postApi.getAllPosts();
-      setPosts(res.data.data);
+      setPosts(
+        res.data.data.posts.filter(
+          (post) => post.category === 'BOARD' || post.category === 'REVIEW',
+        ),
+      );
     } catch (error) {
       console.log('error: ', error);
     }
@@ -46,12 +47,12 @@ const Home = () => {
 
   useEffect(() => {
     postList();
-  }, []);
+  }, [active]);
 
   useEffect(() => {
     const filtered = posts.filter((post) => {
       if (active === 'all') return true;
-      // if (active === 'HOT') return post.isHot === true;
+      if (active === 'POPULAR') return post.isPopular === true;
       return post.category === active;
     });
     setFilteredPosts(filtered);
@@ -61,41 +62,41 @@ const Home = () => {
     <S.HomeWrap>
       <Header typeLeft={'LOGO'} typeCenter={'SEARCH'} typeRight={'SEARCH'} />
       <S.TopBtnWrap>
-        {/* <BasicButton
-          handleOnClickButton={() => handleClick('HOT')}
+        <BasicButton
+          handleOnClickButton={() => handleClick('POPULAR')}
           existIcon={true}
           existText={true}
           text="인기"
-          btnStyle={buttonStyle('HOT')}
+          btnStyle={buttonStyle('POPULAR')}
           textStyle={{
             font: CS.font.labelSmall,
-            color: active === 'HOT' ? CS.color.white : CS.color.accent,
+            color: active === 'POPULAR' ? CS.color.white : CS.color.accent,
           }}
         >
           <FaFire style={{ marginRight: '0.5rem' }} />
-        </BasicButton> */}
+        </BasicButton>
         <BasicButton
-          handleOnClickButton={() => handleClick('fb')}
+          handleOnClickButton={() => handleClick('BOARD')}
           existIcon={true}
           existText={true}
           text="자유게시판"
-          btnStyle={buttonStyle('fb')}
+          btnStyle={buttonStyle('BOARD')}
           textStyle={{
             font: CS.font.labelSmall,
-            color: active === 'fb' ? CS.color.white : CS.color.accent,
+            color: active === 'BOARD' ? CS.color.white : CS.color.accent,
           }}
         >
           <IoDocumentTextOutline style={{ marginRight: '0.5rem' }} />
         </BasicButton>
         <BasicButton
-          handleOnClickButton={() => handleClick('review')}
+          handleOnClickButton={() => handleClick('REVIEW')}
           existIcon={true}
           existText={true}
           text="취업후기"
-          btnStyle={buttonStyle('review')}
+          btnStyle={buttonStyle('REVIEW')}
           textStyle={{
             font: CS.font.labelSmall,
-            color: active === 'review' ? CS.color.white : CS.color.accent,
+            color: active === 'REVIEW' ? CS.color.white : CS.color.accent,
           }}
         >
           <FiSend style={{ marginRight: '0.5rem' }} />
@@ -116,10 +117,10 @@ const Home = () => {
             category={post.category}
             username={post.author}
             rate={user.roles}
-            // isHot={post.isHot}
+            isHot={post.isPopular}
             createdAt={post.createdAt}
             contentLength="SHORT"
-            comments={2}
+            comments={post.commentCount}
             handleOnClickPost={() =>
               navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
             }
