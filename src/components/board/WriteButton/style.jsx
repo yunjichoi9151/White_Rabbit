@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import * as CS from '../../../styles/CommonStyles';
 
 export const FixedButton = styled.div`
-  background-color: ${CS.color.secondary};
+  background-color: ${CS.color.white};
+  border: 1px solid ${CS.color.borderTransparent};
   width: 50px;
   height: 50px;
   border-radius: 25px;
