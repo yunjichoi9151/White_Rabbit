@@ -58,13 +58,7 @@ const Home = () => {
 
   return (
     <S.HomeWrap>
-      <Header
-        existLeft={true}
-        existSearch={true}
-        headerStyle={{
-          background: CS.color.white,
-        }}
-      />
+      <Header typeLeft={'LOGO'} typeCenter={'SEARCH'} typeRight={'SEARCH'} />
       <S.TopBtnWrap>
         {/* <BasicButton
           handleOnClickButton={() => handleClick('HOT')}

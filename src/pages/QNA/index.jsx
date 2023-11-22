@@ -26,10 +26,10 @@ const QNA = () => {
   return (
     <S.QNAWrap>
       <Header
-        text="개발Q&A"
-        existText={true}
-        existRight={true}
-        headerStyle={{ backgroundColor: CS.color.white }}
+        typeLeft={'TEXT'}
+        typeCenter={'SEARCH'}
+        typeRight={'SEARCH'}
+        textLeft={'개발Q&A'}
       />
       <S.FilterBar>
         <S.ButtonWrap>

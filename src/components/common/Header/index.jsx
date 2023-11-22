@@ -43,7 +43,7 @@ const Header = ({
       {/* header left */}
       <S.LeftWrap
         style={{
-          ...(typeLeft === LeftType.TEXT && { minWidth: '80px' }),
+          ...(typeLeft === LeftType.TEXT && { minWidth: '120px' }),
           ...(typeLeft === LeftType.LOGO && { minWidth: '52px' }),
         }}
       >

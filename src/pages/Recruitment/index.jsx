@@ -9,7 +9,7 @@ import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 
 const Recruitment = () => {
-  const [selectedFilter, setSelectedFilter] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('프로젝트');
 
   const handleFilterButtonClick = (filter) => {
     setSelectedFilter(filter);
@@ -18,30 +18,12 @@ const Recruitment = () => {
   return (
     <S.RecruitmentWrap>
       <Header
-        text={`${selectedFilter ? selectedFilter : '프로젝트/스터디'} 모집`}
-        existText={true}
-        existRight={true}
-        headerStyle={{ backgroundColor: CS.color.white }}
+        typeLeft={'TEXT'}
+        typeCenter={'SEARCH'}
+        typeRight={'SEARCH'}
+        textLeft={`${selectedFilter} 모집`}
       />
       <S.FilterBar>
-        <BasicButton
-          text="전체"
-          textStyle={{
-            font: CS.font.labelSmall,
-            padding: '4px',
-            marginRight: '4px',
-            width: '100%',
-          }}
-          existText={false}
-          iconDirection={'left'}
-          children={
-            <FaCircle
-              size={12}
-              color={!selectedFilter ? CS.color.positive : CS.color.secondary}
-            />
-          }
-          handleOnClickButton={() => handleFilterButtonClick('')}
-        />
         <BasicButton
           text="프로젝트"
           textStyle={{

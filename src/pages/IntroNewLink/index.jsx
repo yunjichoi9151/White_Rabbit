@@ -20,14 +20,13 @@ function NewLink() {
   return (
     <div style={{ paddingTop: 64 }}>
       <Header
-        text={'링크'}
-        existText={true}
-        existLeft={true}
-        existRight={true}
-        BtnText={'등록'}
+        typeLeft={'BACK'}
+        typeCenter={'TEXT'}
+        typeRight={'TEXT'}
+        textCenter={'링크'}
+        textRight={'등록'}
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
-          background: CS.color.white,
         }}
       />
       <InputBox

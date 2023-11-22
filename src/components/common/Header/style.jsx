@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import * as CS from '../../../styles/CommonStyles';
 
 export const Header = styled.div`
   width: 100%;
   max-width: 900px;
   height: 4rem;
   padding: 1rem;
-  background-color: transparent;
+  background-color: ${CS.color.white};
   display: flex;
   align-items: center;
   justify-content: space-between;
