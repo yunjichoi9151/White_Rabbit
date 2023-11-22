@@ -13,4 +13,8 @@ export const FixedButton = styled.div`
   bottom: 116px;
   right: 16px;
   z-index: 999;
+
+  @media (min-width: 901px) {
+    right: calc((100% - 900px) / 2 + 16px);
+  }
 `;
