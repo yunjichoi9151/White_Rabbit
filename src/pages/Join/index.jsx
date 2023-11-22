@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
+import { userApi } from '../../../api/utils/user';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
@@ -36,6 +37,7 @@ function Join({ onClickButton }) {
   const handleChangeSelect = (e) => {
     setSelected(e.target.value);
   };
+
   return (
     <div style={{ paddingTop: 64 }}>
       <Header
