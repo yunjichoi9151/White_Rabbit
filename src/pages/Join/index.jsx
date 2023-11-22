@@ -258,6 +258,7 @@ function Join({ onClickButton }) {
 
             display: 'flex',
             justifyContent: 'center',
+            marginBottom: 20,
           }}
         >
           <BasicButton
