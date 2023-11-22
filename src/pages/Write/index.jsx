@@ -25,14 +25,13 @@ const Write = () => {
   return (
     <S.WriteWrap>
       <Header
-        text={'게시물 작성'}
-        existText={true}
-        existLeft={true}
-        existRight={true}
-        BtnText={'완료'}
+        typeLeft={'BACK'}
+        typeCenter={'TEXT'}
+        typeRight={'TEXT'}
+        textCenter={'게시물 작성'}
+        textRight={'완료'}
         headerStyle={{
-          borderBottom: `1px solid ${CS.color.contentTertiary}`,
-          background: CS.color.white,
+          borderBottom: `1px solid ${CS.color.borderTransparent}`,
         }}
         leftOnClickEvent={{ goBack }}
         rightOnClickEvent={() => console.log('done')}

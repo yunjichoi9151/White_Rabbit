@@ -13,6 +13,7 @@ import boardData from '../../test/board.json';
 import userData from '../../test/user.json';
 import { postApi } from '../../../api/utils/Post';
 import Header from '../../components/common/Header';
+import WriteButton from '../../components/board/WriteButton';
 
 const Home = () => {
   const [active, setActive] = useState('all');
@@ -125,6 +126,7 @@ const Home = () => {
           />
         ))}
       </S.BoardWrap>
+      <WriteButton />
     </S.HomeWrap>
   );
 };
