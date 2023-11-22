@@ -9,7 +9,7 @@ export const RecruitmentWrap = styled.div`
 
 export const FilterBar = styled.div`
   width: 100%;
-  height: 64px;
+  height: 36px;
   padding: 0px 24px;
   display: flex;
 `;

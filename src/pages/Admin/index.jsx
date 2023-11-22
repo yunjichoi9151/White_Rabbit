@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
+import Header from '../../components/common/Header';
 import TabBar from '../../components/profile/TabBar';
 import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
@@ -9,7 +10,7 @@ import TableRow from '../../components/admin/TableRow';
 
 const Admin = () => {
   const [isAdmitted, setIsAdmitted] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('1');
+  const [currentTabKey, setCurrentTabKey] = useState('0');
 
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
@@ -37,10 +38,20 @@ const Admin = () => {
 
   return (
     <S.AdminWrap>
+      <Header
+        typeLeft={'TEXT'}
+        typeRight={'TEXT'}
+        textLeft={'관리자'}
+        textRight={'로그아웃'}
+        headerStyle={{
+          borderBottom: `1px solid ${CS.color.borderTransparent}`,
+        }}
+      />
       <TabBar
         tabNames={['회원 관리', '기수 관리', '스킬 관리']}
         currentTabKey={currentTabKey}
         onTabClick={handleTabClick}
+        style={{ paddingTop: '60px' }}
       />
       {currentTabKey === '0' ? (
         <>
@@ -51,6 +62,7 @@ const Admin = () => {
               padding: '12px',
               justifyContent: 'flex-end',
               margin: 0,
+              height: 'auto',
             }}
             onChange={handleCheckBoxChange}
           />

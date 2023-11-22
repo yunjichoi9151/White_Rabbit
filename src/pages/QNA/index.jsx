@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
-import NavBar from '../../components/common/NavBar';
 import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
@@ -27,10 +26,10 @@ const QNA = () => {
   return (
     <S.QNAWrap>
       <Header
-        text="개발Q&A"
-        existText={true}
-        existRight={true}
-        headerStyle={{ backgroundColor: CS.color.white }}
+        typeLeft={'TEXT'}
+        typeCenter={'SEARCH'}
+        typeRight={'SEARCH'}
+        textLeft={'개발Q&A'}
       />
       <S.FilterBar>
         <S.ButtonWrap>
@@ -39,6 +38,7 @@ const QNA = () => {
             textStyle={{
               font: CS.font.labelSmall,
               padding: '4px',
+              marginRight: '4px',
               width: '100%',
             }}
             existText={false}
@@ -163,7 +163,6 @@ const QNA = () => {
         </S.PostWrap>
         <WriteButton />
       </S.PostList>
-      <NavBar />
     </S.QNAWrap>
   );
 };

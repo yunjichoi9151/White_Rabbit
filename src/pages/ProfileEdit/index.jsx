@@ -24,17 +24,14 @@ function ProfileEdit() {
   return (
     <div style={{ paddingTop: 64 }}>
       <Header
-        text={'프로필 편집'}
-        existText={true}
-        existLeft={true}
-        existRight={true}
-        BtnText={'완료'}
-        handleOnClickButton={handleClickDone}
+        typeLeft={'TEXT'}
+        typeRight={'TEXT'}
+        textLeft={'프로필 편집'}
+        textRight={'완료'}
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
-          borderRadius: 0,
-          background: CS.color.white,
         }}
+        rightOnClickEvent={handleClickDone}
       />
       <ProfileImg
         src="/assets/img/account.png"

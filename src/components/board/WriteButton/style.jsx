@@ -6,6 +6,8 @@ export const FixedButton = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 25px;
+  display: flex;
+  justify-content: center;
   position: fixed;
   bottom: 116px;
   right: 16px;

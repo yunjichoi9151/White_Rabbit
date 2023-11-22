@@ -26,11 +26,10 @@ const MyPage = () => {
     <>
       <S.MyPageWrap>
         <Header
-          text={'내 프로필'}
-          existText={true}
+          typeLeft={'TEXT'}
+          textLeft={`내 프로필`}
           headerStyle={{
             borderBottom: `1px solid ${CS.color.contentTertiary}`,
-            background: CS.color.white,
           }}
         />
         <S.ProfileWrap>
