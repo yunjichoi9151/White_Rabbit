@@ -15,6 +15,6 @@ export const commentApi = {
   modifyComment: (commentId, content) =>
     api.patch(`/comments/${commentId}`, { content }),
 
-  // 댓글 삭제
+  // 댓글 삭제.
   deleteComment: (commentId) => api.delete(`/comments/${commentId}`),
 };
