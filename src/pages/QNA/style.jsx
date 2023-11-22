@@ -7,6 +7,7 @@ export const QNAWrap = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 64px;
+  background-color: ${CS.color.secondary};
 `;
 
 export const FilterBar = styled.div`
@@ -15,6 +16,7 @@ export const FilterBar = styled.div`
   padding: 0px 24px 0px 24px;
   display: flex;
   justify-content: space-between;
+  background-color: ${CS.color.white};
 `;
 export const ButtonWrap = styled.div`
   width: 100%;
@@ -24,8 +26,7 @@ export const ButtonWrap = styled.div`
 
 export const PostList = styled.div`
   width: 100%;
-  height: 100%;
-  background-color: ${CS.color.secondary};
+  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
 `;
