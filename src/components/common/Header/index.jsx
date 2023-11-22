@@ -1,142 +1,91 @@
-import React from 'react';
+import React, { Children } from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../BasicText';
 import BasicButton from '../BasicButton';
 import InputBar from '../InputBar';
 import { IoSearch, IoArrowBack } from 'react-icons/io5';
+import { BsTextCenter } from 'react-icons/bs';
+
+const LeftType = {
+  TEXT: 'text',
+  LOGO: 'logo',
+  BACK: 'back button',
+};
+
+const CenterType = {
+  TEXT: 'text',
+  SEARCH: 'search bar',
+};
+
+const RightType = {
+  TEXT: 'text button',
+  SEARCH: 'search button',
+};
 
 const Header = ({
-  existText = false,
-  existLeft = false,
-  existRight = false,
-  existSearch = false,
-  text = '',
-  BtnText = '',
+  typeLeft = 'TEXT',
+  typeCenter,
+  typeRight,
+  textLeft,
+  textCenter,
+  textRight,
   leftOnClickEvent,
   rightOnClickEvent,
   headerStyle,
 }) => {
+  typeLeft = LeftType[typeLeft];
+  typeCenter = CenterType[typeCenter];
+  typeRight = RightType[typeRight];
+
   return (
     <S.Header style={headerStyle}>
-      {/* 글씨만 있는 헤더 */}
-      {existText && !existLeft && !existRight && !existSearch && (
-        <BasicText
-          text={text}
-          style={{
-            width: '100%',
-            justifyContent: 'left',
-            font: CS.font.headingMedium,
-          }}
-        />
-      )}
-      {/* 글씨와 오른쪽 아이콘 있는 헤더 */}
-      {existText && !existLeft && existRight && !existSearch && (
-        <S.HeaderWrap>
+      {/* header left */}
+      <S.LeftWrap
+        style={{
+          ...(typeLeft === LeftType.TEXT && { minWidth: '80px' }),
+          ...(typeLeft === LeftType.LOGO && { minWidth: '52px' }),
+        }}
+      >
+        {typeLeft === LeftType.TEXT && (
           <BasicText
-            text={text}
+            text={textLeft}
             style={{
-              width: '100%',
               font: CS.font.headingMedium,
+              wordBreak: 'keep-all',
             }}
           />
-          <BasicButton
-            existIcon={true}
-            btnStyle={{ width: '2rem' }}
-            handleOnClickButton={rightOnClickEvent}
-          >
-            <IoSearch color={CS.color.black} size="1.25rem" />
-          </BasicButton>
-        </S.HeaderWrap>
-      )}
-      {/* 글씨와 왼쪽 아이콘 있는 헤더 */}
-      {existText && existLeft && !existRight && !existSearch && (
-        <S.HeaderWrap>
-          <BasicButton
-            existIcon={true}
-            btnStyle={{ width: '2rem' }}
-            handleOnClickButton={leftOnClickEvent}
-          >
-            <IoArrowBack />
-          </BasicButton>
-          <BasicText
-            text={text}
-            style={{
-              width: '90%',
-              paddingRight: '10%',
-              justifyContent: 'center',
-              font: CS.font.headingMedium,
-            }}
-          />
-        </S.HeaderWrap>
-      )}
-      {/* 글씨와 왼쪽 아이콘, 오른쪽 버튼 있는 헤더 */}
-      {existText && existLeft && existRight && !existSearch && (
-        <S.HeaderWrap>
-          <BasicButton
-            existIcon={true}
-            btnStyle={{ width: '2rem' }}
-            handleOnClickButton={leftOnClickEvent}
-          >
-            <IoArrowBack color={CS.color.black} />
-          </BasicButton>
-          <BasicText
-            text={text}
-            style={{
-              width: '90%',
-              justifyContent: 'center',
-              font: CS.font.headingMedium,
-            }}
-          />
-          <BasicButton
-            text={BtnText}
-            btnStyle={{
-              width: '10%',
-            }}
-            textStyle={{
-              font: CS.font.labelSmall,
-              color: CS.color.primary,
-            }}
-            handleOnClickButton={rightOnClickEvent}
-          />
-        </S.HeaderWrap>
-      )}
-      {/* 왼쪽에 로고 버튼, 오른쪽에 search 있는 헤더 */}
-      {!existText && existLeft && !existRight && existSearch && (
-        <S.HeaderWrap>
+        )}
+        {typeLeft === LeftType.LOGO && (
           <BasicButton
             existIcon={true}
             btnStyle={{
               width: '2rem',
             }}
+            children={<S.LogoImg src="/assets/img/elice_icon.png" alt="logo" />}
             handleOnClickButton={leftOnClickEvent}
-          >
-            <S.LogoImg src="/assets/img/elice_icon.png" alt="logo" />
-          </BasicButton>
-          <InputBar
-            existLeft={true}
-            inputBarStyle={{
-              height: '2.5rem',
-              padding: '0.5rem 0.75rem',
-              marginLeft: '0.75rem',
-              backgroundColor: CS.color.secondary,
-              borderRadius: '1rem',
-              display: 'flex',
+          />
+        )}
+        {typeLeft === LeftType.BACK && (
+          <BasicButton
+            existIcon={true}
+            handleOnClickButton={leftOnClickEvent}
+            children={<IoArrowBack size={24} color={CS.color.black} />}
+          />
+        )}
+      </S.LeftWrap>
+      {/* header center */}
+      <S.CenterWrap>
+        {typeCenter === CenterType.TEXT && (
+          <BasicText
+            text={textCenter}
+            style={{
+              font: CS.font.headingMedium,
+              justifyContent: 'center',
             }}
-            inputStyle={{
-              font: CS.font.labelSmall,
-              textAlign: 'left',
-              alignItems: 'center',
-            }}
-            placeholder="회사, 사람, 키워드로 검색"
-          >
-            <IoSearch color={CS.color.contentTertiary} size="1.25rem" />
-          </InputBar>
-        </S.HeaderWrap>
-      )}
-      {/* search만 있는 헤더 */}
-      {!existText && !existLeft && !existRight && existSearch && (
-        <S.HeaderWrap>
+          />
+        )}
+        {typeCenter === CenterType.SEARCH && (
           <InputBar
             existLeft={true}
             inputBarStyle={{
@@ -153,11 +102,32 @@ const Header = ({
               alignItems: 'center',
             }}
             placeholder="회사, 사람, 키워드로 검색"
-          >
-            <IoSearch color={CS.color.contentTertiary} size="1.25rem" />
-          </InputBar>
-        </S.HeaderWrap>
-      )}
+          />
+        )}
+      </S.CenterWrap>
+      {/* header right */}
+      <S.RightWrap>
+        {typeRight === RightType.TEXT && (
+          <BasicButton
+            text={textRight}
+            textStyle={{
+              font: CS.font.labelSmall,
+              color: CS.color.primary,
+              wordBreak: 'keep-all',
+            }}
+            handleOnClickButton={rightOnClickEvent}
+          />
+        )}
+        {typeRight === RightType.SEARCH && (
+          <BasicButton
+            existIcon={true}
+            children={
+              <IoSearch color={CS.color.contentTertiary} size="1.5rem" />
+            }
+            handleOnClickButton={rightOnClickEvent}
+          />
+        )}
+      </S.RightWrap>
     </S.Header>
   );
 };

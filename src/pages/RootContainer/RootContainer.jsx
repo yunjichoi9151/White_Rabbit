@@ -13,6 +13,8 @@ const RootContainer = () => {
     ROUTER_LINK.MYPAGE.link,
     ROUTER_LINK.HOME.link,
     ROUTER_LINK.DETAIL.link,
+    ROUTER_LINK.QNA.link,
+    ROUTER_LINK.RECRUITMENT.link,
   ];
 
   return (

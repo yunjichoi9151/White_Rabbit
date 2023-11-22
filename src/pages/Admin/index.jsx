@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
+import Header from '../../components/common/Header';
 import TabBar from '../../components/profile/TabBar';
 import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
@@ -37,10 +38,20 @@ const Admin = () => {
 
   return (
     <S.AdminWrap>
+      <Header
+        typeLeft={'TEXT'}
+        typeRight={'TEXT'}
+        textLeft={'관리자'}
+        textRight={'로그아웃'}
+        headerStyle={{
+          borderBottom: `1px solid ${CS.color.borderTransparent}`,
+        }}
+      />
       <TabBar
         tabNames={['회원 관리', '기수 관리', '스킬 관리']}
         currentTabKey={currentTabKey}
         onTabClick={handleTabClick}
+        style={{ paddingTop: '60px' }}
       />
       {currentTabKey === '0' ? (
         <>
