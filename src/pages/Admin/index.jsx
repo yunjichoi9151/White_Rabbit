@@ -9,7 +9,7 @@ import TableRow from '../../components/admin/TableRow';
 
 const Admin = () => {
   const [isAdmitted, setIsAdmitted] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('1');
+  const [currentTabKey, setCurrentTabKey] = useState('0');
 
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
@@ -51,6 +51,7 @@ const Admin = () => {
               padding: '12px',
               justifyContent: 'flex-end',
               margin: 0,
+              height: 'auto',
             }}
             onChange={handleCheckBoxChange}
           />

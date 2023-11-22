@@ -39,6 +39,7 @@ const QNA = () => {
             textStyle={{
               font: CS.font.labelSmall,
               padding: '4px',
+              marginRight: '4px',
               width: '100%',
             }}
             existText={false}
