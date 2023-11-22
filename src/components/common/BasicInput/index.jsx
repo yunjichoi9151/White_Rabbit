@@ -6,6 +6,7 @@ const BasicInput = ({
   type,
   value,
   onChange,
+  onKeyDown,
   placeholder = '',
   isReadOnly = false,
   style,
@@ -17,6 +18,7 @@ const BasicInput = ({
       type={type}
       value={value}
       onChange={onChange}
+      onKeyDown={onKeyDown}
       placeholder={placeholder}
       readOnly={isReadOnly}
       style={style}
