@@ -3,12 +3,14 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import Header from '../../components/common/Header';
+import { useNavigate } from 'react-router';
 
 function NewLink() {
   const [form, setForm] = useState({
     inputLinkValue: '',
     inputTitleValue: '',
   });
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setForm((prev) => ({
@@ -28,6 +30,7 @@ function NewLink() {
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
         }}
+        leftOnClickEvent={() => navigate(-1)}
       />
       <InputBox
         label="링크 연결"
@@ -36,7 +39,7 @@ function NewLink() {
         }}
         inputProps={{
           value: form['inputLinkValue'],
-          handleOnChangeValue: onChange,
+          onChange: onChange,
           placeholder: 'https://',
           name: 'inputLinkValue',
         }}
@@ -50,7 +53,7 @@ function NewLink() {
         }}
         inputProps={{
           value: form['inputTitleValue'],
-          handleOnChangeValue: onChange,
+          onChange: onChange,
           placeholder: '',
           name: 'inputTitleValue',
         }}

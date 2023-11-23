@@ -6,11 +6,13 @@ import Header from '../../components/common/Header';
 import BasicText from '../../components/common/BasicText';
 import BasicInput from '../../components/common/BasicInput';
 import SkillText from '../../components/common/SkillText';
+import { useNavigate } from 'react-router';
 
 function NewSkill({ inputProps }) {
   const [form, setForm] = useState({
     inputSkillValue: '',
   });
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setForm((prev) => ({
@@ -29,6 +31,7 @@ function NewSkill({ inputProps }) {
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
         }}
+        leftOnClickEvent={() => navigate(-1)}
       />
       <S.ChoiceSkill>
         <BasicText
