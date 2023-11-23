@@ -7,7 +7,6 @@ export const Container = styled.div`
   align-items: center;
   margin-left: 20px;
   margin-right: 20px;
-  margin-bottom: 8px;
 `;
 
 export const StyledInput = styled.input`
