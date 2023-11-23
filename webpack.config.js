@@ -17,7 +17,7 @@ module.exports = {
     client: {
       overlay: true,
       // 웹소켓 설정
-      webSocketURL: { hostname: undefined, pathname: undefined, port: '3000' },
+      webSocketURL: 'ws://0.0.0.0:80/ws',
     },
     compress: true,
   },
