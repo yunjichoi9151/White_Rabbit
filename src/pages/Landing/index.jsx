@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
 import { userApi } from '../../../api/utils/user';
 import * as S from './style';
@@ -8,35 +8,37 @@ import InputBox from '../../components/common/InputBox';
 import BasicButton from '../../components/common/BasicButton';
 
 const Landing = () => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     inputIdValue: '',
     inputPwValue: '',
   });
 
   const onChange = (e) => {
+    const { name, value } = e.target;
+
     setForm((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
   /////// API /////////
-  const handleLogin = () => {
-    const { inputIdValue, inputPwValue } = form;
+  const handleLogin = async () => {
+    try {
+      const { inputIdValue, inputPwValue } = form;
 
-    userApi
-      .login(inputIdValue, inputPwValue)
-      .then((response) => {
-        // 로그인 성공 시 처리
-        console.log('로그인 성공:', response.data);
+      const res = await userApi.login(inputIdValue, inputPwValue);
 
-        <Link to={ROUTER_LINK.HOME.link} />;
-      })
-      .catch((error) => {
-        // 로그인 실패 시 처리
-        console.error('로그인 실패:', error);
-      });
+      if (res.status === 200) {
+        navigate('/home');
+      }
+    } catch (error) {
+      alert('error: ' + error.response.data.message);
+    }
   };
+
   /////////////////
 
   return (
@@ -59,7 +61,7 @@ const Landing = () => {
           }}
           inputProps={{
             value: form['inputIdValue'],
-            handleOnChangeValue: onChange,
+            onChange: onChange,
             placeholder: 'example@elice.com',
             name: 'inputIdValue',
           }}
@@ -75,7 +77,7 @@ const Landing = () => {
           }}
           inputProps={{
             value: form['inputPwValue'],
-            handleOnChangeValue: onChange,
+            onChange: onChange,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
             name: 'inputPwValue',
           }}
@@ -85,7 +87,7 @@ const Landing = () => {
 
       <S.ButtonWrap>
         <BasicButton
-          onClick={handleLogin}
+          handleOnClickButton={handleLogin}
           text="로그인"
           textStyle={{
             color: CS.color.white,

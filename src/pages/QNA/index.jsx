@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -7,9 +7,12 @@ import WriteButton from '../../components/board/WriteButton';
 import CheckBox from '../../components/common/CheckBox';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
+import { postApi } from '../../../api/utils/Post';
 
 const QNA = () => {
+  const category = 'QNA';
   const [selectedFilter, setSelectedFilter] = useState('latest');
+  const [posts, setPosts] = useState([]);
 
   const handleFilterButtonClick = (filter) => {
     setSelectedFilter(filter);
@@ -22,6 +25,20 @@ const QNA = () => {
       console.log('해제되었습니다.');
     }
   };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await postApi.getCategoryPosts(category);
+        setPosts(res.data.data.posts);
+        console.log(res.data.data.posts);
+      } catch (error) {
+        console.log('error: ', error.response.data);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <S.QNAWrap>
@@ -85,82 +102,28 @@ const QNA = () => {
         />
       </S.FilterBar>
       <S.PostList>
-        <S.PostWrap>
-          <Post
-            src={''}
-            username="UserName"
-            rate="레이서"
-            createdAt="2023"
-            existFollowBtn={false}
-            isFollow={false}
-            existMoreBtn={false}
-            category={'QNA'}
-            title={'title'}
-            content={'content'}
-            contentLength="LONG"
-            isHot={false}
-            isLike={false}
-            likes={0}
-            comments={0}
-          />
-        </S.PostWrap>
-        <S.PostWrap>
-          <Post
-            src={''}
-            username="UserName"
-            rate="레이서"
-            createdAt="2023"
-            existFollowBtn={false}
-            isFollow={false}
-            existMoreBtn={false}
-            category={'QNA'}
-            title={'title'}
-            content={'content'}
-            contentLength="LONG"
-            isHot={false}
-            isLike={false}
-            likes={0}
-            comments={0}
-          />
-        </S.PostWrap>
-        <S.PostWrap>
-          <Post
-            src={''}
-            username="UserName"
-            rate="레이서"
-            createdAt="2023"
-            existFollowBtn={false}
-            isFollow={false}
-            existMoreBtn={false}
-            category={'QNA'}
-            title={'title'}
-            content={'content'}
-            contentLength="LONG"
-            isHot={false}
-            isLike={false}
-            likes={0}
-            comments={0}
-          />
-        </S.PostWrap>
-        <S.PostWrap>
-          <Post
-            src={''}
-            username="UserName"
-            rate="레이서"
-            createdAt="2023"
-            existFollowBtn={false}
-            isFollow={false}
-            existMoreBtn={false}
-            category={'QNA'}
-            title={'title'}
-            content={'content'}
-            contentLength="LONG"
-            isHot={false}
-            isLike={false}
-            likes={0}
-            comments={0}
-          />
-        </S.PostWrap>
+        {posts.map((post, index) => (
+          <S.PostWrap>
+            <Post
+              key={index}
+              category={category}
+              src={''}
+              username={'post'}
+              rate="레이서"
+              createdAt={post.createdAt}
+              title={post.title}
+              content={post.content}
+              existFollowBtn={post.author}
+              isFollow={false}
+              existMoreBtn={false}
+              contentLength="LONG"
+              isHot={post.isPopular}
+              isLike={false}
+              likes={0}
+              comments={post.commentCount}
+            />
+          </S.PostWrap>
+        ))}
         <WriteButton />
       </S.PostList>
     </S.QNAWrap>

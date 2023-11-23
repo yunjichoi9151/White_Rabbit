@@ -7,6 +7,10 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'bundle.js',
+  },
   module: {
     rules: [
       {
@@ -32,10 +36,6 @@ module.exports = {
         use: ['file-loader'],
       },
     ],
-  },
-  output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
