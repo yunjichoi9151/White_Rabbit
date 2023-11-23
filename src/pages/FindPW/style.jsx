@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const Header = styled.div`
-  height: 50px;
+export const Container = styled.div`
+  padding-top: 64px;
 `;
 export const ButtonWrap = styled.div`
   display: flex;

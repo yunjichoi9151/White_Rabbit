@@ -3,12 +3,14 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import Header from '../../components/common/Header';
+import { useNavigate } from 'react-router';
 
 function LinkEdit() {
   const [form, setForm] = useState({
     inputLinkValue: '',
     inputTitleValue: '',
   });
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setForm((prev) => ({
@@ -28,6 +30,7 @@ function LinkEdit() {
         headerStyle={{
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
         }}
+        leftOnClickEvent={() => navigate(-1)}
       />
 
       <InputBox
@@ -37,7 +40,7 @@ function LinkEdit() {
         }}
         inputProps={{
           value: form['inputLinkValue'],
-          handleOnChangeValue: onChange,
+          onChange: onChange,
           placeholder: 'https://',
           name: 'inputLinkValue',
         }}
@@ -51,7 +54,7 @@ function LinkEdit() {
         }}
         inputProps={{
           value: form['inputTitleValue'],
-          handleOnChangeValue: onChange,
+          onChange: onChange,
           placeholder: '',
           name: 'inputTitleValue',
         }}
