@@ -31,8 +31,7 @@ const Landing = () => {
 
       const res = await userApi.login(inputIdValue, inputPwValue);
 
-      if (res.data) {
-        // setToken(response.data.token);
+      if (res.status === 200) {
         navigate('/home');
       }
     } catch (error) {

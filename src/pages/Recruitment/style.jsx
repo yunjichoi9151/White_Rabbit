@@ -10,22 +10,24 @@ export const RecruitmentWrap = styled.div`
 
 export const FilterBar = styled.div`
   width: 100%;
-  height: 36px;
+  min-height: 3rem;
   padding: 0px 24px;
   background-color: ${CS.color.white};
   display: flex;
+  align-items: center;
 `;
 
 export const PostList = styled.div`
   width: 100%;
+  padding-top: 0.5rem;
   padding-bottom: 100px;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 `;
 
 export const PostWrap = styled.div`
   width: 100%;
   height: 100%;
-  padding-top: 12px;
   display: flex;
 `;
