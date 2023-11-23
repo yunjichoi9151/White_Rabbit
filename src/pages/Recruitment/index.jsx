@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import NavBar from '../../components/common/NavBar';
@@ -7,13 +7,32 @@ import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
+import { postApi } from '../../../api/utils/Post';
+
+const CategoryText = {
+  PROJECT: '프로젝트',
+  STUDY: '스터디',
+};
 
 const Recruitment = () => {
-  const [selectedFilter, setSelectedFilter] = useState('프로젝트');
+  const [category, setCategory] = useState('PROJECT');
+  const [posts, setPosts] = useState([]);
 
-  const handleFilterButtonClick = (filter) => {
-    setSelectedFilter(filter);
+  const handleCategoryClick = (category) => {
+    setCategory(category);
   };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await postApi.getCategoryPosts(category);
+        setPosts(res.data.data.posts);
+      } catch (error) {
+        console.log('error: ', error);
+      }
+    };
+    fetchPosts();
+  }, [category]);
 
   return (
     <S.RecruitmentWrap>
@@ -21,7 +40,7 @@ const Recruitment = () => {
         typeLeft={'TEXT'}
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
-        textLeft={`${selectedFilter} 모집`}
+        textLeft={`${CategoryText[category]} 모집`}
       />
       <S.FilterBar>
         <BasicButton
@@ -38,13 +57,11 @@ const Recruitment = () => {
             <FaCircle
               size={12}
               color={
-                selectedFilter === '프로젝트'
-                  ? CS.color.positive
-                  : CS.color.secondary
+                category === 'PROJECT' ? CS.color.positive : CS.color.secondary
               }
             />
           }
-          handleOnClickButton={() => handleFilterButtonClick('프로젝트')}
+          handleOnClickButton={() => handleCategoryClick('PROJECT')}
         />
         <BasicButton
           text="스터디"
@@ -58,73 +75,36 @@ const Recruitment = () => {
             <FaCircle
               size={12}
               color={
-                selectedFilter === '스터디'
-                  ? CS.color.positive
-                  : CS.color.secondary
+                category === 'STUDY' ? CS.color.positive : CS.color.secondary
               }
             />
           }
-          handleOnClickButton={() => handleFilterButtonClick('스터디')}
+          handleOnClickButton={() => handleCategoryClick('STUDY')}
         />
       </S.FilterBar>
       <S.PostList>
-        <S.PostWrap>
-          <Post
-            src={''}
-            username={'UserName'}
-            rate={'레이서'}
-            createdAt={'2023'}
-            existFollowBtn={false}
-            isFollow={false}
-            existMoreBtn={false}
-            category={'PROJECT'}
-            title={'title'}
-            content={'content'}
-            contentLength={'LONG'}
-            isHot={false}
-            isLike={false}
-            likes={0}
-            comments={0}
-          />
-        </S.PostWrap>
-        <S.PostWrap>
-          <Post
-            src={''}
-            username={'UserName'}
-            rate={'레이서'}
-            createdAt={'2023'}
-            existFollowBtn={false}
-            isFollow={false}
-            existMoreBtn={false}
-            category={'STUDY'}
-            title={'title'}
-            content={'content'}
-            contentLength={'LONG'}
-            isHot={false}
-            isLike={false}
-            likes={0}
-            comments={0}
-          />
-        </S.PostWrap>
-        <S.PostWrap>
-          <Post
-            src={''}
-            username={'UserName'}
-            rate={'레이서'}
-            createdAt={'2023'}
-            existFollowBtn={false}
-            isFollow={false}
-            existMoreBtn={false}
-            category={'PROJECT'}
-            title={'title'}
-            content={'content'}
-            contentLength={'LONG'}
-            isHot={false}
-            isLike={false}
-            likes={0}
-            comments={0}
-          />
-        </S.PostWrap>
+        {posts.map((post, index) => (
+          <S.PostWrap>
+            <Post
+              key={index}
+              category={category}
+              src={''}
+              username={'post'}
+              rate="레이서"
+              createdAt={post.createdAt}
+              title={post.title}
+              content={post.content}
+              existFollowBtn={post.author}
+              isFollow={false}
+              existMoreBtn={false}
+              contentLength="LONG"
+              isHot={post.isPopular}
+              isLike={false}
+              likes={0}
+              comments={post.commentCount}
+            />
+          </S.PostWrap>
+        ))}
       </S.PostList>
       <WriteButton />
       <NavBar />
