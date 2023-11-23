@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --config webpack.dev.js --open --hot --host=localhost",
+    "dev": "webpack-dev-server --config webpack.dev.js --open --hot --host=127.0.0.1",
     "build": "webpack --config webpack.prod.js",
-    "start": "webpack-dev-server --config webpack.dev.js --open --hot --host=localhost"
+    "start": "webpack-dev-server --config webpack.dev.js --open --hot --host=127.0.0.1"
   },
   "keywords": [],
   "author": "",
