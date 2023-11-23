@@ -8,8 +8,8 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   devServer: {
-    port: 3003,
-    host: '127.0.0.1', // <-- this
+    port: 3000,
+    host: 'localhost', // <-- this
   },
   output: {
     path: path.join(__dirname, '/dist'),
