@@ -31,8 +31,7 @@ const Landing = () => {
 
       const res = await userApi.login(inputIdValue, inputPwValue);
 
-      if (res.data) {
-        // setToken(response.data.token);
+      if (res.status === 200) {
         navigate('/home');
       }
     } catch (error) {
@@ -77,6 +76,7 @@ const Landing = () => {
             type: 'none',
           }}
           inputProps={{
+            type: 'password',
             value: form['inputPwValue'],
             onChange: onChange,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
