@@ -17,7 +17,7 @@ module.exports = {
     client: {
       overlay: true,
       // 웹소켓 설정
-      webSocketURL: 'ws://0.0.0.0:80/ws',
+      webSocketURL: 'ws://kdt-sw-6-team07.elicecoding.com/ws',
     },
     compress: true,
   },
