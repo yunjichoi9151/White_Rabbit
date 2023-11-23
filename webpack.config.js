@@ -8,21 +8,12 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   devServer: {
-    port: 3000,
-    liveReload: true,
-    // host 지정
-    host: '0.0.0.0',
-    allowedHosts: 'all',
-    open: true,
-    client: {
-      overlay: true,
-      // 웹소켓 설정
-      webSocketURL: 'ws://0.0.0.0:80/ws',
-    },
-    compress: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
+    port: 3003,
+    host: '127.0.0.1', // <-- this
+  },
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: 'bundle.js',
   },
   module: {
     rules: [
@@ -49,10 +40,6 @@ module.exports = {
         use: ['file-loader'],
       },
     ],
-  },
-  output: {
-    path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
