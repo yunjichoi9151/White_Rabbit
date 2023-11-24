@@ -57,7 +57,10 @@ const Admin = () => {
         <>
           <CheckBox
             text={'승인 대기만 보기'}
-            textColor={CS.color.contentSecondary}
+            textStyle={{
+              color: CS.color.contentSecondary,
+              font: CS.font.labelSmall,
+            }}
             style={{
               padding: '12px',
               justifyContent: 'flex-end',

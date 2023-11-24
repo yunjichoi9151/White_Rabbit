@@ -7,6 +7,7 @@ import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
 import CheckBox from '../../components/common/CheckBox';
+import BasicModal from '../../components/common/BasicModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
@@ -157,12 +158,20 @@ const QNA = () => {
         </S.ButtonWrap>
         <CheckBox
           text={'내 질문만 보기'}
-          textColor={CS.color.contentSecondary}
-          style={{ padding: '4px', justifyContent: 'flex-end', margin: 0 }}
+          textStyle={{
+            color: CS.color.contentSecondary,
+            font: CS.font.labelSmall,
+          }}
+          style={{
+            padding: '4px',
+            justifyContent: 'flex-end',
+            margin: 0,
+          }}
           onChange={handleCheckBoxChange}
         />
       </S.FilterBar>
       <S.PostList>
+        {/* <BasicModal children={'완료되었습니다.'} /> */}
         {filteredPosts.map((post, index) => (
           <S.PostWrap>
             <Post
