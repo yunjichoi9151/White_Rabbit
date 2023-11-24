@@ -81,10 +81,11 @@ const Post = ({
             style={{
               font: CS.font.labelSmall,
               color: CS.color.white,
-              maxWidth: '80px',
+              minWidth: '80px',
               padding: '4px 12px',
               borderRadius: '4px',
               backgroundColor: labelColor[category],
+              justifyContent: 'center',
             }}
           />
           <BasicText

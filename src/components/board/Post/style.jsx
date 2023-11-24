@@ -14,7 +14,7 @@ export const TitleWrapper = styled.div`
   height: 100%;
   padding: 12px 20px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
 `;
 export const ContentWrapper = styled.div`

@@ -11,27 +11,27 @@ import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
+import { followApi } from '../../../api/utils/Follow';
+
+const sortType = {
+  NEW: 'new',
+  COMMENT: 'comment',
+};
+
+const userRateType = {
+  User: '레이서',
+  Coach: '코치',
+};
 
 const QNA = () => {
   const category = 'QNA';
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [filter, setFilter] = useState('latest'); // 필터링 추가해야 됨
+  const [sort, setSort] = useState(sortType.NEW);
+  const [isMineOnly, setIsMineOnly] = useState(false);
   const [filteredPosts, setFilteredPosts] = useState([]);
 
   const navigate = useNavigate();
-
-  const handleFilterButtonClick = (newFilter) => {
-    setFilter(newFilter);
-  };
-
-  const handleCheckBoxChange = (e) => {
-    if (e.target.checked) {
-      setFilteredPosts(posts.filter((post) => post.author === userInfo._id));
-    } else {
-      filterAndSetPosts(filter);
-    }
-  };
 
   const fetchUserInfo = async () => {
     try {
@@ -44,21 +44,47 @@ const QNA = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category);
+      const res = await postApi.getCategoryPosts(category, sort);
       setPosts(res.data.data.posts);
+      filterMyPosts(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error.response.data);
     }
   };
 
-  const filterAndSetPosts = (currentFilter) => {
-    if (currentFilter === 'latest') {
+  const handleSortClick = (sortBy) => {
+    setSort(sortBy);
+  };
+
+  const handleCheckBoxChange = (e) => {
+    setIsMineOnly(e.target.checked);
+  };
+
+  const handleFollowClick = (index, isFollowing, toUser) => {
+    try {
+      // if (isFollowing) {
+      //   followApi.deleteFollow(userInfo._id, toUser._id);
+      // } else {
+      //   followApi.postFollow(userInfo._id, toUser._id);
+      // }
+      // console.log(isFollowing, toUser);
+      setFilteredPosts((prevPosts) => {
+        const updatedPosts = [...prevPosts];
+        console.log('1' + updatedPosts[index].isFollow);
+        updatedPosts[index].isFollow = !updatedPosts[index].isFollow;
+        console.log('2' + updatedPosts[index].isFollow);
+        console.log('=============');
+        return updatedPosts;
+      });
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const filterMyPosts = (posts) => {
+    if (isMineOnly) {
       setFilteredPosts(
-        posts.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
-      );
-    } else if (currentFilter === 'reply') {
-      setFilteredPosts(
-        posts.slice().sort((a, b) => b.commentCount - a.commentCount),
+        posts.filter((post) => post.author._id === userInfo._id),
       );
     } else {
       setFilteredPosts(posts);
@@ -71,11 +97,11 @@ const QNA = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [sort]);
 
   useEffect(() => {
-    filterAndSetPosts(filter);
-  }, [filter, posts]);
+    filterMyPosts(posts);
+  }, [isMineOnly]);
 
   return (
     <S.QNAWrap>
@@ -101,14 +127,14 @@ const QNA = () => {
               <FaCircle
                 size={12}
                 color={
-                  filter === 'latest' ? CS.color.positive : CS.color.secondary
+                  sort === sortType.NEW ? CS.color.positive : CS.color.secondary
                 }
               />
             }
-            handleOnClickButton={() => handleFilterButtonClick('latest')}
+            handleOnClickButton={() => handleSortClick(sortType.NEW)}
           />
           <BasicButton
-            text="댓글 많은 순"
+            text="답변 많은 순"
             textStyle={{
               font: CS.font.labelSmall,
               padding: '4px',
@@ -120,11 +146,13 @@ const QNA = () => {
               <FaCircle
                 size={12}
                 color={
-                  filter === 'reply' ? CS.color.positive : CS.color.secondary
+                  sort === sortType.COMMENT
+                    ? CS.color.positive
+                    : CS.color.secondary
                 }
               />
             }
-            handleOnClickButton={() => handleFilterButtonClick('reply')}
+            handleOnClickButton={() => handleSortClick(sortType.COMMENT)}
           />
         </S.ButtonWrap>
         <CheckBox
@@ -140,23 +168,33 @@ const QNA = () => {
             <Post
               key={index}
               category={category}
-              src={''} // author
-              username={'post'} // author
-              rate={'레이서'} // author
+              src={
+                post.author.profile_url === ''
+                  ? '/assets/img/elice_icon.png'
+                  : post.author.profile_url
+              }
+              username={post.author.name}
+              rate={userRateType[post.author.roles]}
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author !== userInfo._id}
-              isFollow={false} // follow 했는지 여부
-              existMoreBtn={post.author === userInfo._id}
               contentLength={'LONG'}
+              existFollowBtn={post.author._id !== userInfo._id}
+              isFollow={post.isFollowing}
+              existMoreBtn={post.author._id === userInfo._id}
               isHot={post.isPopular}
-              isLike={false} // 좋아요 했는지 여부
+              isLike={post.isLiked}
               likes={post.like_count}
               comments={post.commentCount}
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
+              // handleOnClickProfile={{}}
+              handleOnClickFollow={() =>
+                handleFollowClick(1, post.isFollowing, post.author)
+              }
+              // handleOnClickDots={{}}
+              // handleOnClickLikeBtn={{}}
             />
           </S.PostWrap>
         ))}
