@@ -79,16 +79,21 @@ const Post = ({
           <BasicText
             text={labelText[category]}
             style={{
-              color: CS.color.white,
               font: CS.font.labelSmall,
+              color: CS.color.white,
+              minWidth: '80px',
               padding: '4px 12px',
               borderRadius: '4px',
               backgroundColor: labelColor[category],
+              justifyContent: 'center',
             }}
           />
           <BasicText
             text={title}
-            style={{ font: CS.font.headingMedium, padding: '4px 12px' }}
+            style={{
+              font: CS.font.headingMedium,
+              padding: '4px 12px',
+            }}
           />
           {isHot && (
             <>
@@ -104,7 +109,7 @@ const Post = ({
             </>
           )}
         </S.TitleWrapper>
-        <S.ContentWrapper>
+        <S.ContentWrapper onClick={handleOnClickPost}>
           <BasicText
             text={substrContent}
             style={{ font: CS.font.paragraphSmall }}

@@ -1,211 +1,688 @@
 {
-  "message": "전체 리스트",
-  "data": [
-    {
-      "like_count": 0,
-      "_id": "655afdcf7621d8df5126b69f",
-      "title": "페이징 테스트8 수정!!!",
-      "content": "테스트 내용10",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:51.570Z",
-      "updatedAt": "2023-11-21T11:42:27.920Z",
-      "__v": 0
-    },
-    {
-      "_id": "655b6969dcd16d0564f3c092",
-      "title": "게시물 등록 테스트2",
-      "content": "테스트 내용2",
-      "like_count": 0,
-      "category": "fb",
-      "author": "65576abc708ef932094e02ae",
-      "image_url": "",
-      "createdAt": "2023-11-20T14:12:57.859Z",
-      "updatedAt": "2023-11-20T14:12:57.859Z",
-      "__v": 0
-    },
-    {
-      "image_url": "",
-      "_id": "6558a9364a0a2004134ee703",
-      "title": "게시물 등록 테스트",
-      "content": "테스트 내용",
-      "like_count": 2,
-      "category": "fb",
-      "author": "65576abc708ef932094e02ae",
-      "createdAt": "2023-11-18T12:08:22.830Z",
-      "updatedAt": "2023-11-20T13:45:40.047Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afdd87621d8df5126b6a3",
-      "title": "페이징 테스트10",
-      "content": "테스트 내용10",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:34:00.202Z",
-      "updatedAt": "2023-11-20T06:34:00.202Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afdd37621d8df5126b6a1",
-      "title": "페이징 테스트9",
-      "content": "테스트 내용9",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:55.273Z",
-      "updatedAt": "2023-11-20T06:33:55.273Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afdc77621d8df5126b69d",
-      "title": "페이징 테스트7",
-      "content": "테스트 내용7",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:43.949Z",
-      "updatedAt": "2023-11-20T06:33:43.949Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afdc47621d8df5126b69b",
-      "title": "페이징 테스트6",
-      "content": "테스트 내용6",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:40.226Z",
-      "updatedAt": "2023-11-20T06:33:40.226Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afdc07621d8df5126b699",
-      "title": "페이징 테스트5",
-      "content": "테스트 내용5",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:36.474Z",
-      "updatedAt": "2023-11-20T06:33:36.474Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afdbb7621d8df5126b697",
-      "title": "페이징 테스트4",
-      "content": "테스트 내용4",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:31.709Z",
-      "updatedAt": "2023-11-20T06:33:31.709Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afdb67621d8df5126b695",
-      "title": "페이징 테스트3",
-      "content": "테스트 내용3",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:26.802Z",
-      "updatedAt": "2023-11-20T06:33:26.802Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afda97621d8df5126b693",
-      "title": "페이징 테스트2",
-      "content": "테스트 내용2",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:33:13.510Z",
-      "updatedAt": "2023-11-20T06:33:13.510Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "_id": "655afca870dfa4b151853e2d",
-      "title": "페이징 테스트1",
-      "content": "테스트 내용1",
-      "like": [],
-      "category": "review",
-      "author": "65570e7b25deab3354a7b35a",
-      "image_url": "",
-      "createdAt": "2023-11-20T06:28:56.813Z",
-      "updatedAt": "2023-11-20T06:28:56.813Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "image_url": "",
-      "_id": "65578ba2c2d53628b6ecc81d",
-      "title": "게시물 등록 테스트",
-      "content": "테스트 내용",
-      "like": [],
-      "category": "fb",
-      "author": "65576abc708ef932094e02ae",
-      "createdAt": "2023-11-17T15:49:54.708Z",
-      "updatedAt": "2023-11-17T15:49:54.708Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "image_url": "",
-      "_id": "6555a8305d6a95207b989be2",
-      "title": "테스트으",
-      "content": "테스트 내용",
-      "like": [],
-      "category": "fb",
-      "author": "65557399417ebc167c7722e5",
-      "createdAt": "2023-11-16T05:27:12.782Z",
-      "updatedAt": "2023-11-16T05:27:12.782Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "image_url": "",
-      "_id": "65533c85764e7f8a84c3fb7a",
-      "title": "테스트 제목3",
-      "content": "테스트 내용3",
-      "like": [],
-      "category": "fb",
-      "author": "65533c31dcfc01f0684c34e5",
-      "createdAt": "2023-11-14T09:23:17.090Z",
-      "updatedAt": "2023-11-14T09:23:17.090Z",
-      "__v": 0
-    },
-    {
-      "like_count": 0,
-      "image_url": "",
-      "_id": "65533c7f764e7f8a84c3fb78",
-      "title": "테스트 제목2",
-      "content": "테스트 내용2",
-      "like": [],
-      "category": "fb",
-      "author": "65533c31dcfc01f0684c34e5",
-      "createdAt": "2023-11-14T09:23:11.254Z",
-      "updatedAt": "2023-11-14T09:23:11.254Z",
-      "__v": 0
-    }
-  ]
+  "message": "모든 게시글 조회",
+  "data": {
+    "posts": [
+      {
+        "_id": "6560042beba6ec406b8f977e",
+        "title": "BOARD 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "BOARD",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+        "createdAt": "2023-11-24T02:02:19.303Z",
+        "updatedAt": "2023-11-24T02:02:19.303Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "6560012fd939e753502aac48",
+        "title": "게시물 등록 테스트12",
+        "content": "테스트 내용",
+        "like_count": 0,
+        "category": "BOARD",
+        "author": {
+          "_id": "655ab91e4a1c14af061dafd2",
+          "name": "관리자",
+          "profile_url": "http://localhost:5000/image/20231120114128-aaaa.jpg",
+          "roles": "Admin"
+        },
+        "image_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+        "createdAt": "2023-11-24T01:49:35.097Z",
+        "updatedAt": "2023-11-24T01:49:35.097Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0dae318d5343f4b7b273",
+        "title": "웹 기반 투표 시스템 개발 프로젝트 팀원 모집",
+        "content": "웹 기반 투표 시스템을 개발할 팀원을 찾고 있습니다. React와 Node.js 경험이 있는 분을 원합니다. 보안과 사용자 경험을 중시하는 프로젝트로, 프론트엔드 개발자 2명, 백엔드 개발자 1명을 추가로 모집합니다.",
+        "like_count": 0,
+        "category": "PROJECT",
+        "author": {
+          "_id": "655f0028afad007ba08fa183",
+          "name": "유수빈",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:30:38.989Z",
+        "updatedAt": "2023-11-23T08:30:38.989Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0cae318d5343f4b7b264",
+        "title": "프론트엔드에서 API 요청 최적화 팁이 있나요?",
+        "content": "웹 애플리케이션에서 API 요청을 할 때 페이지 로딩 속도를 개선할 수 있는 방법이 궁금합니다.",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655efef4afad007ba08fa16d",
+          "name": "최윤지",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:26:22.520Z",
+        "updatedAt": "2023-11-23T08:26:22.520Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 1,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0c45318d5343f4b7b258",
+        "title": "Node.js에서의 데이터베이스 연결은 어떻게 하나요?",
+        "content": "Node.js로 서버를 구축하는 중인데, MySQL 데이터베이스를 어떻게 연결하나요?",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655efdfaafad007ba08fa169",
+          "name": "이준영",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:24:37.165Z",
+        "updatedAt": "2023-11-23T08:24:37.165Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 1,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0b06318d5343f4b7b24a",
+        "title": "React에서 상태 관리는 어떻게 하는 것이 좋나요?",
+        "content": "React에서 여러 컴포넌트 간의 상태를 관리하는 것이 어려워요. 어떤 방법이나 도구를 사용하는 것이 좋을까요?",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655f0002afad007ba08fa17f",
+          "name": "김보경",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:19:18.239Z",
+        "updatedAt": "2023-11-23T08:19:18.239Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 1,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0aa5318d5343f4b7b246",
+        "title": "취업 후 첫 프로젝트 완료 소감",
+        "content": "취업 후 처음 맡은 프로젝트를 성공적으로 마쳤어요. 프로젝트 관리와 팀워크, 기술적인 도전 등에 대한 제 경험을 공유하고 싶습니다.",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655f0002afad007ba08fa17f",
+          "name": "김보경",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:17:41.948Z",
+        "updatedAt": "2023-11-23T08:17:41.948Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0a7e318d5343f4b7b241",
+        "title": "백엔드 개발자로 취업하며 느낀 점",
+        "content": "부트캠프에서 배운 백엔드 기술을 바탕으로 처음으로 개발자로 취업했습니다. 실무에서 중요한 것들과 부트캠프에서 어떻게 준비해야 하는지 나누고 싶어요.",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655effa0afad007ba08fa178",
+          "name": "장보근",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:17:02.636Z",
+        "updatedAt": "2023-11-23T08:17:02.636Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0a4d318d5343f4b7b23c",
+        "title": "코딩 테스트와 면접, 내 경험에서 배운 것들",
+        "content": "여러 회사의 코딩 테스트와 면접을 거쳐 취업에 성공했습니다. 특히 알고리즘 문제 해결 능력이 중요했던 점, 면접에서의 커뮤니케이션 기술 등을 공유하고 싶어요.",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655eff25afad007ba08fa171",
+          "name": "하지원",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:16:13.643Z",
+        "updatedAt": "2023-11-23T08:16:13.643Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f0a26318d5343f4b7b237",
+        "title": "프론트엔드 개발자로의 첫 걸음",
+        "content": "부트캠프를 수료하고 나서 프론트엔드 개발자로 취업했습니다. 실무에서는 어떤 기술이 중요한지, 어떻게 준비했는지 공유하고 싶어요.",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655efef4afad007ba08fa16d",
+          "name": "최윤지",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:15:34.320Z",
+        "updatedAt": "2023-11-23T08:15:34.320Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f09f9318d5343f4b7b232",
+        "title": "스타트업 개발팀에 합류한 소감",
+        "content": "스타트업 개발팀에 합류한 지 벌써 한 달이 지났네요. 새로운 환경에서 배우는 것들이 많아요. 부트캠프에서의 경험이 정말 큰 밑거름이 됐습니다.",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655efdfaafad007ba08fa169",
+          "name": "이준영",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:14:49.842Z",
+        "updatedAt": "2023-11-23T08:14:49.842Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f09c0318d5343f4b7b22d",
+        "title": "첫 번째 개발자 직장에 합격했어요!",
+        "content": "부트캠프 수료 후 첫 번째 면접에서 바로 합격 소식을 받았어요! 부트캠프에서 배운 실무 지식이 정말 큰 도움이 됐어요. 면접 준비 과정과 팁을 공유하고 싶어요.",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655f0028afad007ba08fa183",
+          "name": "유수빈",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:13:52.669Z",
+        "updatedAt": "2023-11-23T08:13:52.669Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f091c318d5343f4b7b228",
+        "title": "주말 온라인 스터디 그룹 모집",
+        "content": "이번 주말에 온라인으로 진행할 코딩 스터디 그룹을 모집합니다. HTML, CSS에 관심 있는 분들은 댓글로 연락주세요!",
+        "like_count": 0,
+        "category": "STUDY",
+        "author": {
+          "_id": "655f0002afad007ba08fa17f",
+          "name": "김보경",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:11:08.429Z",
+        "updatedAt": "2023-11-23T08:11:08.429Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f08e3318d5343f4b7b223",
+        "title": "부트캠프 환경 설정 관련 질문",
+        "content": "안녕하세요, 부트캠프 환경 설정에 약간 혼란스러운 부분이 있어 질문드립니다. Visual Studio Code에서 확장 프로그램을 어떻게 설정하나요?",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655effa0afad007ba08fa178",
+          "name": "장보근",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:10:11.345Z",
+        "updatedAt": "2023-11-23T08:10:11.345Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f08a8318d5343f4b7b21e",
+        "title": "웹 개발 관련 도움 요청",
+        "content": "웹 개발 과제에 막혔어요. HTML과 CSS를 사용해야 하는데, 특정 문제에서 도움이 필요해요. 경험 있으신 분들의 조언 부탁드려요!",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655eff25afad007ba08fa171",
+          "name": "하지원",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:09:12.939Z",
+        "updatedAt": "2023-11-23T08:09:12.939Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f07f9318d5343f4b7b219",
+        "title": "오늘의 코딩 도전기!",
+        "content": "오늘 처음으로 JavaScript를 사용해서 간단한 계산기를 만들어봤어요. 아직 버그가 많지만, 작은 성공이라 기쁩니다. 여러분은 오늘 어떤 도전을 하셨나요?",
+        "like_count": 0,
+        "category": "BOARD",
+        "author": {
+          "_id": "655f0028afad007ba08fa183",
+          "name": "유수빈",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T08:06:17.276Z",
+        "updatedAt": "2023-11-23T08:06:17.276Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f05e1318d5343f4b7b214",
+        "title": "코딩 공부 방법 공유해요",
+        "content": "안녕하세요, 코딩을 효과적으로 배울 수 있는 개인적인 팁을 공유하고 싶어요. 여러분의 공부 방법도 궁금하니 공유해주시면 좋을 것 같아요!",
+        "like_count": 0,
+        "category": "BOARD",
+        "author": {
+          "_id": "655efef4afad007ba08fa16d",
+          "name": "최윤지",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T07:57:21.896Z",
+        "updatedAt": "2023-11-23T07:57:21.896Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655f036bafad007ba08fa18e",
+        "title": "부트캠프 첫 주, 어떠셨나요?",
+        "content": "이번 주 부트캠프 시작하고 처음으로 주말을 맞이했네요. 모두 어떤 경험을 하셨나요? 저는 새로운 학습 내용에 흥미롭고 설레는 한 주였어요!",
+        "like_count": 0,
+        "category": "BOARD",
+        "author": {
+          "_id": "655efdfaafad007ba08fa169",
+          "name": "이준영",
+          "profile_url": "",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T07:46:51.752Z",
+        "updatedAt": "2023-11-23T07:46:51.752Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655ee2876d48e7c97d520d2a",
+        "title": "테스트 수정!!!",
+        "content": "테스트 내용10",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T05:26:31.289Z",
+        "updatedAt": "2023-11-23T05:27:15.987Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655ede095312dfb5cdf58617",
+        "title": "테스트 수정!!!",
+        "content": "테스트 내용10",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655ab91e4a1c14af061dafd2",
+          "name": "관리자",
+          "profile_url": "http://localhost:5000/image/20231120114128-aaaa.jpg",
+          "roles": "Admin"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T05:07:21.113Z",
+        "updatedAt": "2023-11-23T05:18:31.276Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": false
+      },
+      {
+        "_id": "655edd3f464d72f8f2b05fc3",
+        "title": "BOARD 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "BOARD",
+        "author": {
+          "_id": "655ab91e4a1c14af061dafd2",
+          "name": "관리자",
+          "profile_url": "http://localhost:5000/image/20231120114128-aaaa.jpg",
+          "roles": "Admin"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T05:03:59.361Z",
+        "updatedAt": "2023-11-23T05:03:59.361Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 2,
+        "isFollowing": false
+      },
+      {
+        "_id": "655ebdf110bd95ff4504a7b3",
+        "title": "QNA 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T02:50:25.984Z",
+        "updatedAt": "2023-11-23T02:50:25.984Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655eb1338fc9c7f68d08ec88",
+        "title": "QNA 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T01:56:03.178Z",
+        "updatedAt": "2023-11-23T01:56:03.178Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655eb0ad69585994903fe8ed",
+        "title": "QNA 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T01:53:49.662Z",
+        "updatedAt": "2023-11-23T01:53:49.662Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655eac3d605f5aec7f7f0811",
+        "title": "QNA 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T01:34:53.823Z",
+        "updatedAt": "2023-11-23T01:34:53.823Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655eab84a083363769749760",
+        "title": "QNA 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T01:31:48.874Z",
+        "updatedAt": "2023-11-23T01:31:48.874Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655eaa8ea1b327a17699d89a",
+        "title": "QNA 게시물 등록 테스트2",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-23T01:27:42.920Z",
+        "updatedAt": "2023-11-23T01:27:42.920Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655de5dc4255ab222e35610b",
+        "title": "QNA 게시물 등록 테스트",
+        "content": "테스트",
+        "like_count": 0,
+        "category": "QNA",
+        "author": {
+          "_id": "65570e7b25deab3354a7b35a",
+          "name": "김보경경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-22T11:28:29.010Z",
+        "updatedAt": "2023-11-22T11:28:29.010Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 1,
+        "isFollowing": false
+      },
+      {
+        "_id": "655da1723c18591f076067a3",
+        "title": "게시물 수정 테스트",
+        "content": "테스트 내용",
+        "like_count": 1,
+        "category": "BOARD",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-22T06:36:34.122Z",
+        "updatedAt": "2023-11-22T08:20:10.196Z",
+        "__v": 0,
+        "isPopular": true,
+        "commentCount": 3,
+        "isFollowing": true
+      },
+      {
+        "_id": "655da00a3c18591f07606795",
+        "title": "게시물 등록 테스트 10",
+        "content": "테스트 내용 10",
+        "like_count": 2,
+        "category": "BOARD",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-22T06:30:34.889Z",
+        "updatedAt": "2023-11-22T08:12:29.077Z",
+        "__v": 0,
+        "isPopular": true,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655da00f3c18591f07606797",
+        "title": "게시물 등록 테스트 11",
+        "content": "테스트 내용 11",
+        "like_count": 3,
+        "category": "BOARD",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-22T06:30:39.581Z",
+        "updatedAt": "2023-11-22T08:12:02.281Z",
+        "__v": 0,
+        "isPopular": true,
+        "commentCount": 0,
+        "isFollowing": true
+      },
+      {
+        "_id": "655d9fe33c18591f0760678a",
+        "title": "게시물 등록 테스트 6",
+        "content": "테스트 내용 6",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-22T06:29:55.303Z",
+        "updatedAt": "2023-11-22T06:29:55.303Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 1,
+        "isFollowing": true
+      },
+      {
+        "_id": "655d9fdb3c18591f07606786",
+        "title": "게시물 등록 테스트 4",
+        "content": "테스트 내용 4",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-22T06:29:47.445Z",
+        "updatedAt": "2023-11-22T06:29:47.445Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 2,
+        "isFollowing": true
+      },
+      {
+        "_id": "655d9f9b3c18591f07606780",
+        "title": "게시물 등록 테스트 1",
+        "content": "테스트 내용 1",
+        "like_count": 0,
+        "category": "REVIEW",
+        "author": {
+          "_id": "655d9f403c18591f0760677d",
+          "name": "김보경",
+          "profile_url": "http://localhost:5000/images/20231116190555-aaaa.jpg",
+          "roles": "User"
+        },
+        "image_url": "",
+        "createdAt": "2023-11-22T06:28:43.045Z",
+        "updatedAt": "2023-11-22T06:28:43.045Z",
+        "__v": 0,
+        "isPopular": false,
+        "commentCount": 5,
+        "isFollowing": true
+      }
+    ],
+    "pageInfo": {}
+  }
 }

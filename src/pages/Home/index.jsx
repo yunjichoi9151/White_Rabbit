@@ -21,11 +21,33 @@ const Home = () => {
   const postList = async () => {
     try {
       const res = await postApi.getAllPosts();
-      setPosts(
-        res.data.data.posts.filter(
-          (post) => post.category === 'BOARD' || post.category === 'REVIEW',
-        ),
+      const filteredPosts = res.data.data.posts.filter(
+        (post) => post.category === 'BOARD' || post.category === 'REVIEW',
       );
+
+      const postsWithDefaultImage = await Promise.all(
+        filteredPosts.map(async (post) => {
+          try {
+            await new Promise((resolve, reject) => {
+              const img = new Image();
+              img.src = post.author.profile_url;
+              img.onload = resolve;
+              img.onerror = reject;
+            });
+            return post;
+          } catch (error) {
+            return {
+              ...post,
+              author: {
+                ...post.author,
+                profile_url: '/assets/img/elice_icon.png',
+              },
+            };
+          }
+        }),
+      );
+
+      setPosts(postsWithDefaultImage);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -108,15 +130,11 @@ const Home = () => {
             key={index}
             title={post.title}
             content={post.content}
-            src={
-              user.profile_url === ''
-                ? '/assets/img/elice_icon.png'
-                : user.profile_url
-            }
+            src={post.author.profile_url || '/assets/img/elice_icon.png'}
             likes={post.like_count}
             category={post.category}
-            username={post.author}
-            rate={user.roles}
+            username={post.author.name}
+            rate={post.author.roles}
             isHot={post.isPopular}
             createdAt={post.createdAt}
             contentLength="SHORT"
@@ -124,6 +142,9 @@ const Home = () => {
             handleOnClickPost={() =>
               navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
             }
+            existFollowBtn={user._id === post.author._id ? false : true}
+            existMoreBtn={user._id === post.author._id ? true : false}
+            isFollow={post.isFollowing}
           />
         ))}
       </S.BoardWrap>

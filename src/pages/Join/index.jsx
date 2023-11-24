@@ -374,6 +374,10 @@ function Join() {
             checked={checked}
             onChange={handleChangeCheckBox}
             text="(필수) 만 14세 이상 입니다."
+            textStyle={{
+              color: CS.color.contentSecondary,
+              font: CS.font.labelMedium,
+            }}
           />
         </S.CheckBoxWrap>
         <S.ButtonWrap>

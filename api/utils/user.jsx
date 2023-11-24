@@ -10,6 +10,7 @@ export const userApi = {
     await api.post('/users/login', { email: email, password: password }),
 
   // 정보조회(토큰) API
+  getLoginUserInfo: () => api.get(`/users/`),
 
   getUserInfo: () => api.get(`/users`),
   // 정보조회(ID) API
