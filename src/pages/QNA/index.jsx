@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -8,37 +10,72 @@ import CheckBox from '../../components/common/CheckBox';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
+import { userApi } from '../../../api/utils/user';
 
 const QNA = () => {
   const category = 'QNA';
-  const [selectedFilter, setSelectedFilter] = useState('latest');
+  const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [filter, setFilter] = useState('latest'); // 필터링 추가해야 됨
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
-  const handleFilterButtonClick = (filter) => {
-    setSelectedFilter(filter);
+  const navigate = useNavigate();
+
+  const handleFilterButtonClick = (newFilter) => {
+    setFilter(newFilter);
   };
 
   const handleCheckBoxChange = (e) => {
     if (e.target.checked) {
-      console.log('체크되었습니다.');
+      setFilteredPosts(posts.filter((post) => post.author === userInfo._id));
     } else {
-      console.log('해제되었습니다.');
+      filterAndSetPosts(filter);
+    }
+  };
+
+  const fetchUserInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      setUserInfo(res.data.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const res = await postApi.getCategoryPosts(category);
+      setPosts(res.data.data.posts);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const filterAndSetPosts = (currentFilter) => {
+    if (currentFilter === 'latest') {
+      setFilteredPosts(
+        posts.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+      );
+    } else if (currentFilter === 'reply') {
+      setFilteredPosts(
+        posts.slice().sort((a, b) => b.commentCount - a.commentCount),
+      );
+    } else {
+      setFilteredPosts(posts);
     }
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await postApi.getCategoryPosts(category);
-        setPosts(res.data.data.posts);
-        console.log(res.data.data.posts);
-      } catch (error) {
-        console.log('error: ', error.response.data);
-      }
-    };
+    fetchUserInfo();
+  }, []);
 
+  useEffect(() => {
     fetchPosts();
   }, []);
+
+  useEffect(() => {
+    filterAndSetPosts(filter);
+  }, [filter, posts]);
 
   return (
     <S.QNAWrap>
@@ -64,9 +101,7 @@ const QNA = () => {
               <FaCircle
                 size={12}
                 color={
-                  selectedFilter === 'latest'
-                    ? CS.color.positive
-                    : CS.color.secondary
+                  filter === 'latest' ? CS.color.positive : CS.color.secondary
                 }
               />
             }
@@ -85,9 +120,7 @@ const QNA = () => {
               <FaCircle
                 size={12}
                 color={
-                  selectedFilter === 'reply'
-                    ? CS.color.positive
-                    : CS.color.secondary
+                  filter === 'reply' ? CS.color.positive : CS.color.secondary
                 }
               />
             }
@@ -102,25 +135,28 @@ const QNA = () => {
         />
       </S.FilterBar>
       <S.PostList>
-        {posts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
           <S.PostWrap>
             <Post
               key={index}
               category={category}
-              src={''}
-              username={'post'}
-              rate="레이서"
+              src={''} // author
+              username={'post'} // author
+              rate={'레이서'} // author
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author}
-              isFollow={false}
-              existMoreBtn={false}
-              contentLength="LONG"
+              existFollowBtn={post.author !== userInfo._id}
+              isFollow={false} // follow 했는지 여부
+              existMoreBtn={post.author === userInfo._id}
+              contentLength={'LONG'}
               isHot={post.isPopular}
-              isLike={false}
-              likes={0}
+              isLike={false} // 좋아요 했는지 여부
+              likes={post.like_count}
               comments={post.commentCount}
+              handleOnClickPost={() =>
+                navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
+              }
             />
           </S.PostWrap>
         ))}

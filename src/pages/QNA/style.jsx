@@ -29,6 +29,7 @@ export const PostList = styled.div`
   width: 100%;
   padding-top: 0.5rem;
   padding-bottom: 100px;
+  background-color: ${CS.color.secondary};
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

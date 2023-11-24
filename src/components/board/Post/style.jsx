@@ -23,6 +23,7 @@ export const ContentWrapper = styled.div`
   padding: 4px 20px 20px 20px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 export const IconBar = styled.div`
   width: 100%;

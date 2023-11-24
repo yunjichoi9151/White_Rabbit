@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import NavBar from '../../components/common/NavBar';
@@ -8,6 +10,7 @@ import WriteButton from '../../components/board/WriteButton';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
+import { userApi } from '../../../api/utils/user';
 
 const CategoryText = {
   PROJECT: '프로젝트',
@@ -15,12 +18,27 @@ const CategoryText = {
 };
 
 const Recruitment = () => {
-  const [category, setCategory] = useState('PROJECT');
+  const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [category, setCategory] = useState('PROJECT');
+
+  const navigate = useNavigate();
 
   const handleCategoryClick = (category) => {
     setCategory(category);
   };
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const res = await userApi.getLoginUserInfo();
+        setUserInfo(res.data.data);
+      } catch (error) {
+        console.log('error: ', error.response.data);
+      }
+    };
+    fetchUserInfo();
+  }, []);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -88,20 +106,23 @@ const Recruitment = () => {
             <Post
               key={index}
               category={category}
-              src={''}
-              username={'post'}
-              rate="레이서"
+              src={''} // author
+              username={'post'} // author
+              rate={'레이서'} // author
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author}
-              isFollow={false}
-              existMoreBtn={false}
-              contentLength="LONG"
+              existFollowBtn={post.author !== userInfo._id}
+              isFollow={false} // follow 했는지 여부
+              existMoreBtn={post.author === userInfo._id}
+              contentLength={'LONG'}
               isHot={post.isPopular}
-              isLike={false}
-              likes={0}
+              isLike={false} // 좋아요 했는지 여부
+              likes={post.like_count}
               comments={post.commentCount}
+              handleOnClickPost={() =>
+                navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
+              }
             />
           </S.PostWrap>
         ))}
