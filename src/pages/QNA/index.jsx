@@ -1,44 +1,131 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
 import CheckBox from '../../components/common/CheckBox';
+import BasicModal from '../../components/common/BasicModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
+import { userApi } from '../../../api/utils/user';
+import { followApi } from '../../../api/utils/Follow';
+
+const sortType = {
+  NEW: 'new',
+  COMMENT: 'comment',
+};
+
+const userRateType = {
+  User: '레이서',
+  Coach: '코치',
+};
 
 const QNA = () => {
   const category = 'QNA';
-  const [selectedFilter, setSelectedFilter] = useState('latest');
+  const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [sort, setSort] = useState(sortType.NEW);
+  const [isMineOnly, setIsMineOnly] = useState(false);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
-  const handleFilterButtonClick = (filter) => {
-    setSelectedFilter(filter);
+  const navigate = useNavigate();
+
+  const fetchUserInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      setUserInfo(res.data.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const res = await postApi.getCategoryPosts(category, sort);
+      setPosts(res.data.data.posts);
+      filterMyPosts(res.data.data.posts);
+      console.log(res.data.data.posts);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const handleSortClick = (sortBy) => {
+    setSort(sortBy);
   };
 
   const handleCheckBoxChange = (e) => {
-    if (e.target.checked) {
-      console.log('체크되었습니다.');
+    setIsMineOnly(e.target.checked);
+  };
+
+  const handleFollowClick = async (clickedPost) => {
+    try {
+      // 추가/삭제 API 수정 필요
+      if (clickedPost.isFollowing) {
+        // await followApi.deleteFollow(userInfo._id, clickedPost.author._id);
+      } else {
+        // await followApi.postFollow(userInfo._id, clickedPost.author._id);
+      }
+      const updatedPosts = filteredPosts.map((post) => {
+        if (post._id === clickedPost._id) {
+          return { ...post, isFollowing: !post.isFollowing };
+        }
+        return post;
+      });
+
+      setFilteredPosts(updatedPosts);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const handleLikeClick = async (clickedPost) => {
+    try {
+      const res = await postApi.putLike(clickedPost._id);
+      const updatedPosts = filteredPosts.map((post) => {
+        if (post._id === clickedPost._id) {
+          return {
+            ...post,
+            isLiked: !post.isLiked,
+            like_count: post.isLiked
+              ? post.like_count - 1
+              : post.like_count + 1,
+          };
+        }
+        return post;
+      });
+
+      setFilteredPosts(updatedPosts);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const filterMyPosts = (posts) => {
+    if (isMineOnly) {
+      setFilteredPosts(
+        posts.filter((post) => post.author._id === userInfo._id),
+      );
     } else {
-      console.log('해제되었습니다.');
+      setFilteredPosts(posts);
     }
   };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await postApi.getCategoryPosts(category);
-        setPosts(res.data.data.posts);
-        console.log(res.data.data.posts);
-      } catch (error) {
-        console.log('error: ', error.response.data);
-      }
-    };
-
-    fetchPosts();
+    fetchUserInfo();
   }, []);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [sort]);
+
+  useEffect(() => {
+    filterMyPosts(posts);
+  }, [isMineOnly]);
 
   return (
     <S.QNAWrap>
@@ -64,16 +151,14 @@ const QNA = () => {
               <FaCircle
                 size={12}
                 color={
-                  selectedFilter === 'latest'
-                    ? CS.color.positive
-                    : CS.color.secondary
+                  sort === sortType.NEW ? CS.color.positive : CS.color.secondary
                 }
               />
             }
-            handleOnClickButton={() => handleFilterButtonClick('latest')}
+            handleOnClickButton={() => handleSortClick(sortType.NEW)}
           />
           <BasicButton
-            text="댓글 많은 순"
+            text="답변 많은 순"
             textStyle={{
               font: CS.font.labelSmall,
               padding: '4px',
@@ -85,42 +170,61 @@ const QNA = () => {
               <FaCircle
                 size={12}
                 color={
-                  selectedFilter === 'reply'
+                  sort === sortType.COMMENT
                     ? CS.color.positive
                     : CS.color.secondary
                 }
               />
             }
-            handleOnClickButton={() => handleFilterButtonClick('reply')}
+            handleOnClickButton={() => handleSortClick(sortType.COMMENT)}
           />
         </S.ButtonWrap>
         <CheckBox
           text={'내 질문만 보기'}
-          textColor={CS.color.contentSecondary}
-          style={{ padding: '4px', justifyContent: 'flex-end', margin: 0 }}
+          textStyle={{
+            color: CS.color.contentSecondary,
+            font: CS.font.labelSmall,
+          }}
+          style={{
+            padding: '4px',
+            justifyContent: 'flex-end',
+            margin: 0,
+          }}
           onChange={handleCheckBoxChange}
         />
       </S.FilterBar>
       <S.PostList>
-        {posts.map((post, index) => (
+        {/* <BasicModal children={'완료되었습니다.'} /> */}
+        {filteredPosts.map((post, index) => (
           <S.PostWrap>
             <Post
               key={index}
               category={category}
-              src={''}
-              username={'post'}
-              rate="레이서"
+              src={
+                post.author.profile_url === ''
+                  ? '/assets/img/elice_icon.png'
+                  : post.author.profile_url
+              }
+              username={post.author.name}
+              rate={userRateType[post.author.roles]}
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author}
-              isFollow={false}
-              existMoreBtn={false}
-              contentLength="LONG"
+              contentLength={'LONG'}
+              existFollowBtn={post.author._id !== userInfo._id}
+              isFollow={post.isFollowing}
+              existMoreBtn={post.author._id === userInfo._id}
               isHot={post.isPopular}
-              isLike={false}
-              likes={0}
+              isLike={post.isLiked}
+              likes={post.like_count}
               comments={post.commentCount}
+              handleOnClickPost={() =>
+                navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
+              }
+              // handleOnClickProfile={{}}
+              handleOnClickFollow={() => handleFollowClick(post)}
+              // handleOnClickDots={{}}
+              handleOnClickLikeBtn={() => handleLikeClick(post)}
             />
           </S.PostWrap>
         ))}
