@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { postApi } from '../../../api/utils/Post';
 import { ROUTER_LINK } from '../../router/routes';
 import { Navigate } from 'react-router';
 import Post from '../../components/board/Post';
@@ -6,14 +7,24 @@ import BasicText from '../../components/common/BasicText';
 import * as CS from '../../styles/CommonStyles';
 import * as S from './style';
 
-import userData from '../../test/user.json';
-import boardData from '../../test/board.json';
-
 function MyContent({ type }) {
-  const users = userData.data;
-  const board = boardData.data;
+  const [posts, setPosts] = useState([]);
 
-  console.log(board);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await postApi.getAllPosts();
+        setPosts(res.data.data.posts);
+        console.log(res.data.data.posts);
+      } catch (error) {
+        // alert('error: ' + error.response);
+        //.data.message
+        console.log('error: ', error.response.data.message);
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   // users._id === board.author
 
@@ -31,111 +42,30 @@ function MyContent({ type }) {
             paddingLeft: 28,
           }}
         />
-        <S.BoardWrap>
-          <Post
-            title={board.title}
-            content="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            src={
-              users.profile_url === ''
-                ? '/assets/img/elice_icon.png'
-                : users.profile_url
-            }
-            likes={board.like_count}
-            category={board.category}
-            username={users.name}
-            rate={users.roles}
-            createdAt={board.createdAt}
-            contentLength="SHORT"
-            comments={board.commentCount}
-            handleOnClickPost={() =>
-              Navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
-            }
-          />
-        </S.BoardWrap>
-        <S.BoardWrap>
-          <Post
-            title={board.title}
-            content="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            src={
-              users.profile_url === ''
-                ? '/assets/img/elice_icon.png'
-                : users.profile_url
-            }
-            likes={board.like_count}
-            category={board.category}
-            username={users.name}
-            rate={users.roles}
-            createdAt={board.createdAt}
-            contentLength="SHORT"
-            comments={board.commentCount}
-            handleOnClickPost={() =>
-              Navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
-            }
-          />
-        </S.BoardWrap>
-        <S.BoardWrap>
-          <Post
-            title={board.title}
-            content="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            src={
-              users.profile_url === ''
-                ? '/assets/img/elice_icon.png'
-                : users.profile_url
-            }
-            likes={board.like_count}
-            category={board.category}
-            username={users.name}
-            rate={users.roles}
-            createdAt={board.createdAt}
-            contentLength="SHORT"
-            comments={board.commentCount}
-            handleOnClickPost={() =>
-              Navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
-            }
-          />
-        </S.BoardWrap>
-        <S.BoardWrap>
-          <Post
-            title={board.title}
-            content="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            src={
-              users.profile_url === ''
-                ? '/assets/img/elice_icon.png'
-                : users.profile_url
-            }
-            likes={board.like_count}
-            category={board.category}
-            username={users.name}
-            rate={users.roles}
-            createdAt={board.createdAt}
-            contentLength="SHORT"
-            comments={board.commentCount}
-            handleOnClickPost={() =>
-              Navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
-            }
-          />
-        </S.BoardWrap>
-        <S.BoardWrap>
-          <Post
-            title={board.title}
-            content="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
-            src={
-              users.profile_url === ''
-                ? '/assets/img/elice_icon.png'
-                : users.profile_url
-            }
-            likes={board.like_count}
-            category={board.category}
-            username={users.name}
-            rate={users.roles}
-            createdAt={board.createdAt}
-            contentLength="SHORT"
-            comments={board.commentCount}
-            handleOnClickPost={() =>
-              Navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
-            }
-          />
-        </S.BoardWrap>
+        <S.PostList>
+          {posts.map((post, index) => (
+            <S.PostWrap>
+              <Post
+                key={index}
+                category={category}
+                src={''}
+                username={'post'}
+                rate="레이서"
+                createdAt={post.createdAt}
+                title={post.title}
+                content={post.content}
+                existFollowBtn={post.author}
+                isFollow={false}
+                existMoreBtn={false}
+                contentLength="LONG"
+                isHot={post.isPopular}
+                isLike={false}
+                likes={0}
+                comments={post.commentCount}
+              />
+            </S.PostWrap>
+          ))}
+        </S.PostList>
       </S.Container>
     </>
   );

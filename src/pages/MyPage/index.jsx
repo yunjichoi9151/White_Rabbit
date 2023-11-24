@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { userApi } from '../../../api/utils/user';
 import { ROUTER_LINK } from '../../router/routes';
 import { IoSettingsOutline } from 'react-icons/io5';
@@ -19,26 +19,27 @@ const MyPage = () => {
   //user 정보
   const [user, setUser] = useState({});
   const [follow, setFollow] = useState({});
-  const { userId } = useParams();
+  const navigate = useNavigate();
 
   const userInfo = async () => {
     try {
-      const res = await userApi.getUserInfoById(userId);
-      setUser(res.data.data.user);
+      const res = await userApi.getUserInfo();
+      setUser(res.data.data);
       console.log('res', res);
     } catch (error) {
-      console.log(error);
+      console.log('error: ', error.response.data.message);
     }
   };
-  const users = userData.data;
 
+  console.log('user', user);
   const followInfo = async () => {
     try {
-      const res = await userApi.follow(userId);
+      console.log('user', user);
+      const res = await userApi.follow(user._id);
       setFollow(res.data.data.follow);
-      console.log('res', res);
+      // console.log('res', res);
     } catch (error) {
-      console.log(error);
+      // console.log('error: ', error.response.data.message);
     }
   };
 
@@ -56,8 +57,21 @@ const MyPage = () => {
 
   useEffect(() => {
     userInfo();
-    followInfo();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      followInfo();
+    }
+  }, [user]);
+
+  const handleOnClickFollow = () => {
+    navigate(ROUTER_LINK.FOLLOW.link);
+  };
+
+  const handleOnClickFollowing = () => {
+    navigate(ROUTER_LINK.FOLLOW.link);
+  };
 
   return (
     <>
@@ -71,12 +85,12 @@ const MyPage = () => {
         />
         <S.ProfileWrap>
           <ProfileBar
-            username={users.name}
-            rate={users.roles}
-            genType={users.generation_type}
-            genNum={users.generation_number + '기'}
+            username={user.name}
+            rate={user.roles}
+            genType={user.generation_type}
+            genNum={user.generation_number + '기'}
             existGeneration={true}
-            src={users.profile_url}
+            src={user.profile_url}
             isEditable={false}
             profileSize={2}
             existFollow={true}
@@ -86,6 +100,8 @@ const MyPage = () => {
               margin: 20,
               height: 'auto',
             }}
+            onClickFollower={handleOnClickFollow}
+            onClickFollowing={handleOnClickFollowing}
           />
           <Link to={ROUTER_LINK.PROFILEEDIT.path}>
             <IoSettingsOutline
@@ -110,7 +126,7 @@ const MyPage = () => {
         </S.TabWrap>
 
         {tabName === 'profile' && <SkillLinkPage />}
-        {/* //post api -> user id === user api -> user id ? <MyContent /> : <EmptyContent /> */}
+        {/* //post api -> user id === user api -> user id ? <MyContent type="content" /> : <EmptyContent type="content"/> */}
         {/* {tabName === 'content' && <EmptyContent type="content" />} */}
         {tabName === 'content' && <MyContent type="content" />}
 

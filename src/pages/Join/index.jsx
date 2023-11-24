@@ -56,10 +56,10 @@ function Join() {
   //   confirmPwd: '',
   // });
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPwd, setConfirmPwd] = useState('');
+  const [name, setName] = useState('엘리스');
+  const [email, setEmail] = useState('elice@naver.com');
+  const [password, setPassword] = useState('qwer1234!');
+  const [confirmPwd, setConfirmPwd] = useState('qwer1234!');
 
   // const focusRef = useRef(null);
 
@@ -117,23 +117,32 @@ function Join() {
     setRoles(e.target.value);
   };
 
-  const onClickButton = async () => {
+  const onClickButton = async (e) => {
+    e.preventDefault();
     if (!isNameValid) {
       alert('1글자 이상 20글자 미만으로 입력해주세요.');
+      return;
     } else if (!isEmailValid) {
       alert('이메일 형식이 올바르지 않습니다.');
+      return;
     } else if (!isPwdValid) {
       alert('영문, 숫자, 특수기호 포함 8자리 이상 입력해주세요.');
+      return;
     } else if (!isConfirmPwd) {
       alert('비밀번호가 일치하지 않습니다.');
+      return;
     } else if (!checked) {
       alert('(필수) 만 14세 이상 입니다.');
+      return;
     } else if (genType === '') {
       alert('트랙을 선택해주세요.');
+      return;
     } else if (genNum === '') {
       alert('기수를 선택해주세요.');
+      return;
     } else if (roles === '') {
       alert('등급을 선택해주세요.');
+      return;
     }
 
     /// {API} ///
@@ -142,8 +151,10 @@ function Join() {
         name,
         email,
         password,
+        generation_type: genType,
+        generation_number: Number(genNum),
       });
-      if (res.status === 200) {
+      if (res.status === 201) {
         console.log(res.data);
 
         navigate(ROUTER_LINK.LANDING.link);
@@ -178,10 +189,9 @@ function Join() {
           label="이름"
           subTextProps={{
             type: 'show',
-            text: '0/20',
+            text: `${name.length}/20`,
           }}
           inputProps={{
-            // id: 'nameInput',
             value: name,
             onChange: onChangeName,
             placeholder: '프로필 이름',
@@ -199,7 +209,6 @@ function Join() {
             onChange: onChangeEmail,
             placeholder: 'example@elice.com',
             name: 'inputIdValue',
-            // ref: focusRef,
           }}
           buttonElement={false}
         />
@@ -210,7 +219,7 @@ function Join() {
           }}
           inputProps={{
             value: password,
-            // type: 'password',
+            type: 'password',
             onChange: onChangePwd,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
             name: 'inputPwValue',
@@ -224,7 +233,7 @@ function Join() {
           }}
           inputProps={{
             value: confirmPwd,
-            // type: 'password',
+            type: 'password',
             onChange: onChangeConfirmPwd,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
             name: 'inputPwCheckValue',
@@ -246,6 +255,7 @@ function Join() {
           </S.TextWrap>
           <S.SelectBarWrap>
             <SelectBar
+              value={genType}
               style={{
                 display: 'flex',
                 flex: 2,
@@ -268,14 +278,23 @@ function Join() {
                   name: '트랙 선택',
                   style: { display: 'none' },
                 },
-                { key: 'SW', value: 'SW', name: 'SW 엔지니어 트랙' },
-                { key: 'AI', value: 'AI', name: '웹 풀스택 X AI 트랙 ' },
-                { key: 'Cloud', value: 'Cloud', name: 'Cloud 트랙 ' },
-                { key: 'IoT', value: 'IoT', name: 'IoT 트랙 ' },
+                {
+                  key: 'SW',
+                  value: 'SW 엔지니어 트랙',
+                  name: 'SW 엔지니어 트랙',
+                },
+                {
+                  key: 'AI',
+                  value: '웹 풀스택 X AI 트랙',
+                  name: '웹 풀스택 X AI 트랙',
+                },
+                { key: 'Cloud', value: 'Cloud 트랙', name: 'Cloud 트랙' },
+                { key: 'IoT', value: 'IoT 트랙', name: 'IoT 트랙' },
               ]}
               onChange={handleChangegenType}
             />
             <SelectBar
+              value={genNum}
               style={{
                 display: 'flex',
                 flex: 1,
@@ -323,6 +342,7 @@ function Join() {
           </S.TextWrap>
 
           <SelectBar
+            value={roles}
             style={{
               display: 'flex',
               flex: 1,
@@ -361,19 +381,6 @@ function Join() {
           />
         </S.CheckBoxWrap>
         <S.ButtonWrap>
-          {/* <Link
-            to={ROUTER_LINK.LANDING.link}
-            style={{
-              backgroundColor: CS.color.primary,
-
-              height: 50,
-              borderRadius: 15,
-              flex: 1,
-
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          > */}
           <BasicButton
             handleOnClickButton={onClickButton}
             text="회원가입"
@@ -383,16 +390,13 @@ function Join() {
             }}
             btnStyle={{
               backgroundColor: CS.color.primary,
-
               height: 50,
               borderRadius: 15,
               flex: 1,
-
               display: 'flex',
               justifyContent: 'center',
             }}
           />
-          {/* </Link> */}
         </S.ButtonWrap>
       </S.Container>
     </>
