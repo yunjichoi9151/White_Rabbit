@@ -15,7 +15,6 @@ import ProfileEdit from '../pages/ProfileEdit';
 import Detail from '../pages/Detail';
 import Write from '../pages/Write';
 import Admin from '../pages/Admin';
-import Follow from '../pages/Follow';
 
 export const ROUTER_LINK = {
   LANDING: { path: '/', link: '/' },
@@ -32,7 +31,6 @@ export const ROUTER_LINK = {
   DETAIL: { path: '/post/:postId', link: '/post' },
   WRITE: { path: '/write', link: '/write' },
   ADMIN: { path: '/admin', link: '/admin' },
-  FOLLOW: { path: '/follow', link: '/follow' },
 };
 
 const router = createBrowserRouter([
@@ -95,10 +93,6 @@ const router = createBrowserRouter([
       {
         path: ROUTER_LINK.WRITE.path,
         element: <Write />,
-      },
-      {
-        path: ROUTER_LINK.FOLLOW.path,
-        element: <Follow />,
       },
     ],
   },

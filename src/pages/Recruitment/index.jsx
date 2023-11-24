@@ -163,7 +163,7 @@ const Recruitment = () => {
               isFollow={post.isFollowing}
               existMoreBtn={post.author === userInfo._id}
               contentLength={'LONG'}
-              isHot={post.isPopular}
+              // isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
               comments={post.commentCount}
