@@ -11,8 +11,8 @@ const Landing = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    inputIdValue: '',
-    inputPwValue: '',
+    inputIdValue: 'elice@elice.com',
+    inputPwValue: 'elice',
   });
 
   const onChange = (e) => {
@@ -24,7 +24,7 @@ const Landing = () => {
     }));
   };
 
-  /////// API /////////
+  /////// { API } /////////
   const handleLogin = async () => {
     try {
       const { inputIdValue, inputPwValue } = form;
@@ -35,7 +35,8 @@ const Landing = () => {
         navigate('/home');
       }
     } catch (error) {
-      alert('error: ' + error.response.data.message);
+      alert('error: ', error.response.data.message);
+      console.log('error: ', error.response.data.message);
     }
   };
 

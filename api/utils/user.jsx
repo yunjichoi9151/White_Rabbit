@@ -6,11 +6,12 @@ export const userApi = {
   signUp: (userData) => api.post('/users', userData),
 
   // 로그인 API
-  login: (email, password) =>
-    api.post('/users/login', { email: email, password: password }),
+  login: async (email, password) =>
+    await api.post('/users/login', { email: email, password: password }),
 
   // 정보조회(토큰) API
 
+  getUserInfo: () => api.get(`/users`),
   // 정보조회(ID) API
   getUserInfoById: (userId) => api.get(`/users/${userId}`),
 
@@ -28,5 +29,17 @@ export const userApi = {
   resetPassword: (userData) => api.post('/users/password/reset', userData),
 
   //팔로우 전체 수 조회 API
-  follow: (userId) => api.get(`users/${userId}/follow/number`),
+  follow: (userId) => api.get(`/users/follow/number/${userId}`),
+
+  //새로운 링크 추가 API
+  links: (userId) => api.put(`/users/links/${userId}`),
+
+  //특정 사용자의 모든 링크 조회 API
+  userLinks: (userId) => api.get(`/users/links/${userId}`),
+
+  //유저 스킬 추가 API
+  // skill: (userId) => api.patch(`/users/skill/add/${userId}`),
+
+  //스킬 검색 API
+  skillSearch: (skill) => api.get(`/skills/search/${skill}`),
 };

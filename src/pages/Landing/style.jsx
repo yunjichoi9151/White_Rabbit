@@ -50,6 +50,5 @@ export const PwStyle = styled.div`
   color: #a6a6a6; //CS.color.contentTertiary;
   display: flex;
   justify-content: right;
-  margin-right: 20px;
-  margin-top: 20px;
+  margin: 20px;
 `;

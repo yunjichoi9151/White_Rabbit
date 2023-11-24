@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { userApi } from '../../../api/utils/user';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
@@ -19,6 +20,24 @@ function NewLink() {
     }));
   };
 
+  /////// { API } /////////
+  const handleNewLink = async () => {
+    try {
+      const { inputLinkValue, inputTitleValue } = form;
+
+      const res = await userApi.links(inputLinkValue, inputTitleValue);
+
+      if (res.status === 200) {
+        navigate('/mypage');
+      }
+    } catch (error) {
+      alert('error: ' + error.response.data.message);
+      console.log('error: ', error.response.data.message);
+    }
+  };
+
+  /////////////////
+
   return (
     <S.IntroNewLinkWrapper>
       <Header
@@ -31,6 +50,7 @@ function NewLink() {
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
         }}
         leftOnClickEvent={() => navigate(-1)}
+        rightOnClickEvent={handleNewLink}
       />
       <InputBox
         label="링크 연결"

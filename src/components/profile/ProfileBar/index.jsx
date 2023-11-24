@@ -33,6 +33,8 @@ const ProfileBar = ({
   handleOnClickFollow,
   handleOnClickDots,
   style,
+  onClickFollower,
+  onClickFollowing,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
 
@@ -71,10 +73,19 @@ const ProfileBar = ({
             <BasicText text={rate} style={{ font: CS.font.paragraphSmall }} />
           )}
           {existFollow && (
-            <BasicText
-              text={`팔로워 ${followers} 팔로잉 ${followings}`}
-              style={{ font: CS.font.paragraphSmall }}
-            />
+            <div style={{ display: 'flex' }}>
+              <BasicText
+                onClick={onClickFollower}
+                text={`팔로워 ${followers}`}
+                style={{ font: CS.font.paragraphSmall }}
+              />
+
+              <BasicText
+                onClick={onClickFollowing}
+                text={`팔로잉 ${followings}`}
+                style={{ font: CS.font.paragraphSmall }}
+              />
+            </div>
           )}
         </S.InfoBox>
         {existFollowBtn && (
