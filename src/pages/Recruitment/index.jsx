@@ -160,7 +160,7 @@ const Recruitment = () => {
                   : post.author.profile_url
               }
               username={post.author.name}
-              rate={userRateType[post.author.roles]}
+              rate={post.author.roles}
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}

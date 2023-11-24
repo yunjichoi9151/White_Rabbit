@@ -19,11 +19,6 @@ const sortType = {
   COMMENT: 'comment',
 };
 
-const userRateType = {
-  User: '레이서',
-  Coach: '코치',
-};
-
 const QNA = () => {
   const category = 'QNA';
   const [userInfo, setUserInfo] = useState([]);
@@ -206,7 +201,7 @@ const QNA = () => {
                   : post.author.profile_url
               }
               username={post.author.name}
-              rate={userRateType[post.author.roles]}
+              rate={post.author.roles}
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
