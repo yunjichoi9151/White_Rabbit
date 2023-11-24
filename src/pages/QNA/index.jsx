@@ -83,9 +83,9 @@ const QNA = () => {
     }
   };
 
-  const handleLikeClick = (clickedPost) => {
+  const handleLikeClick = async (clickedPost) => {
     try {
-      const res = postApi.putLike(clickedPost._id);
+      const res = await postApi.putLike(clickedPost._id);
       const updatedPosts = filteredPosts.map((post) => {
         if (post._id === clickedPost._id) {
           return {

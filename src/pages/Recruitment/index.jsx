@@ -17,6 +17,11 @@ const CategoryText = {
   STUDY: '스터디',
 };
 
+const userRateType = {
+  User: '레이서',
+  Coach: '코치',
+};
+
 const Recruitment = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -26,6 +31,49 @@ const Recruitment = () => {
 
   const handleCategoryClick = (category) => {
     setCategory(category);
+  };
+
+  const handleFollowClick = async (clickedPost) => {
+    try {
+      // 추가/삭제 API 수정 필요
+      if (clickedPost.isFollowing) {
+        // await followApi.deleteFollow(userInfo._id, clickedPost.author._id);
+      } else {
+        // await followApi.postFollow(userInfo._id, clickedPost.author._id);
+      }
+      const updatedPosts = posts.map((post) => {
+        if (post._id === clickedPost._id) {
+          return { ...post, isFollowing: !post.isFollowing };
+        }
+        return post;
+      });
+
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const handleLikeClick = async (clickedPost) => {
+    try {
+      const res = await postApi.putLike(clickedPost._id);
+      const updatedPosts = posts.map((post) => {
+        if (post._id === clickedPost._id) {
+          return {
+            ...post,
+            isLiked: !post.isLiked,
+            like_count: post.isLiked
+              ? post.like_count - 1
+              : post.like_count + 1,
+          };
+        }
+        return post;
+      });
+
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
   };
 
   useEffect(() => {
@@ -106,23 +154,31 @@ const Recruitment = () => {
             <Post
               key={index}
               category={category}
-              src={''} // author
-              username={'post'} // author
-              rate={'레이서'} // author
+              src={
+                post.author.profile_url === ''
+                  ? '/assets/img/elice_icon.png'
+                  : post.author.profile_url
+              }
+              username={post.author.name}
+              rate={userRateType[post.author.roles]}
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
               existFollowBtn={post.author !== userInfo._id}
-              isFollow={false} // follow 했는지 여부
+              isFollow={post.isFollowing}
               existMoreBtn={post.author === userInfo._id}
               contentLength={'LONG'}
               isHot={post.isPopular}
-              isLike={false} // 좋아요 했는지 여부
+              isLike={post.isLiked}
               likes={post.like_count}
               comments={post.commentCount}
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
+              // handleOnClickProfile={{}}
+              handleOnClickFollow={() => handleFollowClick(post)}
+              // handleOnClickDots={{}}
+              handleOnClickLikeBtn={() => handleLikeClick(post)}
             />
           </S.PostWrap>
         ))}
