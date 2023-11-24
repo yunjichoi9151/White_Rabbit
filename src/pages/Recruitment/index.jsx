@@ -17,11 +17,6 @@ const CategoryText = {
   STUDY: '스터디',
 };
 
-const userRateType = {
-  User: '레이서',
-  Coach: '코치',
-};
-
 const Recruitment = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
