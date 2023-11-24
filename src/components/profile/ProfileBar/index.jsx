@@ -36,6 +36,12 @@ const ProfileBar = ({
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
 
+  const userLabelText = {
+    USER: '레이서',
+    ADMIN: '관리자',
+    COACH: '코치',
+  };
+
   useEffect(() => {
     setTimeAgo(convertTimeAgo(createdAt));
   }, [createdAt]);
@@ -43,12 +49,11 @@ const ProfileBar = ({
   return (
     <>
       <S.Wrapper style={style}>
-        <div onClick={handleOnClickBar}>
-          <ProfileImg
-            src={src}
-            style={{ width: ProfileImgSize[profileSize] }}
-          />
-        </div>
+        <ProfileImg
+          src={src}
+          style={{ width: ProfileImgSize[profileSize] }}
+          onClickEvent={handleOnClickBar}
+        />
         <S.InfoBox onClick={handleOnClickBar}>
           <BasicText text={username} style={{ font: CS.font.labelSmall }} />
           {existGeneration && (
@@ -59,7 +64,7 @@ const ProfileBar = ({
           )}
           {existTimeAgo ? (
             <BasicText
-              text={`${rate} ･ ${timeAgo}`}
+              text={`${userLabelText[rate.toUpperCase()]} ･ ${timeAgo}`}
               style={{ font: CS.font.paragraphSmall }}
             />
           ) : (
@@ -89,9 +94,20 @@ const ProfileBar = ({
           />
         )}
         {existMoreBtn && (
-          <S.MoreBtn onClick={handleOnClickDots} style={{}}>
+          <BasicButton
+            existIcon={true}
+            existText={false}
+            handleOnClickButton={handleOnClickDots}
+            btnStyle={{
+              width: '24px',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <BsThreeDotsVertical size="24px" color={CS.color.contentTertiary} />
-          </S.MoreBtn>
+          </BasicButton>
         )}
       </S.Wrapper>
     </>
