@@ -17,11 +17,6 @@ const CategoryText = {
   STUDY: '스터디',
 };
 
-const userRateType = {
-  User: '레이서',
-  Coach: '코치',
-};
-
 const Recruitment = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -168,7 +163,7 @@ const Recruitment = () => {
               isFollow={post.isFollowing}
               existMoreBtn={post.author === userInfo._id}
               contentLength={'LONG'}
-              isHot={post.isPopular}
+              // isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
               comments={post.commentCount}

@@ -209,7 +209,7 @@ const QNA = () => {
               existFollowBtn={post.author._id !== userInfo._id}
               isFollow={post.isFollowing}
               existMoreBtn={post.author._id === userInfo._id}
-              isHot={post.isPopular}
+              // isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
               comments={post.commentCount}
