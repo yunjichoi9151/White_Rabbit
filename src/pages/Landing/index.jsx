@@ -76,6 +76,7 @@ const Landing = () => {
             type: 'none',
           }}
           inputProps={{
+            type: 'password',
             value: form['inputPwValue'],
             onChange: onChange,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',

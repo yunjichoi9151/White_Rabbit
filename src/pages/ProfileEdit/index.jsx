@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { userApi } from '../../../api/utils/user';
+import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import ProfileImg from '../../components/common/ProfileImg';
 import Header from '../../components/common/Header';
+import { useNavigate, useParams } from 'react-router';
+
+import userData from '../../test/user.json';
 
 function ProfileEdit() {
+  //user 정보
+  const [user, setUser] = useState({});
+  const { userId } = useParams();
+
+  const userInfo = async () => {
+    try {
+      const res = await userApi.getUserInfoById(userId);
+      setUser(res.data.data.user);
+      console.log('res', res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const users = userData.data;
+
+  useEffect(() => {
+    userInfo();
+  }, []);
+
   const [form, setForm] = useState({
     inputNameValue: '',
     inputIdValue: '',
   });
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     setForm((prev) => ({
@@ -22,7 +47,7 @@ function ProfileEdit() {
   };
 
   return (
-    <div style={{ paddingTop: 64 }}>
+    <S.ProfileEditWrapper>
       <Header
         typeLeft={'BACK'}
         typeCenter={'TEXT'}
@@ -33,6 +58,7 @@ function ProfileEdit() {
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
         }}
         rightOnClickEvent={handleClickDone}
+        leftOnClickEvent={() => navigate(-1)}
       />
       <ProfileImg
         src="/assets/img/account.png"
@@ -51,8 +77,8 @@ function ProfileEdit() {
         }}
         inputProps={{
           value: form['inputNameValue'],
-          handleOnChangeValue: onChange,
-          placeholder: '프로필 이름',
+          onChange: onChange,
+          placeholder: users.name,
           name: 'inputNameValue',
         }}
         buttonElement={false}
@@ -64,8 +90,8 @@ function ProfileEdit() {
         }}
         inputProps={{
           value: form['inputIdValue'],
-          handleOnChangeValue: onChange,
-          placeholder: 'example@elice.com',
+          onChange: onChange,
+          placeholder: users.email,
           name: 'inputIdValue',
         }}
         buttonElement={false}
@@ -77,8 +103,9 @@ function ProfileEdit() {
         }}
         inputProps={{
           value: form['inputStageValue'],
-          handleOnChangeValue: onChange,
-          placeholder: 'SW 엔지니어 트랙 6기',
+
+          placeholder:
+            users.generation_type + ' ' + users.generation_number + '기',
           name: 'inputStageValue',
           isReadOnly: 'true',
         }}
@@ -92,15 +119,15 @@ function ProfileEdit() {
         }}
         inputProps={{
           value: form['inputRatingCheckValue'],
-          handleOnChangeValue: onChange,
-          placeholder: '레이서',
+
+          placeholder: users.roles,
           name: 'inputRatingCheckValue',
           isReadOnly: 'true',
         }}
         signType="none"
         buttonElement={false}
       />
-    </div>
+    </S.ProfileEditWrapper>
   );
 }
 

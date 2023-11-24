@@ -4,8 +4,10 @@ import BasicInput from '../BasicInput';
 
 const InputBar = ({
   id,
+  src,
   type,
   value,
+  accept,
   handleOnChangeValue,
   handleOnKeyDownValue,
   placeholder = '',
@@ -23,6 +25,8 @@ const InputBar = ({
         id={id}
         type={type}
         value={value}
+        accept={accept}
+        src={src}
         onChange={handleOnChangeValue}
         onKeyDown={handleOnKeyDownValue}
         placeholder={placeholder}

@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const IntroNewSkillWrapper = styled.div`
+  padding-top: 64px;
+`;
+
 export const ChoiceSkill = styled.div`
   display: flex;
   flex-direction: column;

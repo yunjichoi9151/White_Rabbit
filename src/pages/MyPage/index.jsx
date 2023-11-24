@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { userApi } from '../../../api/utils/user';
 import { ROUTER_LINK } from '../../router/routes';
 import { IoSettingsOutline } from 'react-icons/io5';
 import * as S from './style';
@@ -11,7 +12,38 @@ import BasicButton from '../../components/common/BasicButton';
 import EmptyContent from '../EmptyContent';
 import Header from '../../components/common/Header';
 
+import userData from '../../test/user.json';
+import MyContent from '../MyContent';
+
 const MyPage = () => {
+  //user 정보
+  const [user, setUser] = useState({});
+  const [follow, setFollow] = useState({});
+  const { userId } = useParams();
+
+  const userInfo = async () => {
+    try {
+      const res = await userApi.getUserInfoById(userId);
+      setUser(res.data.data.user);
+      console.log('res', res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const users = userData.data;
+
+  const followInfo = async () => {
+    try {
+      const res = await userApi.follow(userId);
+      setFollow(res.data.data.follow);
+      console.log('res', res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //follow 수
+
   const handleOnClickButton = () => {
     alert('로그아웃 하시겠습니까?');
   };
@@ -21,6 +53,11 @@ const MyPage = () => {
   const handleClickTab = (tabKey) => {
     setTabName(tabKey);
   };
+
+  useEffect(() => {
+    userInfo();
+    followInfo();
+  }, []);
 
   return (
     <>
@@ -34,17 +71,17 @@ const MyPage = () => {
         />
         <S.ProfileWrap>
           <ProfileBar
-            username="김엘리스"
-            rate="레이서"
-            genType={'SW 엔지니어 트랙'}
-            genNum={'6기'}
+            username={users.name}
+            rate={users.roles}
+            genType={users.generation_type}
+            genNum={users.generation_number + '기'}
             existGeneration={true}
-            src="/assets/img/account.png"
+            src={users.profile_url}
             isEditable={false}
             profileSize={2}
             existFollow={true}
-            followers={30}
-            followings={30}
+            followers={follow.followingNumber}
+            followings={follow.followerNumber}
             style={{
               margin: 20,
               height: 'auto',
@@ -73,7 +110,10 @@ const MyPage = () => {
         </S.TabWrap>
 
         {tabName === 'profile' && <SkillLinkPage />}
-        {tabName === 'content' && <EmptyContent type="content" />}
+        {/* //post api -> user id === user api -> user id ? <MyContent /> : <EmptyContent /> */}
+        {/* {tabName === 'content' && <EmptyContent type="content" />} */}
+        {tabName === 'content' && <MyContent type="content" />}
+
         {tabName === 'reply' && <EmptyContent type="reply" />}
         <S.LogoutBtn
           style={{

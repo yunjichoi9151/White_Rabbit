@@ -31,7 +31,7 @@ function CheckBox({
           text={text}
           style={{
             color: textColor,
-            font: CS.font.labelSmall,
+            font: CS.font.labelMedium,
           }}
         />
       ) : (

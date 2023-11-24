@@ -27,4 +27,7 @@ export const userApi = {
 
   // 비밀번호 재설정 API
   resetPassword: (userData) => api.post('/users/password/reset', userData),
+
+  //팔로우 전체 수 조회 API
+  follow: (userId) => api.get(`users/${userId}/follow/number`),
 };
