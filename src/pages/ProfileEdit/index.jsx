@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { userApi } from '../../../api/utils/user';
+import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import ProfileImg from '../../components/common/ProfileImg';
@@ -46,7 +47,7 @@ function ProfileEdit() {
   };
 
   return (
-    <div style={{ paddingTop: 64 }}>
+    <S.ProfileEditWrapper>
       <Header
         typeLeft={'BACK'}
         typeCenter={'TEXT'}
@@ -126,7 +127,7 @@ function ProfileEdit() {
         signType="none"
         buttonElement={false}
       />
-    </div>
+    </S.ProfileEditWrapper>
   );
 }
 

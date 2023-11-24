@@ -20,7 +20,7 @@ function NewLink() {
   };
 
   return (
-    <div style={{ paddingTop: 64 }}>
+    <S.IntroNewLinkWrapper>
       <Header
         typeLeft={'BACK'}
         typeCenter={'TEXT'}
@@ -59,7 +59,7 @@ function NewLink() {
         }}
         buttonElement={false}
       />
-    </div>
+    </S.IntroNewLinkWrapper>
   );
 }
 

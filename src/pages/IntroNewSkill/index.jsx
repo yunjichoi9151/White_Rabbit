@@ -21,7 +21,7 @@ function NewSkill({ inputProps }) {
     }));
   };
   return (
-    <div style={{ paddingTop: 64 }}>
+    <S.IntroNewSkillWrapper>
       <Header
         typeLeft={'BACK'}
         typeCenter={'TEXT'}
@@ -81,7 +81,7 @@ function NewSkill({ inputProps }) {
         <SkillText text="javascript" existIcon={false} choice={true} />
         <SkillText text="java" existIcon={false} choice={false} />
       </S.Search>
-    </div>
+    </S.IntroNewSkillWrapper>
   );
 }
 
