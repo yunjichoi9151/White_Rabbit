@@ -1,19 +1,21 @@
 import React from 'react';
 import * as S from './style';
 
-const SelectBar = ({
-  style,
-  options = [
-    { key: 'apple', value: 'apple', name: '사과' },
-    { key: 'banana', value: 'banana', name: '바나나' },
-    { key: 'orange', value: 'orange', name: '오렌지' },
-  ],
-  onChange,
-  value,
-  name,
-}) => {
+const SelectBar = ({ style, options, onChange, value, name }) => {
+  const handleSelectChange = (e) => {
+    const selectValue = e.target.value;
+    if (onChange) {
+      onChange(selectValue);
+    }
+  };
+
   return (
-    <S.SelectBar style={style} onChange={onChange} value={value} name={name}>
+    <S.SelectBar
+      style={style}
+      onChange={handleSelectChange}
+      value={value}
+      name={name}
+    >
       {options.map((option) => (
         <option key={option.key} value={option.value} style={option.style}>
           {option.name}
