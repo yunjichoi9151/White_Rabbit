@@ -20,7 +20,7 @@ function LinkEdit() {
   };
 
   return (
-    <div style={{ paddingTop: 64 }}>
+    <S.LinkEditWrapper>
       <Header
         typeLeft={'BACK'}
         typeCenter={'TEXT'}
@@ -60,7 +60,7 @@ function LinkEdit() {
         }}
         buttonElement={false}
       />
-    </div>
+    </S.LinkEditWrapper>
   );
 }
 
