@@ -48,6 +48,7 @@ const QNA = () => {
       const res = await postApi.getCategoryPosts(category, sort);
       setPosts(res.data.data.posts);
       filterMyPosts(res.data.data.posts);
+      console.log(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error.response.data);
     }
@@ -61,22 +62,44 @@ const QNA = () => {
     setIsMineOnly(e.target.checked);
   };
 
-  const handleFollowClick = (index, isFollowing, toUser) => {
+  const handleFollowClick = async (clickedPost) => {
     try {
-      // if (isFollowing) {
-      //   followApi.deleteFollow(userInfo._id, toUser._id);
-      // } else {
-      //   followApi.postFollow(userInfo._id, toUser._id);
-      // }
-      // console.log(isFollowing, toUser);
-      setFilteredPosts((prevPosts) => {
-        const updatedPosts = [...prevPosts];
-        console.log('1' + updatedPosts[index].isFollow);
-        updatedPosts[index].isFollow = !updatedPosts[index].isFollow;
-        console.log('2' + updatedPosts[index].isFollow);
-        console.log('=============');
-        return updatedPosts;
+      // 추가/삭제 API 수정 필요
+      if (clickedPost.isFollowing) {
+        // await followApi.deleteFollow(userInfo._id, clickedPost.author._id);
+      } else {
+        // await followApi.postFollow(userInfo._id, clickedPost.author._id);
+      }
+      const updatedPosts = filteredPosts.map((post) => {
+        if (post._id === clickedPost._id) {
+          return { ...post, isFollowing: !post.isFollowing };
+        }
+        return post;
       });
+
+      setFilteredPosts(updatedPosts);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const handleLikeClick = (clickedPost) => {
+    try {
+      const res = postApi.putLike(clickedPost._id);
+      const updatedPosts = filteredPosts.map((post) => {
+        if (post._id === clickedPost._id) {
+          return {
+            ...post,
+            isLiked: !post.isLiked,
+            like_count: post.isLiked
+              ? post.like_count - 1
+              : post.like_count + 1,
+          };
+        }
+        return post;
+      });
+
+      setFilteredPosts(updatedPosts);
     } catch (error) {
       console.log('error: ', error.response.data);
     }
@@ -199,11 +222,9 @@ const QNA = () => {
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
               // handleOnClickProfile={{}}
-              handleOnClickFollow={() =>
-                handleFollowClick(1, post.isFollowing, post.author)
-              }
+              handleOnClickFollow={() => handleFollowClick(post)}
               // handleOnClickDots={{}}
-              // handleOnClickLikeBtn={{}}
+              handleOnClickLikeBtn={() => handleLikeClick(post)}
             />
           </S.PostWrap>
         ))}
