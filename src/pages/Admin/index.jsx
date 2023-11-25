@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -7,10 +7,13 @@ import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
 import TableHeader from '../../components/admin/TableHeader';
 import TableRow from '../../components/admin/TableRow';
+import { skillApi } from '../../../api/utils/skill';
+import { userApi } from '../../../api/utils/user';
 
 const Admin = () => {
   const [isAdmitted, setIsAdmitted] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('0');
+  const [currentTabKey, setCurrentTabKey] = useState('2');
+  const [skills, setSkills] = useState([]);
 
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
@@ -36,6 +39,22 @@ const Admin = () => {
     console.log('삭제 버튼 클릭');
   };
 
+  // 추가 작업 필요
+  const handleLogoutClick = async () => {
+    const res = await userApi.logout();
+  };
+
+  // 추가 작업 필요
+  const fetchSkills = async () => {
+    const res = await skillApi.getAllSkills();
+    console.log(res.data);
+    setSkills(res.data);
+  };
+
+  useEffect(() => {
+    fetchSkills();
+  }, []);
+
   return (
     <S.AdminWrap>
       <Header
@@ -46,6 +65,7 @@ const Admin = () => {
         headerStyle={{
           borderBottom: `1px solid ${CS.color.borderTransparent}`,
         }}
+        rightOnClickEvent={() => handleLogoutClick()}
       />
       <TabBar
         tabNames={['회원 관리', '기수 관리', '스킬 관리']}
@@ -130,12 +150,15 @@ const Admin = () => {
             />
           </S.ButtonWrap>
           <TableHeader haderTexts={['No.', '스킬', '관리']} />
-          <TableRow
-            colTexts={['1', 'JavaScript']}
-            btnText={'삭제'}
-            btnColor={CS.color.negative}
-            handleBtnClick={handleRemoveClick}
-          />
+          {skills.map((skill, index) => (
+            <TableRow
+              key={index}
+              colTexts={[index + 1, skill.skill]}
+              btnText={'삭제'}
+              btnColor={CS.color.negative}
+              handleBtnClick={handleRemoveClick}
+            />
+          ))}
         </>
       )}
     </S.AdminWrap>

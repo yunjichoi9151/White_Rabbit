@@ -9,6 +9,8 @@ export const userApi = {
   login: async (email, password) =>
     await api.post('/users/login', { email: email, password: password }),
 
+  logout: () => api.get('/users/account/logout'),
+
   // 정보조회(토큰) API
   getLoginUserInfo: () => api.get(`/users/`),
 

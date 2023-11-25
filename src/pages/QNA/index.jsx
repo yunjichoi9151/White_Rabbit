@@ -61,9 +61,9 @@ const QNA = () => {
     try {
       // 추가/삭제 API 수정 필요
       if (clickedPost.isFollowing) {
-        // await followApi.deleteFollow(userInfo._id, clickedPost.author._id);
+        await followApi.deleteFollow(clickedPost.followList._id);
       } else {
-        // await followApi.postFollow(userInfo._id, clickedPost.author._id);
+        await followApi.postFollow(clickedPost.author._id);
       }
       const updatedPosts = filteredPosts.map((post) => {
         if (post._id === clickedPost._id) {
