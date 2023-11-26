@@ -6,6 +6,8 @@ import * as S from './style';
 import Post from '../../components/board/Post';
 import { commentApi } from '../../../api/utils/Comment';
 import EmptyContent from '../EmptyContent';
+import { ROUTER_LINK } from '../../router/routes';
+import { Link } from 'react-router-dom';
 
 function MyContent({ type, userId }) {
   const [posts, setPosts] = useState([]);
@@ -36,10 +38,8 @@ function MyContent({ type, userId }) {
     };
 
     if (type === 'content') {
-      console.log('뭐야 시발');
       fetchPosts();
     } else {
-      console.log('뭐노 시발');
       fetchComments();
     }
   }, []);
@@ -49,7 +49,7 @@ function MyContent({ type, userId }) {
       {posts.length ? (
         <S.Container>
           <BasicText
-            text={type === 'content' ? `게시물 ${posts.length}개` : '댓글 0개'}
+            text={type === 'content' ? `게시물 ${posts.length}개` : `댓글 ${post.length}개`}
             style={{
               background: CS.color.white,
               height: 40,
@@ -61,26 +61,28 @@ function MyContent({ type, userId }) {
           />
           <S.PostList>
             {posts?.map((post, index) => (
-              <S.PostWrap>
-                <Post
-                  key={index}
-                  category={[]}
-                  src={''}
-                  username={'post'}
-                  rate="레이서"
-                  createdAt={post.createdAt}
-                  title={post.title}
-                  content={post.content}
-                  existFollowBtn={post.author}
-                  isFollow={false}
-                  existMoreBtn={false}
-                  contentLength="LONG"
-                  isHot={post.isPopular}
-                  isLike={false}
-                  likes={0}
-                  comments={post.commentCount}
-                />
-              </S.PostWrap>
+              <Link to={`${ROUTER_LINK.DETAIL.link}/${post._id}`}>
+                <S.PostWrap>
+                  <Post
+                    key={index}
+                    category={post.category}
+                    src={''}
+                    username={post.author.name}
+                    rate={post.author.roles}
+                    createdAt={post.createdAt}
+                    title={post.title}
+                    content={post.content}
+                    existFollowBtn={false}
+                    isFollow={false}
+                    existMoreBtn={false}
+                    contentLength="LONG"
+                    isHot={post.isPopular}
+                    isLike={false}
+                    likes={0}
+                    comments={post.commentCount}
+                  />
+                </S.PostWrap>
+              </Link>
             ))}
           </S.PostList>
         </S.Container>

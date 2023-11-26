@@ -37,7 +37,7 @@ const MyPage = () => {
   const followInfo = async () => {
     try {
       const res = await userApi.follow(user._id);
-      setFollow(res.data.data.follow);
+      setFollow(res.data.data);
     } catch (error) {
       // console.log('error: ', error.response.data.message);
     }
@@ -66,17 +66,21 @@ const MyPage = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user._id) {
       followInfo();
     }
   }, [user]);
 
   const handleOnClickFollower = () => {
-    navigate(ROUTER_LINK.FOLLOW.link);
+    navigate(`${ROUTER_LINK.FOLLOW.link}/follower`, {
+      state: user
+    });
   };
 
   const handleOnClickFollowing = () => {
-    navigate(ROUTER_LINK.FOLLOW.link);
+    navigate(`${ROUTER_LINK.FOLLOW.link}/following`, {
+      state: user
+    });
   };
 
   return (
@@ -100,8 +104,8 @@ const MyPage = () => {
             isEditable={false}
             profileSize={2}
             existFollow={true}
-            followers={follow.followingNumber}
-            followings={follow.followerNumber}
+            followers={follow?.followingNumber}
+            followings={follow?.followerNumber}
             style={{
               margin: 20,
               height: 'auto',
@@ -132,7 +136,6 @@ const MyPage = () => {
             tabNames={{ profile: '프로필', content: '게시물', reply: '댓글' }}
             existCounter={true}
             countNum={{ content: 0, reply: 0 }}
-            defaultActive={'profile'}
             onTabClick={handleClickTab}
             currentTabKey={tabName}
           />

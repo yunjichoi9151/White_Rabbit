@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
 import { userApi } from '../../../api/utils/user';
 import * as S from './style';
@@ -19,15 +19,6 @@ function Join() {
   const handleChangeCheckBox = (e) => {
     setChecked(e.target.checked);
   };
-
-  // const onChange = (e) => {
-  //   setForm((prev) => ({
-  //     ...prev,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
-
-  // {유효성 검사} //
 
   const validateName = (name) => {
     return name.toLowerCase().match(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|].{1,20}$/);
@@ -145,8 +136,7 @@ function Join() {
     getSomething();
   }, []);
 
-  const onClickButton = async (e) => {
-    e.preventDefault();
+  const onClickButton = async () => {
     if (!isNameValid) {
       alert('1글자 이상 20글자 미만으로 입력해주세요.');
       return;
@@ -170,6 +160,10 @@ function Join() {
       return;
     } else if (roles === '') {
       alert('등급을 선택해주세요.');
+      return;
+    }
+
+    if (roles === 'coach') {
       return;
     }
 

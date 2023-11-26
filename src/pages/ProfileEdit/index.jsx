@@ -7,6 +7,7 @@ import ProfileImg from '../../components/common/ProfileImg';
 import Header from '../../components/common/Header';
 import { useNavigate, useParams } from 'react-router';
 import { ROUTER_LINK } from '../../router/routes';
+import { postApi } from '../../../api/utils/Post';
 
 function ProfileEdit() {
   //user 정보
@@ -56,6 +57,27 @@ function ProfileEdit() {
     }
   };
 
+  const handleImageChange =  async(event) => {
+    const file = event.target.files[0];
+
+     await handleFormSubmit(file);
+  };
+
+  const [ imageURL, setImageURL ] = useState("")
+
+  const handleFormSubmit =  async(file) => {
+    if (file) {
+      // 이미지를 포함한 FormData 객체 생성
+      const formData = new FormData();
+
+      formData.append('image', file);
+
+      const response = await postApi.addImage(formData)
+      setImageURL(response.data.data)
+      
+    }
+  };
+
   return (
     <S.ProfileEditWrapper>
       <Header
@@ -71,12 +93,13 @@ function ProfileEdit() {
         leftOnClickEvent={() => navigate(-1)}
       />
       <ProfileImg
-        src="/assets/img/account.png"
+        src={imageURL ? `http://localhost:5000/api/v1${imageURL}` : "/assets/img/account.png"}
         style={{
           width: 72,
           margin: 20,
           border: 0,
         }}
+        onClickEvent={handleImageChange}
         isEditable={true}
       />
       <InputBox

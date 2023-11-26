@@ -33,7 +33,7 @@ function SkillLinkPage({ userId, links, setLinks }) {
       <S.UnderLine />
 
       <S.Container>
-        <IntroHeader text="링크" type="link" empty={isEmptyLinks} />
+        <IntroHeader text="링크" type="link" userId={userId} empty={isEmptyLinks} />
         {/* 비어있을때 */}
         {isEmptyLinks ? (
           <EmptyIntro

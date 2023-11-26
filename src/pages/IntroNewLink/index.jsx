@@ -29,7 +29,7 @@ function NewLink() {
       const res = await userApi.links(userId, inputTitleValue, inputLinkValue);
 
       if (res.status === 200) {
-        // navigate('/mypage');
+        navigate('/mypage');
       }
     } catch (error) {
       alert('error: ' + error.response.data.message);

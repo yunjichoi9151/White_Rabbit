@@ -38,6 +38,9 @@ export const userApi = {
   //팔로우 전체 수 조회 API
   follow: (userId) => api.get(`/users/follow/number/${userId}`),
 
+  //팔로우 전체 목록 조회 API
+  followList: (userId) => api.get(`/users/${userId}/follow`),
+
   //새로운 링크 추가 API
   links: (userId, title, url) =>
     api.post(`/users/links/${userId}`, {
@@ -88,8 +91,10 @@ export const userApi = {
       skill,
     }),
 
-  removeSkill: (userId, skill) =>
+    removeSkill: (userId, skill) =>
     api.patch(`/users/skill/remove/${userId}`, {
       skill,
     }),
+
+    
 };
