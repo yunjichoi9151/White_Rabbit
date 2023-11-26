@@ -13,6 +13,7 @@ const BasicInput = ({
   isReadOnly = false,
   style,
   name,
+  ...rest
 }) => {
   return (
     <S.Input
@@ -27,6 +28,7 @@ const BasicInput = ({
       readOnly={isReadOnly}
       style={style}
       name={name}
+      {...rest}
     />
   );
 };

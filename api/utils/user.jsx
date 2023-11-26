@@ -9,6 +9,12 @@ export const userApi = {
   login: async (email, password) =>
     await api.post('/users/login', { email: email, password: password }),
 
+  // 로그아웃 API
+  logout: async () => await api.get('/users/account/logout'),
+
+  // 비밀번호 찾기 이메일 발송 API
+  sendEmail: async (params) => await api.post('/users/password', params),
+
   // 정보조회(토큰) API
   getLoginUserInfo: () => api.get(`/users/`),
 
@@ -33,7 +39,27 @@ export const userApi = {
   follow: (userId) => api.get(`/users/follow/number/${userId}`),
 
   //새로운 링크 추가 API
-  links: (userId) => api.put(`/users/links/${userId}`),
+  links: (userId, title, url) =>
+    api.post(`/users/links/${userId}`, {
+      title,
+      url,
+    }),
+
+  // 링크 수정 API
+  editLinks: (form, userId) => {
+    // console.log(linkId, title, url);
+    return api.put(`/users/links/${userId}`, {
+      linkId: form.id,
+      title: form.inputTitleValue,
+      url: form.inputLinkValue,
+    });
+  },
+
+  // 링크 수정 API
+  removeLinks: (form, userId) => {
+    // console.log(linkId, title, url);
+    return api.delete(`/users/links/${userId}`, form);
+  },
 
   //특정 사용자의 모든 링크 조회 API
   userLinks: (userId) => api.get(`/users/links/${userId}`),
@@ -42,5 +68,28 @@ export const userApi = {
   // skill: (userId) => api.patch(`/users/skill/add/${userId}`),
 
   //스킬 검색 API
-  skillSearch: (skill) => api.get(`/skills/search/${skill}`),
+  skillSearch: (userId) => api.get(`/skills/search/${userId}`),
+
+  //전체 스킬 가져오기 API
+  getAllSkill: () => api.get('/skills'),
+
+  //트랙 기수 API
+  generation: () => api.get('/users/generations'),
+
+  //ID로 유저 정보 수정
+  editUserById: (userId, userName, userEmail) =>
+    api.patch(`/users/${userId}`, {
+      name: userName,
+      email: userEmail,
+    }),
+
+  addSkill: (userId, skill) =>
+    api.patch(`/users/skill/add/${userId}`, {
+      skill,
+    }),
+
+  removeSkill: (userId, skill) =>
+    api.patch(`/users/skill/remove/${userId}`, {
+      skill,
+    }),
 };

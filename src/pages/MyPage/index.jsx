@@ -19,25 +19,25 @@ const MyPage = () => {
   //user 정보
   const [user, setUser] = useState({});
   const [follow, setFollow] = useState({});
+
+  const [links, setLinks] = useState([]);
   const navigate = useNavigate();
 
   const userInfo = async () => {
     try {
       const res = await userApi.getUserInfo();
       setUser(res.data.data);
+      setLinks(res.data.data.links);
       console.log('res', res);
     } catch (error) {
       console.log('error: ', error.response.data.message);
     }
   };
 
-  console.log('user', user);
   const followInfo = async () => {
     try {
-      console.log('user', user);
       const res = await userApi.follow(user._id);
       setFollow(res.data.data.follow);
-      // console.log('res', res);
     } catch (error) {
       // console.log('error: ', error.response.data.message);
     }
@@ -45,8 +45,14 @@ const MyPage = () => {
 
   //follow 수
 
-  const handleOnClickButton = () => {
-    alert('로그아웃 하시겠습니까?');
+  const handleOnClickButton = async () => {
+    if (confirm('로그아웃 하시겠습니까?')) {
+      const response = await userApi.logout();
+
+      if (response.status === 200) {
+        navigate(ROUTER_LINK.LANDING.path);
+      }
+    }
   };
 
   const [tabName, setTabName] = useState('profile');
@@ -65,7 +71,7 @@ const MyPage = () => {
     }
   }, [user]);
 
-  const handleOnClickFollow = () => {
+  const handleOnClickFollower = () => {
     navigate(ROUTER_LINK.FOLLOW.link);
   };
 
@@ -100,16 +106,23 @@ const MyPage = () => {
               margin: 20,
               height: 'auto',
             }}
-            onClickFollower={handleOnClickFollow}
+            onClickFollower={handleOnClickFollower}
             onClickFollowing={handleOnClickFollowing}
           />
-          <Link to={ROUTER_LINK.PROFILEEDIT.path}>
+          <Link
+            to={ROUTER_LINK.PROFILEEDIT.path}
+            style={{
+              display: 'block',
+              width: 28,
+              height: 28,
+              marginTop: 20,
+              marginRight: 20,
+            }}
+          >
             <IoSettingsOutline
               style={{
                 cursor: 'pointer',
                 fontSize: 28,
-                marginTop: 20,
-                marginRight: 20,
               }}
             />
           </Link>
@@ -125,12 +138,16 @@ const MyPage = () => {
           />
         </S.TabWrap>
 
-        {tabName === 'profile' && <SkillLinkPage />}
+        {tabName === 'profile' && (
+          <SkillLinkPage userId={user._id} links={links} setLinks={setLinks} />
+        )}
         {/* //post api -> user id === user api -> user id ? <MyContent type="content" /> : <EmptyContent type="content"/> */}
         {/* {tabName === 'content' && <EmptyContent type="content" />} */}
-        {tabName === 'content' && <MyContent type="content" />}
+        {tabName === 'content' && (
+          <MyContent type="content" userId={user._id} />
+        )}
 
-        {tabName === 'reply' && <EmptyContent type="reply" />}
+        {tabName === 'reply' && <MyContent type="reply" userId={user._id} />}
         <S.LogoutBtn
           style={{
             backgroundColor: CS.color.secondary,

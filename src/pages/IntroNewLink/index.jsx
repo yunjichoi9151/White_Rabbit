@@ -4,9 +4,10 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import Header from '../../components/common/Header';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 function NewLink() {
+  const { userId } = useParams();
   const [form, setForm] = useState({
     inputLinkValue: '',
     inputTitleValue: '',
@@ -25,10 +26,10 @@ function NewLink() {
     try {
       const { inputLinkValue, inputTitleValue } = form;
 
-      const res = await userApi.links(inputLinkValue, inputTitleValue);
+      const res = await userApi.links(userId, inputTitleValue, inputLinkValue);
 
       if (res.status === 200) {
-        navigate('/mypage');
+        // navigate('/mypage');
       }
     } catch (error) {
       alert('error: ' + error.response.data.message);

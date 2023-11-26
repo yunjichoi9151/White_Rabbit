@@ -6,14 +6,16 @@ import BasicButton from '../../components/common/BasicButton';
 import BasicText from '../../components/common/BasicText';
 import { useNavigate } from 'react-router';
 import Header from '../../components/common/Header';
+import { userApi } from '../../../api/utils/user';
 
 function FindPW({ onClickButton }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    inputNameValue: '',
-    inputIdValue: '',
-    inputPwValue: '',
-    inputPwCheckValue: '',
+    name: '',
+    email: '',
+    password: '',
+    passwordCheck: '',
+    code: '',
   });
 
   const onChange = (e) => {
@@ -22,6 +24,14 @@ function FindPW({ onClickButton }) {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const handleClickSendEmail = async () => {
+    const response = await userApi.sendEmail({
+      email: form.email,
+      code: form.code,
+    });
+  };
+
   return (
     <>
       <S.Container>
@@ -46,10 +56,10 @@ function FindPW({ onClickButton }) {
             text: '0/20',
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
+            value: form['name'],
+            onChange: onChange,
             placeholder: '프로필 이름',
-            name: 'inputNameValue',
+            name: 'name',
           }}
           buttonElement={false}
         />
@@ -59,16 +69,16 @@ function FindPW({ onClickButton }) {
             type: 'none',
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
+            value: form['email'],
+            onChange: onChange,
             placeholder: 'example@elice.com',
-            name: 'inputIdValue',
+            name: 'email',
           }}
           buttonElement={false}
         />
         <S.ButtonWrap>
           <BasicButton
-            onClick={onClickButton}
+            handleOnClickButton={handleClickSendEmail}
             text="이메일로 인증 번호 보내기"
             textStyle={{
               color: CS.color.white,
@@ -89,10 +99,10 @@ function FindPW({ onClickButton }) {
             type: 'none',
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
+            value: form['code'],
+            onChange: onChange,
             placeholder: '6자리 숫자',
-            name: 'inputPwValue',
+            name: 'code',
           }}
           buttonElement={true}
         />
@@ -112,10 +122,10 @@ function FindPW({ onClickButton }) {
             type: 'none',
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
+            value: form['password'],
+            onChange: onChange,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-            name: 'inputNameValue',
+            name: 'password',
           }}
           buttonElement={false}
         />
@@ -125,10 +135,10 @@ function FindPW({ onClickButton }) {
             type: 'none',
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
+            value: form['passwordCheck'],
+            onChange: onChange,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-            name: 'inputIdValue',
+            name: 'passwordCheck',
           }}
           buttonElement={false}
         />

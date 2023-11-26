@@ -5,9 +5,24 @@ import { PiPencilSimpleLight, PiMinusCircle } from 'react-icons/pi';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
+import { userApi } from '../../../../api/utils/user';
 
-function LinkIntro({ href, content }) {
+function LinkIntro({ url, content, linkId, userId, setLinks }) {
   const text = content ? content[0] : '';
+
+  const handleClickRemove = async () => {
+    const response = await userApi.removeLinks(
+      {
+        content,
+        url,
+      },
+      userId,
+    );
+
+    if (response.status === 200) {
+      setLinks((prev) => prev.filter((link) => link._id !== linkId));
+    }
+  };
 
   return (
     <>
@@ -29,12 +44,20 @@ function LinkIntro({ href, content }) {
               font: CS.font.paragraphSmall,
             }}
           />
-          <a href={href} style={{ font: CS.font.labelSmall }}>
+          <a url={url} style={{ font: CS.font.labelSmall }}>
             {content}
           </a>
         </S.ContentWrap>
         <S.IconButtonWrap>
-          <Link to={ROUTER_LINK.LINKEDIT.link}>
+          <Link
+            to={`${ROUTER_LINK.LINKEDIT.link}/${userId}`}
+            state={{
+              linkId: linkId,
+              title: content,
+              url: url,
+            }}
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
             <PiPencilSimpleLight
               style={{
                 cursor: 'pointer',
@@ -43,15 +66,14 @@ function LinkIntro({ href, content }) {
             />
           </Link>
 
-          <a>
-            <PiMinusCircle
-              style={{
-                marginLeft: 4,
-                cursor: 'pointer',
-                color: CS.color.contentTertiary,
-              }}
-            />
-          </a>
+          <PiMinusCircle
+            onClick={handleClickRemove}
+            style={{
+              marginLeft: 4,
+              cursor: 'pointer',
+              color: CS.color.contentTertiary,
+            }}
+          />
         </S.IconButtonWrap>
       </S.Container>
     </>

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
 import { userApi } from '../../../api/utils/user';
@@ -104,18 +104,46 @@ function Join() {
   const [genType, setGenType] = useState('');
   const [genNum, setGenNum] = useState('');
   const [roles, setRoles] = useState('');
+  const [generationType, setGenerationType] = useState([]);
+  const [generationNum, setGenerationNum] = useState([]);
 
-  const handleChangegenType = (e) => {
-    setGenType(e.target.value);
+  const handleChangegenType = (value) => {
+    setGenType(value);
   };
 
-  const handleChangegenNum = (e) => {
-    setGenNum(e.target.value);
+  const handleChangegenNum = (value) => {
+    setGenNum(value);
   };
 
-  const handleChangeroles = (e) => {
-    setRoles(e.target.value);
+  const handleChangeroles = (value) => {
+    setRoles(value);
   };
+  /// {트랙 기수 API} ///
+
+  const getSomething = async () => {
+    const response = await userApi.generation();
+    const optionGenType = response.data.data.map((gen) => {
+      return {
+        key: gen.generationType,
+        value: gen.generationType,
+        name: gen.generationType,
+      };
+    });
+    setGenerationType(optionGenType);
+
+    const optionGenNum = response.data.data.map((gen) => {
+      return {
+        key: gen.generationNumber,
+        value: gen.generationNumber,
+        name: gen.generationNumber + '기',
+      };
+    });
+    setGenerationNum(optionGenNum);
+  };
+
+  useEffect(() => {
+    getSomething();
+  }, []);
 
   const onClickButton = async (e) => {
     e.preventDefault();
@@ -163,14 +191,14 @@ function Join() {
       console.error('등록 중 오류 발생:', error);
 
       if (error.response && error.response.status === 409) {
-        // Handle conflict (email already exists) here
         alert('이미 등록된 이메일 주소입니다.');
       } else {
-        // Handle other errors
         alert('등록 중 오류가 발생했습니다. 다시 시도해주세요.');
       }
     }
   };
+
+  console.log('genType', genType);
 
   return (
     <>
@@ -278,18 +306,7 @@ function Join() {
                   name: '트랙 선택',
                   style: { display: 'none' },
                 },
-                {
-                  key: 'SW',
-                  value: 'SW 엔지니어 트랙',
-                  name: 'SW 엔지니어 트랙',
-                },
-                {
-                  key: 'AI',
-                  value: '웹 풀스택 X AI 트랙',
-                  name: '웹 풀스택 X AI 트랙',
-                },
-                { key: 'Cloud', value: 'Cloud 트랙', name: 'Cloud 트랙' },
-                { key: 'IoT', value: 'IoT 트랙', name: 'IoT 트랙' },
+                ...generationType,
               ]}
               onChange={handleChangegenType}
             />
@@ -315,13 +332,7 @@ function Join() {
                   name: '기수 선택',
                   style: { display: 'none' },
                 },
-                { key: '1', value: '1', name: '1기' },
-                { key: '2', value: '2', name: '2기' },
-                { key: '3', value: '3', name: '3기' },
-                { key: '4', value: '4', name: '4기' },
-                { key: '5', value: '5', name: '5기' },
-                { key: '6', value: '6', name: '6기' },
-                { key: '7', value: '7', name: '7기' },
+                ...generationNum,
               ]}
               onChange={handleChangegenNum}
             />

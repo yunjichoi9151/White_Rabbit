@@ -6,25 +6,10 @@ import EmptyIntro from '../../components/SkillLinkIntro/EmptyIntro';
 import SkillIntro from '../../components/SkillLinkIntro/SkillIntro';
 import LinkIntro from '../../components/SkillLinkIntro/LinkIntro';
 
-function SkillLinkPage() {
-  const userId = { userId };
+function SkillLinkPage({ userId, links, setLinks }) {
   /////// { API } /////////
 
-  const [link, setLink] = useState([]);
-
-  useEffect(() => {
-    const linkInfo = async () => {
-      try {
-        const res = await userApi.userLinks(userId);
-        setLink(res.data.data.link);
-        console.log(res.data.data.link);
-      } catch (error) {
-        console.log('error: ', error.response.data);
-      }
-    };
-
-    linkInfo();
-  }, []);
+  const isEmptyLinks = !links?.length;
 
   /////////////////
   return (
@@ -37,19 +22,38 @@ function SkillLinkPage() {
           style={{ display: 'none' }}
         />
         {/* 비어있을때 */}
-        <EmptyIntro text="자신의 스킬을 추가해 주세요." type="skill" />
+        <EmptyIntro
+          text="자신의 스킬을 추가해 주세요."
+          type="skill"
+          userId={userId}
+        />
         {/* skill API 불러왔을때 */}
         {/* <SkillIntro /> */}
       </S.Container>
       <S.UnderLine />
 
       <S.Container>
-        <IntroHeader text="링크" type="link" empty={true} />
+        <IntroHeader text="링크" type="link" empty={isEmptyLinks} />
         {/* 비어있을때 */}
-        <EmptyIntro text="자신의 링크를 추가해 주세요." type="link" />
+        {isEmptyLinks ? (
+          <EmptyIntro
+            text="자신의 링크를 추가해 주세요."
+            type="link"
+            userId={userId}
+          />
+        ) : (
+          <></>
+        )}
         {/* links API 불러왔을때 */}
-        {link.map((link, index) => (
-          <LinkIntro key={index} text={link.title} href={link.links} />
+        {links?.map((link, index) => (
+          <LinkIntro
+            key={index}
+            content={link.title}
+            url={link.url}
+            linkId={link._id}
+            userId={userId}
+            setLinks={setLinks}
+          />
         ))}
       </S.Container>
       <S.UnderLine />
