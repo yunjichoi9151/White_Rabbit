@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -14,6 +16,8 @@ const Admin = () => {
   const [isAdmitted, setIsAdmitted] = useState(false);
   const [currentTabKey, setCurrentTabKey] = useState('2');
   const [skills, setSkills] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
@@ -35,20 +39,34 @@ const Admin = () => {
     console.log('추가 버튼 클릭');
   };
 
-  const handleRemoveClick = () => {
-    console.log('삭제 버튼 클릭');
+  const handleRemoveClick = async (id) => {
+    try {
+      const res = await skillApi.delteSkill(id);
+      fetchSkills();
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
   };
 
-  // 추가 작업 필요
   const handleLogoutClick = async () => {
-    const res = await userApi.logout();
+    try {
+      const res = await userApi.logout();
+      console.log(res);
+      if (res.status === 200) {
+        navigate(ROUTER_LINK.LANDING.path);
+      }
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
   };
 
-  // 추가 작업 필요
   const fetchSkills = async () => {
-    const res = await skillApi.getAllSkills();
-    console.log(res.data);
-    setSkills(res.data);
+    try {
+      const res = await skillApi.getAllSkills();
+      setSkills(res.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
   };
 
   useEffect(() => {
@@ -156,7 +174,7 @@ const Admin = () => {
               colTexts={[index + 1, skill.skill]}
               btnText={'삭제'}
               btnColor={CS.color.negative}
-              handleBtnClick={handleRemoveClick}
+              handleBtnClick={() => handleRemoveClick(skill._id)}
             />
           ))}
         </>

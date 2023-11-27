@@ -26,6 +26,7 @@ const QNA = () => {
   const [sort, setSort] = useState(sortType.NEW);
   const [isMineOnly, setIsMineOnly] = useState(false);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const navigate = useNavigate();
 
@@ -49,6 +50,15 @@ const QNA = () => {
     }
   };
 
+  const handleSearchKeywordChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    console.log('Search keyword:', searchKeyword);
+    // 검색 조건 추가하여 API 호출
+  };
+
   const handleSortClick = (sortBy) => {
     setSort(sortBy);
   };
@@ -59,17 +69,20 @@ const QNA = () => {
 
   const handleFollowClick = async (clickedPost) => {
     try {
+      let followId;
       if (clickedPost.isFollowing) {
         await followApi.deleteFollow(clickedPost.followList._id);
       } else {
         const res = await followApi.postFollow(clickedPost.author._id);
+        followId = res.data.followId;
       }
+
       const updatedPosts = filteredPosts.map((post) => {
         if (post._id === clickedPost._id) {
           return {
             ...post,
             isFollowing: !post.isFollowing,
-            followList: { _id: res.data.followId },
+            followList: { _id: followId },
           };
         }
         return post;
@@ -132,6 +145,8 @@ const QNA = () => {
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
         textLeft={'개발Q&A'}
+        rightOnClickEvent={handleSearchClick}
+        inputChangeEvent={handleSearchKeywordChange}
       />
       <S.FilterBar>
         <S.ButtonWrap>

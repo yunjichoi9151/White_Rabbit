@@ -22,6 +22,7 @@ const Recruitment = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState('PROJECT');
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const navigate = useNavigate();
 
@@ -43,21 +44,36 @@ const Recruitment = () => {
     }
   };
 
+  const handleSearchKeywordChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    console.log('Search keyword:', searchKeyword);
+    // 검색 조건 추가하여 API 호출
+  };
+
   const handleCategoryClick = (category) => {
     setCategory(category);
   };
 
   const handleFollowClick = async (clickedPost) => {
     try {
+      let followId;
       if (clickedPost.isFollowing) {
         await followApi.deleteFollow(clickedPost.followList._id);
       } else {
-        await followApi.postFollow(clickedPost.author._id);
+        const res = await followApi.postFollow(clickedPost.author._id);
+        followId = res.data.followId;
       }
 
       const updatedPosts = posts.map((post) => {
         if (post._id === clickedPost._id) {
-          return { ...post, isFollowing: !post.isFollowing };
+          return {
+            ...post,
+            isFollowing: !post.isFollowing,
+            followList: { _id: followId },
+          };
         }
         return post;
       });
@@ -105,6 +121,8 @@ const Recruitment = () => {
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
         textLeft={`${CategoryText[category]} 모집`}
+        rightOnClickEvent={handleSearchClick}
+        inputChangeEvent={handleSearchKeywordChange}
       />
       <S.FilterBar>
         <BasicButton
