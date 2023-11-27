@@ -36,10 +36,10 @@ export const userApi = {
   resetPassword: (userData) => api.post('/users/password/reset', userData),
 
   //팔로우 전체 수 조회 API
-  follow: (userId) => api.get(`/users/follow/number/${userId}`),
+  follow: (userId) => api.get(`/users/followings/number/${userId}`),
 
   //팔로우 전체 목록 조회 API
-  followList: (userId) => api.get(`/users/${userId}/follow`),
+  followList: (userId) => api.get(`/users/followings/${userId}`),
 
   //새로운 링크 추가 API
   links: (userId, title, url) =>
@@ -50,7 +50,6 @@ export const userApi = {
 
   // 링크 수정 API
   editLinks: (form, userId) => {
-    // console.log(linkId, title, url);
     return api.put(`/users/links/${userId}`, {
       linkId: form.id,
       title: form.inputTitleValue,
@@ -60,8 +59,7 @@ export const userApi = {
 
   // 링크 수정 API
   removeLinks: (form, userId) => {
-    // console.log(linkId, title, url);
-    return api.delete(`/users/links/${userId}`, form);
+    return api.delete(`/users/links/${userId}`, { data: form });
   },
 
   //특정 사용자의 모든 링크 조회 API
@@ -80,10 +78,11 @@ export const userApi = {
   generation: () => api.get('/users/generations'),
 
   //ID로 유저 정보 수정
-  editUserById: (userId, userName, userEmail) =>
+  editUserById: (userId, userName, userEmail, image) =>
     api.patch(`/users/${userId}`, {
       name: userName,
-      email: userEmail,
+      // email: userEmail,
+      profile_url: image,
     }),
 
   addSkill: (userId, skill) =>
@@ -91,10 +90,8 @@ export const userApi = {
       skill,
     }),
 
-    removeSkill: (userId, skill) =>
+  removeSkill: (userId, skill) =>
     api.patch(`/users/skill/remove/${userId}`, {
       skill,
     }),
-
-    
 };

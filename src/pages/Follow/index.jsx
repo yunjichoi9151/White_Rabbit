@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -11,29 +11,40 @@ import { userApi } from '../../../api/utils/user';
 function Follow() {
   const location = useLocation();
 
+  const [followData, setFollowData] = useState({
+    follower: [],
+    following: [],
+  });
+
   const { state } = location;
 
   const { type } = useParams();
 
-  console.log("state", state)
-
-  const [tabName, setTabName] = useState(type === "follower" ? "follower" : "following");
+  const [tabName, setTabName] = useState(
+    type === 'follower' ? 'follower' : 'following',
+  );
   const navigate = useNavigate();
 
   const handleClickTab = (tabKey) => {
     setTabName(tabKey);
   };
 
-  const getFollowList = async() => {
+  const getFollowList = async () => {
     const response = await userApi.followList(state._id);
 
-    console.log("response", response)
-  }
+    const { follower, following } = response.data;
 
+    setFollowData({
+      follower,
+      following,
+    });
+  };
 
   useEffect(() => {
-    // getFollowList()
-  }, [])
+    getFollowList();
+  }, []);
+
+  console.log('followData', followData);
   return (
     <>
       <Header
@@ -47,29 +58,40 @@ function Follow() {
       />
       <S.TabWrap>
         <TabBar
-          tabNames={{ follower: '팔로워', following: '팔로잉' }}
+          tabNames={{
+            follower: `팔로워 ${followData.follower.length}명`,
+            following: `팔로잉 ${followData.following.length}명`,
+          }}
           onTabClick={handleClickTab}
           currentTabKey={tabName}
         />
       </S.TabWrap>
       {/* <S.ProfileWrap> */}
-      {/* <ProfileBar
-      username={users.name}
-      rate={users.roles}
-      genType={users.generation_type}
-      genNum={users.generation_number + '기'}
-      existGeneration={true}
-      src={users.profile_url}
-      isEditable={false}
-      profileSize={2}
-      existFollow={true}
-      followers={follow.followingNumber}
-      followings={follow.followerNumber}
-      style={{
-        margin: 20,
-        height: 'auto',
-      }}
-      /> */}
+
+      {followData[tabName].map((follower, index) => (
+        <Fragment key={`${follower._id}_${index}`}>
+          <ProfileBar
+            username={follower.name}
+            rate={follower.roles}
+            genType={follower.generation_type}
+            genNum={follower.generation_number + '기'}
+            existGeneration={true}
+            src={follower.profile_url}
+            isEditable={false}
+            profileSize={2}
+            existFollowBtn={true}
+            style={{
+              marginTop: 20,
+              marginLeft: 20,
+              marginBottom: 20,
+              paddingRight: 40,
+              height: 'auto',
+            }}
+          />
+          <S.UnderLine />
+        </Fragment>
+      ))}
+
       {/* </S.ProfileWrap> */}
     </>
   );

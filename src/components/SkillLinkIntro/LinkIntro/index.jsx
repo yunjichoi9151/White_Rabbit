@@ -13,7 +13,7 @@ function LinkIntro({ url, content, linkId, userId, setLinks }) {
   const handleClickRemove = async () => {
     const response = await userApi.removeLinks(
       {
-        content,
+        title: content,
         url,
       },
       userId,
@@ -44,7 +44,7 @@ function LinkIntro({ url, content, linkId, userId, setLinks }) {
               font: CS.font.paragraphSmall,
             }}
           />
-          <a url={url} style={{ font: CS.font.labelSmall }}>
+          <a href={url} style={{ font: CS.font.labelSmall }}>
             {content}
           </a>
         </S.ContentWrap>

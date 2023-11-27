@@ -20,3 +20,7 @@ export const Tab = styled.div`
   cursor: pointer;
   font: ${CS.font.labelSmall};
 `;
+
+export const UnderLine = styled.div`
+  border-bottom: 1px solid ${CS.color.contentTertiary};
+`;

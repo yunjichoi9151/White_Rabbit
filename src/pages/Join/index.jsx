@@ -163,10 +163,6 @@ function Join() {
       return;
     }
 
-    if (roles === 'coach') {
-      return;
-    }
-
     /// {API} ///
     try {
       const res = await userApi.signUp({
@@ -175,6 +171,7 @@ function Join() {
         password,
         generation_type: genType,
         generation_number: Number(genNum),
+        roles,
       });
       if (res.status === 201) {
         console.log(res.data);
@@ -368,8 +365,8 @@ function Join() {
                 name: '등급 선택',
                 style: { display: 'none' },
               },
-              { key: 'racer', value: 'racer', name: '레이서' },
-              { key: 'coach', value: 'coach', name: '코치' },
+              { key: 'racer', value: 'USER', name: '레이서' },
+              { key: 'coach', value: 'COACH', name: '코치' },
             ]}
             onChange={handleChangeroles}
           />

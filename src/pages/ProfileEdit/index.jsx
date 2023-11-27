@@ -17,6 +17,7 @@ function ProfileEdit() {
     try {
       const res = await userApi.getLoginUserInfo();
       setUser(res.data.data);
+      setImageURL(res.data.data.profile_url);
       setForm({
         inputNameValue: res.data.data.name,
         inputIdValue: res.data.data.email,
@@ -50,6 +51,7 @@ function ProfileEdit() {
       user._id,
       form['inputNameValue'],
       form['inputIdValue'],
+      imageURL,
     );
 
     if (res.status === 200) {
@@ -57,24 +59,23 @@ function ProfileEdit() {
     }
   };
 
-  const handleImageChange =  async(event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
 
-     await handleFormSubmit(file);
+    await handleFormSubmit(file);
   };
 
-  const [ imageURL, setImageURL ] = useState("")
+  const [imageURL, setImageURL] = useState('');
 
-  const handleFormSubmit =  async(file) => {
+  const handleFormSubmit = async (file) => {
     if (file) {
       // 이미지를 포함한 FormData 객체 생성
       const formData = new FormData();
 
       formData.append('image', file);
 
-      const response = await postApi.addImage(formData)
-      setImageURL(response.data.data)
-      
+      const response = await postApi.addImage(formData);
+      setImageURL(`${response.data.data}`);
     }
   };
 
@@ -93,7 +94,7 @@ function ProfileEdit() {
         leftOnClickEvent={() => navigate(-1)}
       />
       <ProfileImg
-        src={imageURL ? `http://localhost:5000/api/v1${imageURL}` : "/assets/img/account.png"}
+        src={`${imageURL}` || '/assets/img/account.png'}
         style={{
           width: 72,
           margin: 20,
@@ -124,10 +125,11 @@ function ProfileEdit() {
         }}
         inputProps={{
           value: form['inputIdValue'],
-          onChange: onChange,
           placeholder: 'example@elice.com',
           name: 'inputIdValue',
+          isReadOnly: 'true',
         }}
+        signType="none"
         buttonElement={false}
       />
       <InputBox

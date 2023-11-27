@@ -52,19 +52,25 @@ function NewSkill({ inputProps }) {
 
   const handleClickAddSkill = async (data) => {
     try {
-      const res = await userApi.addSkill(userId, data._id);
+      const response = await userApi.addSkill(userId, data._id);
 
-      if (res.status === 200) {
+      if (response.status === 201) {
         setMySkill((prev) => prev.concat(data));
       }
-    } catch {
-      console.log('응 이미있어');
+    } catch (e) {
+      alert(e.response.data.error);
     }
   };
 
-  console.log('skill', skill);
-
   /////////////////
+
+  const handleRemoveSkill = async (_data) => {
+    const response = await userApi.removeSkill(userId, _data._id);
+
+    if (response.status === 201) {
+      setMySkill((prev) => prev.filter((data) => data._id !== _data._id));
+    }
+  };
 
   return (
     <S.IntroNewSkillWrapper>
@@ -88,9 +94,16 @@ function NewSkill({ inputProps }) {
             marginBottom: 20,
           }}
         />
-        {mySkill.map((data) => (
-          <SkillText text={data.skill} existIcon={true} choice={true} />
-        ))}
+        <S.MySkillContainer>
+          {mySkill.map((data) => (
+            <SkillText
+              onClick={() => handleRemoveSkill(data)}
+              text={data.skill}
+              existIcon={true}
+              choice={true}
+            />
+          ))}
+        </S.MySkillContainer>
       </S.ChoiceSkill>
       <S.InputWrap>
         <BasicInput

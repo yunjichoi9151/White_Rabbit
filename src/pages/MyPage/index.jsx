@@ -43,8 +43,6 @@ const MyPage = () => {
     }
   };
 
-  //follow 수
-
   const handleOnClickButton = async () => {
     if (confirm('로그아웃 하시겠습니까?')) {
       const response = await userApi.logout();
@@ -73,13 +71,13 @@ const MyPage = () => {
 
   const handleOnClickFollower = () => {
     navigate(`${ROUTER_LINK.FOLLOW.link}/follower`, {
-      state: user
+      state: user,
     });
   };
 
   const handleOnClickFollowing = () => {
     navigate(`${ROUTER_LINK.FOLLOW.link}/following`, {
-      state: user
+      state: user,
     });
   };
 
@@ -142,7 +140,12 @@ const MyPage = () => {
         </S.TabWrap>
 
         {tabName === 'profile' && (
-          <SkillLinkPage userId={user._id} links={links} setLinks={setLinks} />
+          <SkillLinkPage
+            userId={user._id}
+            links={links}
+            setLinks={setLinks}
+            skills={user.skills}
+          />
         )}
         {/* //post api -> user id === user api -> user id ? <MyContent type="content" /> : <EmptyContent type="content"/> */}
         {/* {tabName === 'content' && <EmptyContent type="content" />} */}

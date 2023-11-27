@@ -6,10 +6,12 @@ import EmptyIntro from '../../components/SkillLinkIntro/EmptyIntro';
 import SkillIntro from '../../components/SkillLinkIntro/SkillIntro';
 import LinkIntro from '../../components/SkillLinkIntro/LinkIntro';
 
-function SkillLinkPage({ userId, links, setLinks }) {
+function SkillLinkPage({ userId, links, setLinks, skills }) {
   /////// { API } /////////
 
   const isEmptyLinks = !links?.length;
+
+  console.log('skills', skills);
 
   /////////////////
   return (
@@ -18,22 +20,29 @@ function SkillLinkPage({ userId, links, setLinks }) {
         <IntroHeader
           text="스킬"
           type="skill"
-          empty={true}
-          style={{ display: 'none' }}
-        />
-        {/* 비어있을때 */}
-        <EmptyIntro
-          text="자신의 스킬을 추가해 주세요."
-          type="skill"
+          empty={skills?.length}
           userId={userId}
         />
-        {/* skill API 불러왔을때 */}
-        {/* <SkillIntro /> */}
+
+        {skills?.length ? (
+          <SkillIntro skills={skills} />
+        ) : (
+          <EmptyIntro
+            text="자신의 스킬을 추가해 주세요."
+            type="skill"
+            userId={userId}
+          />
+        )}
       </S.Container>
       <S.UnderLine />
 
       <S.Container>
-        <IntroHeader text="링크" type="link" userId={userId} empty={isEmptyLinks} />
+        <IntroHeader
+          text="링크"
+          type="link"
+          userId={userId}
+          empty={isEmptyLinks}
+        />
         {/* 비어있을때 */}
         {isEmptyLinks ? (
           <EmptyIntro
