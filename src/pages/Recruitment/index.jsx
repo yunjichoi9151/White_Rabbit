@@ -11,6 +11,7 @@ import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
+import { followApi } from '../../../api/utils/Follow';
 
 const CategoryText = {
   PROJECT: '프로젝트',
@@ -24,18 +25,36 @@ const Recruitment = () => {
 
   const navigate = useNavigate();
 
+  const fetchUserInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      setUserInfo(res.data.data);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const res = await postApi.getCategoryPosts(category);
+      setPosts(res.data.data.posts);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
   const handleCategoryClick = (category) => {
     setCategory(category);
   };
 
   const handleFollowClick = async (clickedPost) => {
     try {
-      // 추가/삭제 API 수정 필요
       if (clickedPost.isFollowing) {
-        // await followApi.deleteFollow(userInfo._id, clickedPost.author._id);
+        await followApi.deleteFollow(clickedPost.followList._id);
       } else {
-        // await followApi.postFollow(userInfo._id, clickedPost.author._id);
+        await followApi.postFollow(clickedPost.author._id);
       }
+
       const updatedPosts = posts.map((post) => {
         if (post._id === clickedPost._id) {
           return { ...post, isFollowing: !post.isFollowing };
@@ -45,7 +64,7 @@ const Recruitment = () => {
 
       setPosts(updatedPosts);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
   };
 
@@ -67,31 +86,15 @@ const Recruitment = () => {
 
       setPosts(updatedPosts);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
   };
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const res = await userApi.getLoginUserInfo();
-        setUserInfo(res.data.data);
-      } catch (error) {
-        console.log('error: ', error.response.data);
-      }
-    };
     fetchUserInfo();
   }, []);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await postApi.getCategoryPosts(category);
-        setPosts(res.data.data.posts);
-      } catch (error) {
-        console.log('error: ', error);
-      }
-    };
     fetchPosts();
   }, [category]);
 

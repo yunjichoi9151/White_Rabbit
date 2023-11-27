@@ -34,7 +34,7 @@ const QNA = () => {
       const res = await userApi.getLoginUserInfo();
       setUserInfo(res.data.data);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
   };
 
@@ -45,7 +45,7 @@ const QNA = () => {
       filterMyPosts(res.data.data.posts);
       console.log(res.data.data.posts);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
   };
 
@@ -59,22 +59,25 @@ const QNA = () => {
 
   const handleFollowClick = async (clickedPost) => {
     try {
-      // 추가/삭제 API 수정 필요
       if (clickedPost.isFollowing) {
         await followApi.deleteFollow(clickedPost.followList._id);
       } else {
-        await followApi.postFollow(clickedPost.author._id);
+        const res = await followApi.postFollow(clickedPost.author._id);
       }
       const updatedPosts = filteredPosts.map((post) => {
         if (post._id === clickedPost._id) {
-          return { ...post, isFollowing: !post.isFollowing };
+          return {
+            ...post,
+            isFollowing: !post.isFollowing,
+            followList: { _id: res.data.followId },
+          };
         }
         return post;
       });
 
       setFilteredPosts(updatedPosts);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
   };
 
