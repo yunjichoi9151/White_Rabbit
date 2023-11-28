@@ -13,8 +13,10 @@ import { skillApi } from '../../../api/utils/skill';
 import { userApi } from '../../../api/utils/user';
 
 const Admin = () => {
-  const [isAdmitted, setIsAdmitted] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('2');
+  const [isAdmittedOnly, setIsAdmittedOnly] = useState(false);
+  const [currentTabKey, setCurrentTabKey] = useState('0');
+  const [members, setMembers] = useState([]);
+  const [generations, setGenerations] = useState([]);
   const [skills, setSkills] = useState([]);
 
   const navigate = useNavigate();
@@ -24,15 +26,23 @@ const Admin = () => {
   };
 
   const handleCheckBoxChange = (e) => {
-    if (e.target.checked) {
-      console.log('체크되었습니다.');
-    } else {
-      console.log('해제되었습니다.');
-    }
+    setIsAdmittedOnly(!isAdmittedOnly);
   };
 
-  const handleAdmitClick = () => {
-    setIsAdmitted(!isAdmitted);
+  const handleAdmitClick = async (member) => {
+    try {
+      const res = await userApi.modifyUserInfo(member._id, {
+        is_coach: !member.is_coach,
+      });
+      setMembers((prevMembers) => {
+        const updatedMembers = prevMembers.map((m) =>
+          m._id === member._id ? { ...m, is_coach: !m.is_coach } : m,
+        );
+        return updatedMembers;
+      });
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
   };
 
   const handleAddClick = () => {
@@ -60,6 +70,16 @@ const Admin = () => {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      const res = await userApi.getAllUsers();
+      console.log(res.data.data);
+      setMembers(res.data.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
   const fetchSkills = async () => {
     try {
       const res = await skillApi.getAllSkills();
@@ -68,6 +88,10 @@ const Admin = () => {
       console.log('error: ', error.response.data);
     }
   };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   useEffect(() => {
     fetchSkills();
@@ -86,7 +110,7 @@ const Admin = () => {
         rightOnClickEvent={() => handleLogoutClick()}
       />
       <TabBar
-        tabNames={['회원 관리', '기수 관리', '스킬 관리']}
+        tabNames={['코치 권한 관리', '기수 관리', '스킬 관리']}
         currentTabKey={currentTabKey}
         onTabClick={handleTabClick}
         style={{ paddingTop: '60px' }}
@@ -108,16 +132,26 @@ const Admin = () => {
             onChange={handleCheckBoxChange}
           />
           <TableHeader haderTexts={['이름', '이메일', '상태', '승인']} />
-          <TableRow
-            colTexts={[
-              '송재천',
-              'BEcoach@elice.com',
-              `${isAdmitted ? '승인 완료' : '승인 대기'}`,
-            ]}
-            btnText={isAdmitted ? '취소' : '승인'}
-            btnColor={isAdmitted ? CS.color.negative : CS.color.primary}
-            handleBtnClick={handleAdmitClick}
-          />
+          {members
+            .filter(
+              (member) =>
+                member.roles === 'COACH' &&
+                (isAdmittedOnly ? member.is_coach === false : true),
+            )
+            .map((member, index) => (
+              <TableRow
+                colTexts={[
+                  member.name,
+                  member.email,
+                  `${member.is_coach ? '승인 완료' : '승인 대기'}`,
+                ]}
+                btnText={member.is_coach ? '취소' : '승인'}
+                btnColor={
+                  member.is_coach ? CS.color.negative : CS.color.primary
+                }
+                handleBtnClick={() => handleAdmitClick(member)}
+              />
+            ))}
         </>
       ) : currentTabKey === '1' ? (
         <>

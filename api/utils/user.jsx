@@ -25,6 +25,8 @@ export const userApi = {
   // 정보조회(ID) API
   getUserInfoById: (userId) => api.get(`/users/${userId}`),
 
+  getAllUsers: () => api.get(`/users/admin/userlist`),
+
   // 유저 정보 수정(ID) API
   // 수정 가능한 정보 확인 필요
   modifyUserInfo: (userId, userData) => api.patch(`/users/${userId}`, userData),
