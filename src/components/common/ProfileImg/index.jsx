@@ -12,7 +12,12 @@ const ProfileImg = ({
   return (
     <Fragment>
       {isEditable ? (
-        <S.ProfileImage src={src} style={style} onChange={onClickEvent}>
+        <S.ProfileImage
+          src={`http://localhost:5000${src}`}
+          // src={src}
+          style={style}
+          onChange={onClickEvent}
+        >
           <S.EditIconWrapper>
             <label htmlFor="featured-image">
               <MdModeEdit className="edit-icon" size={20} color="black" />

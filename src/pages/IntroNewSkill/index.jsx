@@ -6,36 +6,74 @@ import Header from '../../components/common/Header';
 import BasicText from '../../components/common/BasicText';
 import BasicInput from '../../components/common/BasicInput';
 import SkillText from '../../components/common/SkillText';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { userApi } from '../../../api/utils/user';
 
 function NewSkill({ inputProps }) {
   const navigate = useNavigate();
 
+  const { userId } = useParams();
+
   /////// { API } /////////
 
-  const [skill, setSkill] = useState([]);
+  const userInfo = async () => {
+    try {
+      const res = await userApi.getUserInfo();
+      setMySkill(res.data.data.skills);
+      console.log('res', res);
+    } catch (error) {
+      console.log('error: ', error.response.data.message);
+    }
+  };
 
   useEffect(() => {
+    userInfo();
+  }, []);
+
+  const [mySkill, setMySkill] = useState([]);
+  const [skill, setSkill] = useState([]);
+  const [input, setInput] = useState('');
+
+  const handleClickSearch = async () => {
     const skillSearch = async () => {
-      try {
-        const res = await userApi.skillSearch(skill);
-        setSkill(res.data.data.skill);
-        console.log(res.data.data.skill);
-      } catch (error) {
-        console.log('error: ', error);
+      if (input) {
+        const res = await userApi.skillSearch(input);
+
+        setSkill(res.data.data);
       }
     };
 
     skillSearch();
-  }, []);
+  };
 
   const onChange = (e) => {
-    setSkill(e.target.value);
+    setInput(e.target.value);
+  };
+
+  const handleClickAddSkill = async (data) => {
+    try {
+      const response = await userApi.updateSkill(userId, [data._id]);
+
+      if (response.status === 201) {
+        setMySkill((prev) => prev.concat(data));
+      }
+    } catch (e) {
+      alert(e.response.data.error);
+    }
   };
 
   /////////////////
 
+  const handleRemoveSkill = async (_data) => {
+    const response = await userApi.updateSkill(userId, [_data._id]);
+
+    if (response.status === 201) {
+      setMySkill((prev) => prev.filter((data) => data._id === _data._id));
+    }
+  };
+
+  console.log('skill', skill);
+  console.log('setMySkill', setMySkill);
   return (
     <S.IntroNewSkillWrapper>
       <Header
@@ -58,11 +96,21 @@ function NewSkill({ inputProps }) {
             marginBottom: 20,
           }}
         />
-        <SkillText text="javascript" existIcon={true} choice={true} />
+        <S.MySkillContainer>
+          {mySkill.map((data) => (
+            <SkillText
+              onClick={() => handleRemoveSkill(data)}
+              text={data.skill}
+              existIcon={true}
+              choice={true}
+            />
+          ))}
+        </S.MySkillContainer>
       </S.ChoiceSkill>
       <S.InputWrap>
         <BasicInput
           {...inputProps}
+          value={input}
           style={{
             height: 50,
             font: CS.font.labelMedium,
@@ -77,6 +125,7 @@ function NewSkill({ inputProps }) {
           onChange={onChange}
         />
         <IoIosSearch
+          onClick={handleClickSearch}
           style={{
             position: 'absolute',
             top: 15,
@@ -96,7 +145,18 @@ function NewSkill({ inputProps }) {
             marginBottom: 20,
           }}
         />
-        <SkillText text={skill.skill} existIcon={false} choice={true} />
+        <div style={{ display: 'flex' }}>
+          {skill?.map((data, index) => (
+            <SkillText
+              key={`${data._id}_${index}`}
+              onClick={() => handleClickAddSkill(data)}
+              text={data.skill}
+              existIcon={false}
+              choice={false}
+            />
+          ))}
+        </div>
+        <div></div>
       </S.Search>
     </S.IntroNewSkillWrapper>
   );

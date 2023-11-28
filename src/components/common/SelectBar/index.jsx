@@ -4,6 +4,7 @@ import * as S from './style';
 const SelectBar = ({ style, options, onChange, value, name }) => {
   const handleSelectChange = (e) => {
     const selectValue = e.target.value;
+    console.log('selectValue', selectValue);
     if (onChange) {
       onChange(selectValue);
     }
@@ -16,8 +17,12 @@ const SelectBar = ({ style, options, onChange, value, name }) => {
       value={value}
       name={name}
     >
-      {options.map((option) => (
-        <option key={option.key} value={option.value} style={option.style}>
+      {options.map((option, index) => (
+        <option
+          key={`${option.key}_${index}`}
+          value={option.value}
+          style={option.style}
+        >
           {option.name}
         </option>
       ))}

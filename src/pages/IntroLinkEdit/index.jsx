@@ -3,12 +3,20 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import Header from '../../components/common/Header';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import { userApi } from '../../../api/utils/user';
+import { ROUTER_LINK } from '../../router/routes';
 
 function LinkEdit() {
+  const location = useLocation();
+
+  const { state } = location;
+  const { userId } = useParams();
+
   const [form, setForm] = useState({
-    inputLinkValue: '',
-    inputTitleValue: '',
+    id: state.linkId,
+    inputLinkValue: state.url,
+    inputTitleValue: state.title,
   });
   const navigate = useNavigate();
 
@@ -17,6 +25,13 @@ function LinkEdit() {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleClickEdit = async () => {
+    const res = await userApi.editLinks(form, userId);
+    if (res.status === 200) {
+      navigate(ROUTER_LINK.MYPAGE.link);
+    }
   };
 
   return (
@@ -31,6 +46,7 @@ function LinkEdit() {
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
         }}
         leftOnClickEvent={() => navigate(-1)}
+        rightOnClickEvent={handleClickEdit}
       />
 
       <InputBox

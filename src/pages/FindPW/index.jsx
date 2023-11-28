@@ -6,14 +6,16 @@ import BasicButton from '../../components/common/BasicButton';
 import BasicText from '../../components/common/BasicText';
 import { useNavigate } from 'react-router';
 import Header from '../../components/common/Header';
+import { userApi } from '../../../api/utils/user';
 
-function FindPW({ onClickButton }) {
+function FindPW() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    inputNameValue: '',
-    inputIdValue: '',
-    inputPwValue: '',
-    inputPwCheckValue: '',
+    name: '',
+    email: '',
+    password: '',
+    passwordCheck: '',
+    code: '',
   });
 
   const onChange = (e) => {
@@ -22,6 +24,40 @@ function FindPW({ onClickButton }) {
       [e.target.name]: e.target.value,
     }));
   };
+
+  const handleClickSendEmail = async () => {
+    const response = await userApi.sendEmail({
+      email: form.email,
+      name: form.name,
+    });
+
+    if (response.status === 200) {
+      alert(response.data.message);
+    }
+  };
+
+  // const handleClickConfirmCode = async () => {
+  //   const response = await userApi.confirmCode({
+  //     email: form.email,
+  //     code: form.code,
+  //   });
+  //   console.log('response', response);
+  // };
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleClickConfirmCode = () => {
+    setIsVisible(true);
+  };
+
+  const handleClickResetPw = async () => {
+    const response = await userApi.resetPassword({
+      email: form.email,
+      code: form.code,
+      password: form.password,
+    });
+    console.log('response', response);
+  };
+
   return (
     <>
       <S.Container>
@@ -43,13 +79,14 @@ function FindPW({ onClickButton }) {
           label="이름"
           subTextProps={{
             type: 'show',
-            text: '0/20',
+            text: `${form['name'].length}/20`,
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
+            value: form['name'],
+            onChange: onChange,
             placeholder: '프로필 이름',
-            name: 'inputNameValue',
+            name: 'name',
+            maxLength: 20,
           }}
           buttonElement={false}
         />
@@ -59,16 +96,16 @@ function FindPW({ onClickButton }) {
             type: 'none',
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
+            value: form['email'],
+            onChange: onChange,
             placeholder: 'example@elice.com',
-            name: 'inputIdValue',
+            name: 'email',
           }}
           buttonElement={false}
         />
         <S.ButtonWrap>
           <BasicButton
-            onClick={onClickButton}
+            handleOnClickButton={handleClickSendEmail}
             text="이메일로 인증 번호 보내기"
             textStyle={{
               color: CS.color.white,
@@ -89,67 +126,71 @@ function FindPW({ onClickButton }) {
             type: 'none',
           }}
           inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
-            placeholder: '6자리 숫자',
-            name: 'inputPwValue',
+            value: form['code'],
+            onChange: onChange,
+            placeholder: '6자리 코드',
+            name: 'code',
           }}
           buttonElement={true}
+          onClickButton={handleClickConfirmCode}
         />
+        {isVisible && (
+          <>
+            <BasicText
+              text="비밀번호 재설정"
+              style={{
+                font: CS.font.headingLarge,
+                marginLeft: 20,
+                marginBottom: 16,
+                marginTop: 20,
+              }}
+            />
+            <InputBox
+              label="새 비밀번호"
+              subTextProps={{
+                type: 'none',
+              }}
+              inputProps={{
+                value: form['password'],
+                onChange: onChange,
+                placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
+                name: 'password',
+              }}
+              buttonElement={false}
+            />
+            <InputBox
+              label="새 비밀번호 확인"
+              subTextProps={{
+                type: 'none',
+              }}
+              inputProps={{
+                value: form['passwordCheck'],
+                onChange: onChange,
+                placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
+                name: 'passwordCheck',
+              }}
+              buttonElement={false}
+            />
 
-        <BasicText
-          text="비밀번호 재설정"
-          style={{
-            font: CS.font.headingLarge,
-            marginLeft: 20,
-            marginBottom: 16,
-            marginTop: 20,
-          }}
-        />
-        <InputBox
-          label="새 비밀번호"
-          subTextProps={{
-            type: 'none',
-          }}
-          inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
-            placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-            name: 'inputNameValue',
-          }}
-          buttonElement={false}
-        />
-        <InputBox
-          label="새 비밀번호 확인"
-          subTextProps={{
-            type: 'none',
-          }}
-          inputProps={{
-            value: form.name,
-            handleOnChangeValue: onChange,
-            placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-            name: 'inputIdValue',
-          }}
-          buttonElement={false}
-        />
+            <S.ButtonWrap>
+              <BasicButton
+                handleOnClickButton={handleClickResetPw}
+                text="비밀번호 변경"
+                textStyle={{
+                  color: CS.color.white,
+                  font: CS.font.labelMedium,
+                }}
+                btnStyle={{
+                  backgroundColor: CS.color.primary,
+                  width: '100%',
 
-        <S.ButtonWrap>
-          <BasicButton
-            onClick={onClickButton}
-            text="비밀번호 변경"
-            textStyle={{
-              color: CS.color.white,
-              font: CS.font.labelMedium,
-            }}
-            btnStyle={{
-              backgroundColor: CS.color.primary,
-              width: '100%',
-
-              height: 50,
-              borderRadius: 15,
-            }}
-          />
-        </S.ButtonWrap>
+                  height: 50,
+                  borderRadius: 15,
+                }}
+              />
+            </S.ButtonWrap>
+          </>
+        )}
       </S.Container>
     </>
   );
