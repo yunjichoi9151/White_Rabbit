@@ -26,6 +26,7 @@ const QNA = () => {
   const [sort, setSort] = useState(sortType.NEW);
   const [isMineOnly, setIsMineOnly] = useState(false);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ const QNA = () => {
       const res = await userApi.getLoginUserInfo();
       setUserInfo(res.data.data);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
   };
 
@@ -45,8 +46,17 @@ const QNA = () => {
       filterMyPosts(res.data.data.posts);
       console.log(res.data.data.posts);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
+  };
+
+  const handleSearchKeywordChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    console.log('Search keyword:', searchKeyword);
+    // 검색 조건 추가하여 API 호출
   };
 
   const handleSortClick = (sortBy) => {
@@ -59,22 +69,28 @@ const QNA = () => {
 
   const handleFollowClick = async (clickedPost) => {
     try {
-      // 추가/삭제 API 수정 필요
+      let followId;
       if (clickedPost.isFollowing) {
-        // await followApi.deleteFollow(userInfo._id, clickedPost.author._id);
+        await followApi.deleteFollow(clickedPost.followList._id);
       } else {
-        // await followApi.postFollow(userInfo._id, clickedPost.author._id);
+        const res = await followApi.postFollow(clickedPost.author._id);
+        followId = res.data.followId;
       }
+
       const updatedPosts = filteredPosts.map((post) => {
         if (post._id === clickedPost._id) {
-          return { ...post, isFollowing: !post.isFollowing };
+          return {
+            ...post,
+            isFollowing: !post.isFollowing,
+            followList: { _id: followId },
+          };
         }
         return post;
       });
 
       setFilteredPosts(updatedPosts);
     } catch (error) {
-      console.log('error: ', error.response.data);
+      console.log('error: ', error);
     }
   };
 
@@ -129,6 +145,8 @@ const QNA = () => {
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
         textLeft={'개발Q&A'}
+        rightOnClickEvent={handleSearchClick}
+        inputChangeEvent={handleSearchKeywordChange}
       />
       <S.FilterBar>
         <S.ButtonWrap>
