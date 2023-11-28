@@ -6,24 +6,27 @@ import InputBox from '../../components/common/InputBox';
 import ProfileImg from '../../components/common/ProfileImg';
 import Header from '../../components/common/Header';
 import { useNavigate, useParams } from 'react-router';
-
-import userData from '../../test/user.json';
+import { ROUTER_LINK } from '../../router/routes';
+import { postApi } from '../../../api/utils/Post';
 
 function ProfileEdit() {
   //user 정보
   const [user, setUser] = useState({});
-  const { userId } = useParams();
 
   const userInfo = async () => {
     try {
-      const res = await userApi.getUserInfoById(userId);
-      setUser(res.data.data.user);
+      const res = await userApi.getLoginUserInfo();
+      setUser(res.data.data);
+      setImageURL(res.data.data.profile_url);
+      setForm({
+        inputNameValue: res.data.data.name,
+        inputIdValue: res.data.data.email,
+      });
       console.log('res', res);
     } catch (error) {
       console.log(error);
     }
   };
-  const users = userData.data;
 
   useEffect(() => {
     userInfo();
@@ -33,6 +36,7 @@ function ProfileEdit() {
     inputNameValue: '',
     inputIdValue: '',
   });
+
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -42,8 +46,37 @@ function ProfileEdit() {
     }));
   };
 
-  const handleClickDone = () => {
-    console.log('완료 클릭');
+  const handleClickDone = async () => {
+    const res = await userApi.editUserById(
+      user._id,
+      form['inputNameValue'],
+      form['inputIdValue'],
+      imageURL,
+    );
+
+    if (res.status === 200) {
+      navigate(ROUTER_LINK.MYPAGE.link);
+    }
+  };
+
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+
+    await handleFormSubmit(file);
+  };
+
+  const [imageURL, setImageURL] = useState('');
+
+  const handleFormSubmit = async (file) => {
+    if (file) {
+      // 이미지를 포함한 FormData 객체 생성
+      const formData = new FormData();
+
+      formData.append('image', file);
+
+      const response = await postApi.addImage(formData);
+      setImageURL(`${response.data.data}`);
+    }
   };
 
   return (
@@ -61,25 +94,27 @@ function ProfileEdit() {
         leftOnClickEvent={() => navigate(-1)}
       />
       <ProfileImg
-        src="/assets/img/account.png"
+        src={`${imageURL}` || '/assets/img/account.png'}
         style={{
           width: 72,
           margin: 20,
           border: 0,
         }}
+        onClickEvent={handleImageChange}
         isEditable={true}
       />
       <InputBox
         label="이름"
         subTextProps={{
           type: 'show',
-          text: '0/20',
+          text: `${form['inputNameValue'].length}/20`,
         }}
         inputProps={{
           value: form['inputNameValue'],
           onChange: onChange,
-          placeholder: users.name,
+          placeholder: '프로필 이름',
           name: 'inputNameValue',
+          maxLength: 20,
         }}
         buttonElement={false}
       />
@@ -90,10 +125,11 @@ function ProfileEdit() {
         }}
         inputProps={{
           value: form['inputIdValue'],
-          onChange: onChange,
-          placeholder: users.email,
+          placeholder: 'example@elice.com',
           name: 'inputIdValue',
+          isReadOnly: 'true',
         }}
+        signType="none"
         buttonElement={false}
       />
       <InputBox
@@ -102,10 +138,7 @@ function ProfileEdit() {
           type: 'none',
         }}
         inputProps={{
-          value: form['inputStageValue'],
-
-          placeholder:
-            users.generation_type + ' ' + users.generation_number + '기',
+          value: user?.generation_type + ' ' + user?.generation_number + '기',
           name: 'inputStageValue',
           isReadOnly: 'true',
         }}
@@ -118,9 +151,7 @@ function ProfileEdit() {
           type: 'none',
         }}
         inputProps={{
-          value: form['inputRatingCheckValue'],
-
-          placeholder: users.roles,
+          value: user?.roles,
           name: 'inputRatingCheckValue',
           isReadOnly: 'true',
         }}

@@ -32,6 +32,7 @@ const Header = ({
   textRight,
   leftOnClickEvent,
   rightOnClickEvent,
+  inputChangeEvent,
   headerStyle,
 }) => {
   typeLeft = LeftType[typeLeft];
@@ -102,6 +103,7 @@ const Header = ({
               alignItems: 'center',
             }}
             placeholder="회사, 사람, 키워드로 검색"
+            handleOnChangeValue={inputChangeEvent}
           />
         )}
       </S.CenterWrap>

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -7,10 +9,15 @@ import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
 import TableHeader from '../../components/admin/TableHeader';
 import TableRow from '../../components/admin/TableRow';
+import { skillApi } from '../../../api/utils/skill';
+import { userApi } from '../../../api/utils/user';
 
 const Admin = () => {
   const [isAdmitted, setIsAdmitted] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('0');
+  const [currentTabKey, setCurrentTabKey] = useState('2');
+  const [skills, setSkills] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
@@ -32,9 +39,39 @@ const Admin = () => {
     console.log('추가 버튼 클릭');
   };
 
-  const handleRemoveClick = () => {
-    console.log('삭제 버튼 클릭');
+  const handleRemoveClick = async (id) => {
+    try {
+      const res = await skillApi.delteSkill(id);
+      fetchSkills();
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
   };
+
+  const handleLogoutClick = async () => {
+    try {
+      const res = await userApi.logout();
+      console.log(res);
+      if (res.status === 200) {
+        navigate(ROUTER_LINK.LANDING.path);
+      }
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const fetchSkills = async () => {
+    try {
+      const res = await skillApi.getAllSkills();
+      setSkills(res.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchSkills();
+  }, []);
 
   return (
     <S.AdminWrap>
@@ -46,6 +83,7 @@ const Admin = () => {
         headerStyle={{
           borderBottom: `1px solid ${CS.color.borderTransparent}`,
         }}
+        rightOnClickEvent={() => handleLogoutClick()}
       />
       <TabBar
         tabNames={['회원 관리', '기수 관리', '스킬 관리']}
@@ -130,12 +168,15 @@ const Admin = () => {
             />
           </S.ButtonWrap>
           <TableHeader haderTexts={['No.', '스킬', '관리']} />
-          <TableRow
-            colTexts={['1', 'JavaScript']}
-            btnText={'삭제'}
-            btnColor={CS.color.negative}
-            handleBtnClick={handleRemoveClick}
-          />
+          {skills.map((skill, index) => (
+            <TableRow
+              key={index}
+              colTexts={[index + 1, skill.skill]}
+              btnText={'삭제'}
+              btnColor={CS.color.negative}
+              handleBtnClick={() => handleRemoveClick(skill._id)}
+            />
+          ))}
         </>
       )}
     </S.AdminWrap>

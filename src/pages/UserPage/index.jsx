@@ -14,7 +14,7 @@ import Header from '../../components/common/Header';
 
 import MyContent from '../MyContent';
 
-const MyPage = () => {
+const UserPage = () => {
   //user 정보
   const [user, setUser] = useState({});
   const [follow, setFollow] = useState({});
@@ -39,16 +39,6 @@ const MyPage = () => {
       setFollow(res.data.data);
     } catch (error) {
       // console.log('error: ', error.response.data.message);
-    }
-  };
-
-  const handleOnClickButton = async () => {
-    if (confirm('로그아웃 하시겠습니까?')) {
-      const response = await userApi.logout();
-
-      if (response.status === 200) {
-        navigate(ROUTER_LINK.LANDING.path);
-      }
     }
   };
 
@@ -85,11 +75,13 @@ const MyPage = () => {
     <>
       <S.MyPageWrap>
         <Header
-          typeLeft={'TEXT'}
-          textLeft={`내 프로필`}
+          typeLeft={'BACK'}
+          typeCenter={'TEXT'}
+          textCenter={user.name}
           headerStyle={{
             borderBottom: `1px solid ${CS.color.contentTertiary}`,
           }}
+          leftOnClickEvent={() => navigate(-1)}
         />
         <S.ProfileWrap>
           <ProfileBar
@@ -119,24 +111,39 @@ const MyPage = () => {
             onClickFollower={handleOnClickFollower}
             onClickFollowing={handleOnClickFollowing}
           />
-          <Link
-            to={ROUTER_LINK.PROFILEEDIT.path}
-            style={{
-              display: 'block',
-              width: 28,
-              height: 28,
-              marginTop: 20,
-              marginRight: 20,
-            }}
-          >
-            <IoSettingsOutline
-              style={{
-                cursor: 'pointer',
-                fontSize: 28,
-              }}
-            />
-          </Link>
         </S.ProfileWrap>
+        <S.ButtonWrap>
+          <BasicButton
+            text="팔로우"
+            textStyle={{
+              font: CS.font.labelSmall,
+              color: CS.color.black,
+            }}
+            btnStyle={{
+              border: `1px solid ${CS.color.contentTertiary}`,
+              background: CS.color.white,
+              width: '50%',
+              height: 30,
+              borderRadius: 7,
+              marginRight: 4,
+            }}
+          />
+          <BasicButton
+            text="메세지"
+            textStyle={{
+              font: CS.font.labelSmall,
+              color: CS.color.black,
+            }}
+            btnStyle={{
+              border: `1px solid ${CS.color.contentTertiary}`,
+              background: CS.color.white,
+              width: '50%',
+              height: 30,
+              borderRadius: 7,
+              marginLeft: 4,
+            }}
+          />
+        </S.ButtonWrap>
         <S.TabWrap>
           <TabBar
             tabNames={{ profile: '프로필', content: '게시물', reply: '댓글' }}
@@ -161,24 +168,9 @@ const MyPage = () => {
 
         {tabName === 'reply' && <MyContent type="reply" userId={user._id} />}
         {/* <EmptyContent type={tabName} /> */}
-        <S.LogoutBtn
-          style={{
-            backgroundColor: CS.color.secondary,
-          }}
-        >
-          <BasicButton
-            text="로그아웃"
-            textStyle={{
-              color: CS.color.contentTertiary,
-              font: CS.font.labelSmall,
-            }}
-            btnStyle={{ height: 50 }}
-            handleOnClickButton={handleOnClickButton}
-          />
-        </S.LogoutBtn>
       </S.MyPageWrap>
     </>
   );
 };
 
-export default MyPage;
+export default UserPage;

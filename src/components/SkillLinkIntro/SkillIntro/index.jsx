@@ -3,11 +3,18 @@ import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import SkillText from '../../common/SkillText';
 
-function SkillIntro() {
+function SkillIntro({ skills }) {
   return (
     <>
       <S.Container>
-        <SkillText text="javascript" existIcon={false} choice={false} />
+        {skills?.map((skill) => (
+          <SkillText
+            key={skill._id}
+            text={skill.skill}
+            existIcon={false}
+            choice={false}
+          />
+        ))}
       </S.Container>
     </>
   );

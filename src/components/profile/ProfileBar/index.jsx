@@ -102,13 +102,13 @@ const ProfileBar = ({
               <BasicText
                 onClick={onClickFollower}
                 text={`팔로워 ${followers}`}
-                style={{ font: CS.font.paragraphSmall }}
+                style={{ font: CS.font.paragraphSmall, cursor: 'pointer' }}
               />
 
               <BasicText
                 onClick={onClickFollowing}
                 text={`팔로잉 ${followings}`}
-                style={{ font: CS.font.paragraphSmall }}
+                style={{ font: CS.font.paragraphSmall, cursor: 'pointer' }}
               />
             </div>
           )}

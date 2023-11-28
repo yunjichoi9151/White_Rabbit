@@ -5,7 +5,7 @@ import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 import BasicButton from '../../common/BasicButton';
 
-function EmptyIntro({ text, onClickButton, type }) {
+function EmptyIntro({ text, onClickButton, type, userId }) {
   return (
     <>
       <BasicText
@@ -18,7 +18,10 @@ function EmptyIntro({ text, onClickButton, type }) {
       />
 
       {type === 'skill' ? (
-        <Link to={ROUTER_LINK.NEWSKILL.path}>
+        <Link
+          to={`${ROUTER_LINK.NEWSKILL.link}/${userId}`}
+          style={{ width: 90, display: 'block' }}
+        >
           <BasicButton
             text={type === 'skill' ? '+ 스킬 추가' : '+ 링크 추가'}
             textStyle={{ fontColor: CS.color.black, font: CS.font.labelSmall }}
@@ -34,7 +37,10 @@ function EmptyIntro({ text, onClickButton, type }) {
           />
         </Link>
       ) : (
-        <Link to={ROUTER_LINK.NEWLINK.path}>
+        <Link
+          to={`${ROUTER_LINK.NEWLINK.link}/${userId}`}
+          style={{ width: 90, display: 'block' }}
+        >
           <BasicButton
             text={type === 'skill' ? '+ 스킬 추가' : '+ 링크 추가'}
             textStyle={{ fontColor: CS.color.black, font: CS.font.labelSmall }}

@@ -40,4 +40,12 @@ export const postApi = {
 
   // 게시물별 좋아요 목록 조회 API
   getLikePosts: (postId) => api.get(`/boards/${postId}/likes`),
+
+  // // 이미지 등록 API
+  addImage: (image) =>
+    api.post(`/image`, image, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
 };

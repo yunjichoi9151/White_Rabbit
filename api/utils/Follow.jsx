@@ -2,14 +2,7 @@ import { api } from '../index';
 
 export const followApi = {
   // 팔로우 등록
-  postFollow: (fromUserId, toUserId) => {
-    const requestData = {
-      to: toUserId,
-    };
-    api.post(`/users/${fromUserId}/follow`, requestData);
-  },
+  postFollow: (toUserId) => api.post(`/users/followings/${toUserId}`),
 
-  deleteFollow: (fromUserId, toUserId) => {
-    api.delete(`/users/${fromUserId}/follow?from=${toUserId}`);
-  },
+  deleteFollow: (followId) => api.delete(`/users/followings/${followId}`),
 };

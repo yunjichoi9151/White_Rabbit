@@ -15,6 +15,8 @@ import ProfileEdit from '../pages/ProfileEdit';
 import Detail from '../pages/Detail';
 import Write from '../pages/Write';
 import Admin from '../pages/Admin';
+import Follow from '../pages/Follow';
+import UserPage from '../pages/UserPage';
 
 export const ROUTER_LINK = {
   LANDING: { path: '/', link: '/' },
@@ -22,15 +24,17 @@ export const ROUTER_LINK = {
   QNA: { path: '/qna', link: '/qna' },
   RECRUITMENT: { path: '/recruitment', link: '/recruitment' },
   MYPAGE: { path: '/mypage', link: '/mypage' },
-  LINKEDIT: { path: '/linkedit', link: '/linkedit' },
-  NEWLINK: { path: '/newlink', link: '/newlink' },
+  LINKEDIT: { path: '/linkedit/:userId', link: '/linkedit' },
+  NEWLINK: { path: '/newlink/:userId', link: '/newlink' },
   JOIN: { path: '/join', link: '/join' },
   FINDPW: { path: '/findpw', link: '/findpw' },
-  NEWSKILL: { path: '/newskill', link: '/newskill' },
+  NEWSKILL: { path: '/newskill/:userId', link: '/newskill' },
   PROFILEEDIT: { path: '/profileedit', link: '/profileedit' },
   DETAIL: { path: '/post/:postId', link: '/post' },
   WRITE: { path: '/write', link: '/write' },
   ADMIN: { path: '/admin', link: '/admin' },
+  FOLLOW: { path: '/follow/:type', link: '/follow' },
+  USERPAGE: { path: '/userpage', link: '/userpage' },
   POSTEDIT: { path: '/post/:postId/edit', link: '/posts' },
 };
 
@@ -94,6 +98,14 @@ const router = createBrowserRouter([
       {
         path: ROUTER_LINK.WRITE.path,
         element: <Write />,
+      },
+      {
+        path: ROUTER_LINK.FOLLOW.path,
+        element: <Follow />,
+      },
+      {
+        path: ROUTER_LINK.USERPAGE.path,
+        element: <UserPage />,
       },
       {
         path: ROUTER_LINK.POSTEDIT.path,
