@@ -14,7 +14,6 @@ const TabBar = ({
     <>
       <S.TabBar style={style}>
         {Object.keys(tabNames).map((key, index) => (
-          <>
             <Tab
               key={key}
               tabName={tabNames[key]}
@@ -23,7 +22,6 @@ const TabBar = ({
               isActive={currentTabKey === key}
               handleOnClick={() => onTabClick(key)}
             />
-          </>
         ))}
       </S.TabBar>
     </>

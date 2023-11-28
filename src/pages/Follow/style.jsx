@@ -1,20 +1,9 @@
 import styled from 'styled-components';
 import * as CS from '../../styles/CommonStyles';
 
-export const MyPageWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-top: 64px;
-  overflow-y: auto;
-`;
-export const ProfileWrap = styled.div`
-  display: flex;
-`;
-
 export const TabWrap = styled.div`
   display: flex;
+  padding-top: 64px;
 `;
 export const Tab = styled.div`
   width: 100%;
@@ -31,14 +20,7 @@ export const Tab = styled.div`
   cursor: pointer;
   font: ${CS.font.labelSmall};
 `;
-export const TabBar = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-`;
-export const LogoutBtn = styled.div`
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+
+export const UnderLine = styled.div`
+  border-bottom: 1px solid ${CS.color.contentTertiary};
 `;

@@ -24,3 +24,7 @@ export const Search = styled.div`
   flex-direction: column;
   margin: 20px;
 `;
+
+export const MySkillContainer = styled.div`
+  display: flex;
+`;

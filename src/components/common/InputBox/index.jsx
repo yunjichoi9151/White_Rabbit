@@ -55,7 +55,7 @@ function InputBox({
           />
           {buttonElement ? (
             <BasicButton
-              onClick={onClickButton}
+              handleOnClickButton={onClickButton}
               text="인증"
               textStyle={{
                 color: CS.color.white,
