@@ -41,7 +41,7 @@ const QNA = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category, sort);
+      const res = await postApi.getCategoryPosts(category, searchKeyword, sort);
       setPosts(res.data.data.posts);
       filterMyPosts(res.data.data.posts);
       console.log(res.data.data.posts);
@@ -55,8 +55,7 @@ const QNA = () => {
   };
 
   const handleSearchClick = () => {
-    console.log('Search keyword:', searchKeyword);
-    // 검색 조건 추가하여 API 호출
+    fetchPosts();
   };
 
   const handleSortClick = (sortBy) => {

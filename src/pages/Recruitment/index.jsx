@@ -37,7 +37,7 @@ const Recruitment = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category);
+      const res = await postApi.getCategoryPosts(category, searchKeyword);
       setPosts(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error);
@@ -49,8 +49,7 @@ const Recruitment = () => {
   };
 
   const handleSearchClick = () => {
-    console.log('Search keyword:', searchKeyword);
-    // 검색 조건 추가하여 API 호출
+    fetchPosts();
   };
 
   const handleCategoryClick = (category) => {

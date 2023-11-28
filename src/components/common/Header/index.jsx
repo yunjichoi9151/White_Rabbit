@@ -102,7 +102,7 @@ const Header = ({
               textAlign: 'left',
               alignItems: 'center',
             }}
-            placeholder="회사, 사람, 키워드로 검색"
+            placeholder="제목, 내용, 작성자로 검색"
             handleOnChangeValue={inputChangeEvent}
           />
         )}
