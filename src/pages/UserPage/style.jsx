@@ -36,9 +36,9 @@ export const TabBar = styled.div`
   height: 100%;
   display: flex;
 `;
-export const LogoutBtn = styled.div`
-  height: 100%;
+export const ButtonWrap = styled.div`
   display: flex;
+  padding: 8px 24px;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
 `;

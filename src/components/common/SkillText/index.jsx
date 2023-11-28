@@ -5,10 +5,10 @@ import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../BasicText';
 
-function SkillText({ text, existIcon, choice }) {
+function SkillText({ text, existIcon, choice, onClick }) {
   return (
     <>
-      <S.Container>
+      <S.Container onClick={onClick}>
         <S.Wrap
           style={
             choice === true
