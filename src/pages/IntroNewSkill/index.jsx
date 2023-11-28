@@ -52,7 +52,7 @@ function NewSkill({ inputProps }) {
 
   const handleClickAddSkill = async (data) => {
     try {
-      const response = await userApi.addSkill(userId, data._id);
+      const response = await userApi.updateSkill(userId, [data._id]);
 
       if (response.status === 201) {
         setMySkill((prev) => prev.concat(data));
@@ -65,13 +65,15 @@ function NewSkill({ inputProps }) {
   /////////////////
 
   const handleRemoveSkill = async (_data) => {
-    const response = await userApi.removeSkill(userId, _data._id);
+    const response = await userApi.updateSkill(userId, [_data._id]);
 
     if (response.status === 201) {
-      setMySkill((prev) => prev.filter((data) => data._id !== _data._id));
+      setMySkill((prev) => prev.filter((data) => data._id === _data._id));
     }
   };
 
+  console.log('skill', skill);
+  console.log('setMySkill', setMySkill);
   return (
     <S.IntroNewSkillWrapper>
       <Header
@@ -144,12 +146,13 @@ function NewSkill({ inputProps }) {
           }}
         />
         <div style={{ display: 'flex' }}>
-          {skill?.map((data) => (
+          {skill?.map((data, index) => (
             <SkillText
+              key={`${data._id}_${index}`}
               onClick={() => handleClickAddSkill(data)}
               text={data.skill}
               existIcon={false}
-              choice={true}
+              choice={false}
             />
           ))}
         </div>

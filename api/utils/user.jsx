@@ -15,6 +15,9 @@ export const userApi = {
   // 비밀번호 찾기 이메일 발송 API
   sendEmail: async (params) => await api.post('/users/password', params),
 
+  // 비밀번호 찾기 인증 코드 확인 API
+  confirmCode: async (params) => await api.post('/users/password/code', params),
+
   // 정보조회(토큰) API
   getLoginUserInfo: () => api.get(`/users/`),
 
@@ -33,7 +36,7 @@ export const userApi = {
   resetPasswordEmail: (email) => api.post('/users/password', { email }),
 
   // 비밀번호 재설정 API
-  resetPassword: (userData) => api.post('/users/password/reset', userData),
+  resetPassword: (params) => api.post('/users/password/reset', params),
 
   //팔로우 전체 수 조회 API
   follow: (userId) => api.get(`/users/followings/number/${userId}`),
@@ -85,13 +88,19 @@ export const userApi = {
       profile_url: image,
     }),
 
+  //스킬 추가
   addSkill: (userId, skill) =>
     api.patch(`/users/skill/add/${userId}`, {
       skill,
     }),
 
+  //스킬 삭제
   removeSkill: (userId, skill) =>
     api.patch(`/users/skill/remove/${userId}`, {
       skill,
     }),
+
+  // 스킬 업데이트
+  updateSkill: (userId, skill) =>
+    api.patch(`/users/skills/${userId}`, { skills: skill }),
 };

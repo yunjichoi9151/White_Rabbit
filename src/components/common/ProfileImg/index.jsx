@@ -14,6 +14,7 @@ const ProfileImg = ({
       {isEditable ? (
         <S.ProfileImage
           src={`http://localhost:5000${src}`}
+          // src={src}
           style={style}
           onChange={onClickEvent}
         >

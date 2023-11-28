@@ -16,6 +16,7 @@ import Detail from '../pages/Detail';
 import Write from '../pages/Write';
 import Admin from '../pages/Admin';
 import Follow from '../pages/Follow';
+import UserPage from '../pages/UserPage';
 
 export const ROUTER_LINK = {
   LANDING: { path: '/', link: '/' },
@@ -33,6 +34,7 @@ export const ROUTER_LINK = {
   WRITE: { path: '/write', link: '/write' },
   ADMIN: { path: '/admin', link: '/admin' },
   FOLLOW: { path: '/follow/:type', link: '/follow' },
+  USERPAGE: { path: '/userpage', link: '/userpage' },
 };
 
 const router = createBrowserRouter([
@@ -99,6 +101,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_LINK.FOLLOW.path,
         element: <Follow />,
+      },
+      {
+        path: ROUTER_LINK.USERPAGE.path,
+        element: <UserPage />,
       },
     ],
   },

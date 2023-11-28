@@ -72,7 +72,15 @@ function Follow() {
         <Fragment key={`${follower._id}_${index}`}>
           <ProfileBar
             username={follower.name}
-            rate={follower.roles}
+            rate={
+              follower.roles === 'USER'
+                ? '레이서'
+                : follower.roles === 'COACH'
+                ? '코치'
+                : follower.roles === 'ADMIN'
+                ? '관리자'
+                : ''
+            }
             genType={follower.generation_type}
             genNum={follower.generation_number + '기'}
             existGeneration={true}

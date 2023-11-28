@@ -18,6 +18,7 @@ function MyContent({ type, userId }) {
         const res = await postApi.getPostByUserId(userId);
         const _res = res.data.data.map((data) => data.post);
         setPosts(_res);
+        console.log(_res);
       } catch (error) {
         // alert('error: ' + error.response);
         //.data.message
@@ -49,7 +50,11 @@ function MyContent({ type, userId }) {
       {posts.length ? (
         <S.Container>
           <BasicText
-            text={type === 'content' ? `게시물 ${posts.length}개` : `댓글 ${post.length}개`}
+            text={
+              type === 'content'
+                ? `게시물 ${posts.length}개`
+                : `댓글 ${posts.length}개`
+            }
             style={{
               background: CS.color.white,
               height: 40,
@@ -87,7 +92,7 @@ function MyContent({ type, userId }) {
           </S.PostList>
         </S.Container>
       ) : (
-        <EmptyContent type="reply" />
+        <EmptyContent />
       )}
     </>
   );

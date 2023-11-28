@@ -215,6 +215,7 @@ function Join() {
             onChange: onChangeName,
             placeholder: '프로필 이름',
             name: 'inputNameValue',
+            maxLength: 20,
           }}
           buttonElement={false}
         />
