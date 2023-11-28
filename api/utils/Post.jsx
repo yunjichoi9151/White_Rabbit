@@ -25,11 +25,15 @@ export const postApi = {
   // 게시물 조회(유저 id) API
   getPostByUserId: (userId) => api.get(`/boards/users/${userId}`),
 
+  // 게시물 등록 API
+  newPost: (title, content, category, image_url) =>
+    api.post(`/boards`, { title, content, category, image_url }),
+
   // 게시물 수정 API
   modifyPost: (postId, post) => api.patch(`/boards/${postId}`, post),
 
   // 게시물 삭제 API
-  deletePost: (postId) => api.delete(`/boards${postId}`),
+  deletePost: (postId) => api.delete(`/boards/${postId}`),
 
   // 좋아요 추가/취소 API
   putLike: (postId) => api.put(`/boards/${postId}/likes`),

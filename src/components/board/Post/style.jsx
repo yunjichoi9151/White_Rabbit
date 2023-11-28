@@ -20,10 +20,19 @@ export const TitleWrapper = styled.div`
 export const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 4px 20px 20px 20px;
-  display: flex;
+  padding: 4px 20px;
+  display: ${(props) => (props.contentLength === 'ALL' ? 'grid' : 'flex')};
   align-items: center;
   cursor: pointer;
+  justify-content: space-between;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+`;
+export const ShowWrapper = styled.div`
+  width: 100%;
+  padding: 0.5rem 1.75rem;
+  display: flex;
+  justify-content: flex-end;
 `;
 export const IconBar = styled.div`
   width: 100%;
@@ -39,4 +48,17 @@ export const IconWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+`;
+export const IconWrapperCenter = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+`;
+export const ImgWrapper = styled.div`
+  /* width: 100%; */
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

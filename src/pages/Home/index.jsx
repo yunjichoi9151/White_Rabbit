@@ -12,6 +12,9 @@ import userData from '../../test/user.json';
 import { postApi } from '../../../api/utils/Post';
 import Header from '../../components/common/Header';
 import WriteButton from '../../components/board/WriteButton';
+import { userApi } from '../../../api/utils/user';
+import BasicModal from '../../components/common/BasicModal';
+import BottomModal from '../../components/board/BottomModal';
 
 const Home = () => {
   const [active, setActive] = useState('all');
@@ -21,9 +24,7 @@ const Home = () => {
   const postList = async () => {
     try {
       const res = await postApi.getAllPosts();
-      const filteredPosts = res.data.data.posts.filter(
-        (post) => post.category === 'BOARD' || post.category === 'REVIEW',
-      );
+      const filteredPosts = res.data.data.posts;
 
       const postsWithDefaultImage = await Promise.all(
         filteredPosts.map(async (post) => {
@@ -52,7 +53,75 @@ const Home = () => {
       console.log('error: ', error);
     }
   };
-  const user = userData.data;
+
+  const likeHandler = async (postId) => {
+    try {
+      await postApi.putLike(postId);
+      setPosts(
+        posts.map((post) => {
+          if (post._id === postId) {
+            return {
+              ...post,
+              like_count: post.isLiked
+                ? post.like_count - 1
+                : post.like_count + 1,
+              isLiked: !post.isLiked,
+            };
+          }
+          return post;
+        }),
+      );
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  const [user, setUser] = useState({});
+
+  const userInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      setUser(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [targetPostId, setTargetPostId] = useState(null);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleOnClickDots = (postId) => {
+    setIsModalOpen(true);
+    setTargetPostId(postId);
+  };
+
+  const handleEdit = () => {
+    setIsModalOpen(false);
+    // navigate(`/post/${targetPostId}/edit`);
+    navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', targetPostId));
+  };
+
+  const handleDelete = async () => {
+    setIsModalOpen(false);
+    try {
+      await postApi.deletePost(targetPostId);
+      setPosts(posts.filter((post) => post._id !== targetPostId));
+      // navigate('/home');
+      navigate(ROUTER_LINK.HOME.link);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
   const navigate = useNavigate();
 
   const handleClick = (category) => {
@@ -69,6 +138,7 @@ const Home = () => {
 
   useEffect(() => {
     postList();
+    userInfo();
   }, [active]);
 
   useEffect(() => {
@@ -132,6 +202,7 @@ const Home = () => {
             content={post.content}
             src={post.author.profile_url || '/assets/img/elice_icon.png'}
             likes={post.like_count}
+            isLike={post.isLiked}
             category={post.category}
             username={post.author.name}
             rate={post.author.roles}
@@ -144,11 +215,22 @@ const Home = () => {
             }
             existFollowBtn={user._id === post.author._id ? false : true}
             existMoreBtn={user._id === post.author._id ? true : false}
+            handleOnClickLikeBtn={() => likeHandler(post._id)}
+            handleOnClickDots={() => handleOnClickDots(post._id)}
             isFollow={post.isFollowing}
+            imgSrc={'http://localhost:5000' + post.image_url}
+            view={post.view_count}
           />
         ))}
       </S.BoardWrap>
       <WriteButton />
+      {isModalOpen && (
+        <BottomModal
+          onClose={closeModal}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      )}
     </S.HomeWrap>
   );
 };

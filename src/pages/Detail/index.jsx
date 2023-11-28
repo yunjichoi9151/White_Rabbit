@@ -10,29 +10,51 @@ import ProfileImg from '../../components/common/ProfileImg';
 import InputBar from '../../components/common/InputBar';
 import BasicButton from '../../components/common/BasicButton';
 import { postApi } from '../../../api/utils/Post';
-import { commentApi } from '../../../api/utils/Comment';
+import { commentApi } from '../../../api/utils/comment';
+import { userApi } from '../../../api/utils/user';
+import BottomModal from '../../components/board/BottomModal';
+import { ROUTER_LINK } from '../../router/routes';
+
+const labelText = {
+  BOARD: '자유게시판',
+  REVIEW: '취업후기',
+  QNA: '개발 Q&A',
+  PROJECT: '프로젝트',
+  STUDY: '스터디',
+};
 
 const Detail = () => {
-  const [active, setActive] = useState('ALL');
-  const [inputData, setInputData] = useState('');
   const navigate = useNavigate();
   const { postId } = useParams();
-  // const post = detailData.data;
-  const [post, setPost] = useState([]);
+
+  // GET Post Detail
+  const [post, setPost] = useState({});
 
   const postDetail = async () => {
     try {
       const res = await postApi.getPostByPostId(postId);
-      setPost(res.data.data.post);
+      setPost(res.data.data);
+      console.log(res.data.data);
     } catch (error) {
       console.log('error: ', error);
     }
   };
-  const user = userData.data;
-  // const comments = commentData.data;
-  const [comments, setComments] = useState([]);
+
+  // GET LoginUser Info
+  const [user, setUser] = useState({});
+
+  const userInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      setUser(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // GET All Comments
+  const [comments, setComments] = useState([]);
+
   const commentsList = async () => {
     try {
       const res = await commentApi.getCommentsByPost(postId);
@@ -46,8 +68,7 @@ const Detail = () => {
   const newCommentHandler = useCallback(
     async (content) => {
       try {
-        // await commentApi.postComment(postId, content);
-        console.log(content);
+        await commentApi.postComment(postId, content);
         commentsList();
       } catch (error) {
         console.log('error: ', error);
@@ -57,6 +78,8 @@ const Detail = () => {
   );
 
   // CHANGE InputData
+  const [inputData, setInputData] = useState('');
+
   const changeInputData = (e) => {
     setInputData(e.target.value);
   };
@@ -77,15 +100,97 @@ const Detail = () => {
     }
   };
 
-  const labelText = {
-    BOARD: '자유게시판',
-    REVIEW: '취업후기',
-    QNA: '개발 Q&A',
-    PROJECT: '프로젝트',
-    STUDY: '스터디',
+  // Editable
+  const [editableCommentId, setEditableCommentId] = useState(null);
+  const [targetId, setTargetId] = useState(null);
+
+  // Modal
+  const [modalType, setModalType] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Click Three Dots Btn
+  const handleOnClickDots = (type, id) => {
+    setIsModalOpen(true);
+    setModalType(type);
+    setTargetId(id);
+  };
+
+  // Modal Close
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // EDIT Post & Comment
+  const handleEdit = () => {
+    setIsModalOpen(false);
+    if (modalType === 'comment') {
+      setEditableCommentId(targetId);
+    } else if (modalType === 'post') {
+      // navigate(`/post/${postId}/edit`);
+      navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', postId));
+    }
+  };
+
+  // DELETE Post & Comment
+  const handleDelete = async () => {
+    setIsModalOpen(false);
+    if (modalType === 'comment') {
+      try {
+        await commentApi.deleteComment(targetId);
+        commentsList();
+      } catch (error) {
+        console.log('error: ', error);
+      }
+    } else if (modalType === 'post') {
+      try {
+        await postApi.deletePost(postId);
+        // navigate('/home');
+        navigate(ROUTER_LINK.HOME.link);
+      } catch (error) {
+        console.log('error: ', error);
+      }
+    }
+  };
+
+  // UPDATE Comment List
+  const handleCommentUpdated = () => {
+    setEditableCommentId(null);
+    commentsList();
+  };
+
+  // Like Handler
+  const likeHandler = async (postId) => {
+    try {
+      await postApi.putLike(postId);
+      postDetail();
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  // GET Category
+  const getCategoryPath = (category) => {
+    switch (category) {
+      case 'BOARD':
+      case 'REVIEW':
+        return '/home';
+      case 'QNA':
+        return '/qna';
+      case 'PROJECT':
+      case 'STUDY':
+        return '/recruitment';
+      default:
+        return '/';
+    }
+  };
+
+  const handleBackClick = () => {
+    const path = getCategoryPath(post?.post?.category);
+    navigate(path);
   };
 
   useEffect(() => {
+    userInfo();
     postDetail();
     commentsList();
   }, []);
@@ -95,52 +200,84 @@ const Detail = () => {
       <Header
         typeLeft={'BACK'}
         typeCenter={'TEXT'}
-        textCenter={labelText[post.category]}
+        textCenter={labelText[post?.post?.category]}
         headerStyle={{
           borderBottom: `0.5px solid ${CS.color.contentTertiary}`,
           backgroundColor: CS.color.white,
         }}
-        leftOnClickEvent={() => navigate(-1)}
+        leftOnClickEvent={handleBackClick}
       />
       <S.BoardWrap>
-        <Post
-          title={post.title}
-          content={post.content}
-          src={
-            user.profile_url === ''
-              ? '/assets/img/elice_icon.png'
-              : user.profile_url
-          }
-          likes={post.like_count}
-          category={post.category}
-          username={post.author}
-          rate={user.roles}
-          contentLength="ALL"
-          isHot={true}
-          createdAt={post.createdAt}
-          comments={post.commentCount}
-        />
+        {post && (
+          <Post
+            title={post?.post?.title}
+            content={post?.post?.content}
+            src={
+              post?.post?.author?.profile_url || '/assets/img/elice_icon.png'
+            }
+            likes={post?.post?.like_count}
+            isLike={post?.isLiked}
+            category={post?.post?.category}
+            username={post?.post?.author?.name}
+            rate={post?.post?.author?.roles}
+            contentLength="ALL"
+            isHot={post?.isPopular}
+            createdAt={post?.post?.createdAt}
+            comments={post?.commentCount}
+            existFollowBtn={
+              user?._id === post?.post?.author?._id ? false : true
+            }
+            existMoreBtn={user?._id === post?.post?.author?._id ? true : false}
+            handleOnClickDots={() => handleOnClickDots('post', post?.post?._id)}
+            handleOnClickLikeBtn={() => likeHandler(post?.post?._id)}
+            isFollow={post?.isFollowing}
+            imgSrc={'http://localhost:5000' + post?.post?.image_url}
+            view={post?.post?.view_count}
+          />
+        )}
       </S.BoardWrap>
       <S.CommentWrap>
-        <S.CommentTitle>댓글 {comments.length}</S.CommentTitle>
-        {comments.map((comment, index) => (
-          <Reply
-            key={index}
-            src={user.profile_url}
-            rate={user.roles}
-            username={comment.author}
-            comment={comment.content}
-            createdAt={comment.createdAt}
-            style={{ backgroundColor: CS.color.white }}
+        {comments && (
+          <>
+            <S.CommentTitle>댓글 {comments.length}</S.CommentTitle>
+            {comments.map((comment, index) => (
+              <React.Fragment key={index}>
+                <Reply
+                  src={
+                    comment.author.profile_url || '/assets/img/elice_icon.png'
+                  }
+                  rate={comment.author.roles}
+                  username={comment.author.name}
+                  comment={comment.content}
+                  commentId={comment._id}
+                  createdAt={comment.createdAt}
+                  style={{ backgroundColor: CS.color.white }}
+                  existMoreBtn={user?._id === comment.author?._id}
+                  handleOnClickDots={() =>
+                    handleOnClickDots('comment', comment._id)
+                  }
+                  isEditable={editableCommentId === comment._id}
+                  onCommentUpdated={handleCommentUpdated}
+                />
+              </React.Fragment>
+            ))}
+          </>
+        )}
+        {isModalOpen && (
+          <BottomModal
+            onClose={handleCloseModal}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
           />
-        ))}
+        )}
       </S.CommentWrap>
+
       <S.NewCommentWrap>
         <ProfileImg
           src={
-            user.profile_url === ''
+            user?.profile_url === ''
               ? '/assets/img/elice_icon.png'
-              : user.profile_url
+              : user?.profile_url
           }
           style={{ width: '2.5rem', height: '2.5rem' }}
         />

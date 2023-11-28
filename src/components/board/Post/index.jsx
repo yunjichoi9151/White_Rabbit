@@ -8,10 +8,13 @@ import { BiLike } from 'react-icons/bi';
 import { BiSolidLike } from 'react-icons/bi';
 import { TbMessage2 } from 'react-icons/tb';
 import { FaFireAlt } from 'react-icons/fa';
+import { FaRegEye } from 'react-icons/fa';
+import BasicImage from '../../common/BasicImage';
+import ProfileImg from '../../common/ProfileImg';
 
 const length = {
   LONG: 100,
-  SHORT: 30,
+  SHORT: 50,
 };
 
 const labelColor = {
@@ -51,6 +54,8 @@ const Post = ({
   handleOnClickFollow,
   handleOnClickDots,
   handleOnClickLikeBtn,
+  imgSrc = '',
+  view,
 }) => {
   const substrContent =
     contentLength !== 'ALL' && content.length > length[contentLength]
@@ -109,12 +114,38 @@ const Post = ({
             </>
           )}
         </S.TitleWrapper>
-        <S.ContentWrapper onClick={handleOnClickPost}>
+        <S.ContentWrapper
+          onClick={handleOnClickPost}
+          contentLength={contentLength}
+        >
           <BasicText
             text={substrContent}
-            style={{ font: CS.font.paragraphSmall }}
+            style={{
+              font: CS.font.paragraphSmall,
+              width: 'auto',
+              marginBottom: '1rem',
+            }}
           />
+          {imgSrc !== '' && (
+            <S.ImgWrapper>
+              <ProfileImg
+                src={imgSrc}
+                // src="/assets/img/elice_icon.png"
+                style={{
+                  width: contentLength === 'ALL' ? '50%' : '4rem',
+                  height: contentLength === 'ALL' ? 'auto' : '4rem',
+                  borderRadius: '1rem',
+                }}
+              />
+            </S.ImgWrapper>
+          )}
         </S.ContentWrapper>
+        {/* <S.ShowWrapper>
+          <BasicText
+            text={'조회 ' + view}
+            style={{ font: CS.font.labelSmall }}
+          />
+        </S.ShowWrapper> */}
         <S.IconBar>
           <S.IconWrapper>
             <BasicButton
@@ -128,6 +159,13 @@ const Post = ({
               style={{ font: CS.font.labelSmall, padding: '4px' }}
             />
           </S.IconWrapper>
+          <S.IconWrapperCenter>
+            <FaRegEye style={{ marginTop: '0.25rem' }} />
+            <BasicText
+              text={view}
+              style={{ font: CS.font.labelSmall, padding: '4px' }}
+            />
+          </S.IconWrapperCenter>
           <S.IconWrapper style={{ flexDirection: 'row-reverse' }}>
             <BasicText
               text={comments}
