@@ -10,8 +10,7 @@ function SkillLinkPage({ userId, links, setLinks, skills }) {
   /////// { API } /////////
 
   const isEmptyLinks = !links?.length;
-
-  console.log('skills', skills);
+  const isEmptySkills = !skills?.length;
 
   /////////////////
   return (
@@ -20,11 +19,11 @@ function SkillLinkPage({ userId, links, setLinks, skills }) {
         <IntroHeader
           text="스킬"
           type="skill"
-          empty={skills?.length}
+          empty={isEmptySkills}
           userId={userId}
         />
 
-        {skills?.length ? (
+        {!isEmptySkills ? (
           <SkillIntro skills={skills} />
         ) : (
           <EmptyIntro

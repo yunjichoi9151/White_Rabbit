@@ -40,8 +40,26 @@ const ProfileBar = ({
   style,
   onClickFollower,
   onClickFollowing,
+  followId,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
+  const [_isFollow, setIsFollow] = useState(isFollow);
+
+  const userLabelText = {
+    USER: '레이서',
+    ADMIN: '관리자',
+    COACH: '코치',
+  };
+
+  const handleOnClickFollow = async (e) => {
+    e.preventDefault();
+    if (!_isFollow) return;
+    const response = await followApi.deleteFollow(followId);
+
+    if (response.status === 200) {
+      setIsFollow(!_isFollow);
+    }
+  };
 
   useEffect(() => {
     setTimeAgo(convertTimeAgo(createdAt));
@@ -89,13 +107,13 @@ const ProfileBar = ({
         </S.InfoBox>
         {existFollowBtn && (
           <BasicButton
-            text={isFollow ? '팔로잉' : '팔로우'}
-            // handleOnClickButton={handleOnClickFollow}
+            text={_isFollow ? '팔로잉' : '팔로우'}
+            handleOnClickButton={handleOnClickFollow}
             btnStyle={{
               width: '70px',
               height: '35px',
               borderRadius: '4px',
-              backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
+              backgroundColor: _isFollow ? CS.color.primary : CS.color.accent,
             }}
             textStyle={{
               font: CS.font.labelSmall,

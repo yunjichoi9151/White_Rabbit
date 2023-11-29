@@ -30,18 +30,16 @@ function IntroHeader({ type, empty, userId }) {
             }}
           />
         </S.HeaderWrap>
-        {empty === true ? (
-          <PiPencilSimpleLight style={{ display: 'none' }} />
-        ) : (
-          <Link to={link}>
-            <PiPencilSimpleLight
-              style={{
-                cursor: 'pointer',
-                color: CS.color.contentTertiary,
-              }}
-            />
-          </Link>
-        )}
+
+        <Link to={link}>
+          <PiPencilSimpleLight
+            style={{
+              cursor: 'pointer',
+              color: CS.color.contentTertiary,
+              display: empty ? 'none' : 'block',
+            }}
+          />
+        </Link>
       </S.Container>
     </>
   );

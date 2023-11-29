@@ -44,6 +44,9 @@ export const userApi = {
   //팔로우 전체 목록 조회 API
   followList: (userId) => api.get(`/users/followings/${userId}`),
 
+  //팔로우 삭제
+  deleteFollow: (userId) => api.delete(`/users/followings/${userId}`),
+
   //새로운 링크 추가 API
   links: (userId, title, url) =>
     api.post(`/users/links/${userId}`, {
@@ -78,7 +81,7 @@ export const userApi = {
   getAllSkill: () => api.get('/skills'),
 
   //트랙 기수 API
-  generation: () => api.get('/users/generations'),
+  generation: () => api.get('/generations'),
 
   //ID로 유저 정보 수정
   editUserById: (userId, userName, userEmail, image) =>
@@ -89,8 +92,8 @@ export const userApi = {
     }),
 
   //스킬 추가
-  addSkill: (userId, skill) =>
-    api.patch(`/users/skill/add/${userId}`, {
+  addSkill: (skill) =>
+    api.post(`/skills`, {
       skill,
     }),
 
@@ -103,4 +106,7 @@ export const userApi = {
   // 스킬 업데이트
   updateSkill: (userId, skill) =>
     api.patch(`/users/skills/${userId}`, { skills: skill }),
+
+  //기수 트랙 조회 API
+  // generationType: () => api.get('generation_type'),
 };

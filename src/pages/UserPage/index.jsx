@@ -15,6 +15,10 @@ import Header from '../../components/common/Header';
 import MyContent from '../MyContent';
 
 const UserPage = () => {
+  const { userId } = useParams();
+
+  console.log('userId', userId);
+
   //user 정보
   const [user, setUser] = useState({});
   const [follow, setFollow] = useState({});
@@ -23,10 +27,11 @@ const UserPage = () => {
   const navigate = useNavigate();
 
   const userInfo = async () => {
+    console.log('userIduserIduserIduserId', userId);
     try {
-      const res = await userApi.getUserInfo();
-      setUser(res.data.data);
-      setLinks(res.data.data.links);
+      const res = await userApi.getUserInfoById(userId);
+      setUser(res.data);
+      setLinks(res.data.links);
       console.log('res', res);
     } catch (error) {
       console.log('error: ', error.response.data.message);
@@ -49,8 +54,8 @@ const UserPage = () => {
   };
 
   useEffect(() => {
-    userInfo();
-  }, []);
+    userId && userInfo();
+  }, [userId]);
 
   useEffect(() => {
     if (user._id) {

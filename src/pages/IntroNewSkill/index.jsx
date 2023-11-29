@@ -33,11 +33,14 @@ function NewSkill({ inputProps }) {
   const [mySkill, setMySkill] = useState([]);
   const [skill, setSkill] = useState([]);
   const [input, setInput] = useState('');
+  const [addSkillInput, setAddSkillInput] = useState('');
+  const [isEmptySearch, setIsEmptySearch] = useState(false);
 
   const handleClickSearch = async () => {
     const skillSearch = async () => {
       if (input) {
         const res = await userApi.skillSearch(input);
+        setIsEmptySearch(!res.data.data.length);
 
         setSkill(res.data.data);
       }
@@ -47,33 +50,58 @@ function NewSkill({ inputProps }) {
   };
 
   const onChange = (e) => {
+    const { name } = e.target;
+
+    if (name === 'addSkill') {
+      setAddSkillInput(e.target.value);
+      return;
+    }
     setInput(e.target.value);
   };
 
   const handleClickAddSkill = async (data) => {
-    try {
-      const response = await userApi.updateSkill(userId, [data._id]);
-
-      if (response.status === 201) {
-        setMySkill((prev) => prev.concat(data));
+    const skillsId = mySkill.map((skill) => skill._id);
+    setMySkill((prev) => {
+      if (!skillsId.includes(data._id)) {
+        return prev.concat(data);
       }
-    } catch (e) {
-      alert(e.response.data.error);
+      return prev;
+    });
+  };
+
+  const handleClickPostSkill = async () => {
+    const response = await userApi.addSkill(addSkillInput);
+
+    if (response.status === 201) {
+      setMySkill((prev) => prev.concat(response.data));
     }
   };
 
   /////////////////
 
   const handleRemoveSkill = async (_data) => {
-    const response = await userApi.updateSkill(userId, [_data._id]);
+    setMySkill((prev) => prev.filter((data) => data._id !== _data._id));
+  };
 
-    if (response.status === 201) {
-      setMySkill((prev) => prev.filter((data) => data._id === _data._id));
+  const handleClickSave = async () => {
+    const skillsId = mySkill.map((skill) => skill._id);
+    const response = await userApi.updateSkill(userId, skillsId);
+
+    if (response.status === 200) {
+      navigate(-1);
     }
   };
 
-  console.log('skill', skill);
-  console.log('setMySkill', setMySkill);
+  const handleKeyDownEnter = (e, type) => {
+    if (e.keyCode === 13) {
+      if (type === 'addSkill') {
+        handleClickPostSkill();
+      } else {
+        handleClickSearch();
+      }
+    }
+  };
+
   return (
     <S.IntroNewSkillWrapper>
       <Header
@@ -86,7 +114,7 @@ function NewSkill({ inputProps }) {
           borderBottom: `1px solid ${CS.color.contentTertiary}`,
         }}
         leftOnClickEvent={() => navigate(-1)}
-        // rightOnClickEvent={}
+        rightOnClickEvent={handleClickSave}
       />
       <S.ChoiceSkill>
         <BasicText
@@ -97,8 +125,9 @@ function NewSkill({ inputProps }) {
           }}
         />
         <S.MySkillContainer>
-          {mySkill.map((data) => (
+          {mySkill?.map((data) => (
             <SkillText
+              key={data._id}
               onClick={() => handleRemoveSkill(data)}
               text={data.skill}
               existIcon={true}
@@ -123,6 +152,7 @@ function NewSkill({ inputProps }) {
           }}
           placeholder="스킬을 검색해보세요."
           onChange={onChange}
+          onKeyDown={handleKeyDownEnter}
         />
         <IoIosSearch
           onClick={handleClickSearch}
@@ -137,27 +167,86 @@ function NewSkill({ inputProps }) {
         />
       </S.InputWrap>
 
-      <S.Search>
-        <BasicText
-          text="검색 결과"
-          style={{
-            font: CS.font.headingMedium,
-            marginBottom: 20,
-          }}
-        />
-        <div style={{ display: 'flex' }}>
-          {skill?.map((data, index) => (
-            <SkillText
-              key={`${data._id}_${index}`}
-              onClick={() => handleClickAddSkill(data)}
-              text={data.skill}
-              existIcon={false}
-              choice={false}
+      {!isEmptySearch ? (
+        <S.Search>
+          <BasicText
+            text="검색 결과"
+            style={{
+              font: CS.font.headingMedium,
+              marginBottom: 20,
+            }}
+          />
+          <div style={{ display: 'flex' }}>
+            {skill?.map((data, index) => (
+              <SkillText
+                key={`${data._id}_${index}`}
+                onClick={() => handleClickAddSkill(data)}
+                text={data.skill}
+                existIcon={false}
+                choice={false}
+              />
+            ))}
+          </div>
+        </S.Search>
+      ) : (
+        <>
+          <S.Search
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+            }}
+          >
+            <BasicText
+              text="검색 결과"
+              style={{
+                font: CS.font.headingMedium,
+              }}
             />
-          ))}
-        </div>
-        <div></div>
-      </S.Search>
+
+            <BasicText
+              text="검색 결과가 없습니다. 직접 입력 해주세요."
+              style={{
+                font: CS.font.labelSmall,
+                color: CS.color.contentTertiary,
+              }}
+            />
+          </S.Search>
+
+          <S.InputWrap>
+            <BasicInput
+              {...inputProps}
+              value={addSkillInput}
+              style={{
+                height: 50,
+                font: CS.font.labelMedium,
+                textAlign: 'left',
+                outline: 'none',
+                border: `1px solid ${CS.color.secondary}`,
+                borderRadius: 10,
+                paddingBottom: 0,
+                paddingLeft: 16,
+              }}
+              placeholder="스킬을 검색해보세요."
+              onChange={onChange}
+              name="addSkill"
+              onKeyDown={(e) => handleKeyDownEnter(e, 'addSkill')}
+            />
+
+            <IoIosSearch
+              onClick={handleClickPostSkill}
+              style={{
+                position: 'absolute',
+                top: 15,
+                right: 20,
+                width: 20,
+                height: 20,
+                cursor: 'pointer',
+              }}
+            />
+          </S.InputWrap>
+        </>
+      )}
     </S.IntroNewSkillWrapper>
   );
 }

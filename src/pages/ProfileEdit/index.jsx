@@ -79,6 +79,11 @@ function ProfileEdit() {
     }
   };
 
+  const userLabelText = {
+    USER: '레이서',
+    ADMIN: '관리자',
+    COACH: '코치',
+  };
   return (
     <S.ProfileEditWrapper>
       <Header
@@ -151,7 +156,7 @@ function ProfileEdit() {
           type: 'none',
         }}
         inputProps={{
-          value: user?.roles,
+          value: `${userLabelText[user.roles]}`,
           name: 'inputRatingCheckValue',
           isReadOnly: 'true',
         }}

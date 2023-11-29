@@ -34,7 +34,7 @@ export const ROUTER_LINK = {
   WRITE: { path: '/write', link: '/write' },
   ADMIN: { path: '/admin', link: '/admin' },
   FOLLOW: { path: '/follow/:type', link: '/follow' },
-  USERPAGE: { path: '/userpage', link: '/userpage' },
+  USERPAGE: { path: '/userpage/:userId', link: '/userpage' },
   POSTEDIT: { path: '/post/:postId/edit', link: '/posts' },
 };
 

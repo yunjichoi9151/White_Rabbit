@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
@@ -8,15 +8,28 @@ import { useNavigate } from 'react-router';
 import Header from '../../components/common/Header';
 import { userApi } from '../../../api/utils/user';
 
+const initialForm = {
+  name: '엘리스',
+  email: 'hajw.study@gmail.com',
+  password: '',
+  passwordCheck: '',
+  code: '',
+};
+
 function FindPW() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-    passwordCheck: '',
-    code: '',
-  });
+
+  const [timer, setTimer] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const [form, setForm] = useState(initialForm);
 
   const onChange = (e) => {
     setForm((prev) => ({
@@ -26,13 +39,34 @@ function FindPW() {
   };
 
   const handleClickSendEmail = async () => {
-    const response = await userApi.sendEmail({
-      email: form.email,
-      name: form.name,
-    });
+    try {
+      const response = await userApi.sendEmail({
+        email: form.email,
+        name: form.name,
+      });
 
-    if (response.status === 200) {
-      alert(response.data.message);
+      if (response.status === 200) {
+        alert(response.data.message);
+        setTimer(600);
+        setIsVisible(false);
+        setForm({
+          ...form,
+          password: '',
+          passwordCheck: '',
+          code: '',
+        });
+      }
+    } catch (error) {
+      if (error.response.data.message === '"name" is not allowed to be empty') {
+        console.log(error);
+        alert('이름을 입력해주세요.');
+      }
+      if (
+        error.response.data.message === '"email" is not allowed to be empty'
+      ) {
+        console.log(error);
+        alert('이메일을 입력해주세요.');
+      }
     }
   };
 
@@ -43,10 +77,22 @@ function FindPW() {
   //   });
   //   console.log('response', response);
   // };
+
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleClickConfirmCode = () => {
-    setIsVisible(true);
+  const handleClickConfirmCode = async () => {
+    try {
+      const response = await userApi.confirmCode({
+        email: form.email,
+        code: form.code,
+      });
+
+      if (response.status === 200) {
+        setIsVisible(true);
+      }
+    } catch (error) {
+      alert('인증 번호가 다릅니다.');
+    }
   };
 
   const handleClickResetPw = async () => {
@@ -55,7 +101,14 @@ function FindPW() {
       code: form.code,
       password: form.password,
     });
-    console.log('response', response);
+  };
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const remainingSeconds = (seconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${remainingSeconds}`;
   };
 
   return (
@@ -120,20 +173,31 @@ function FindPW() {
             }}
           />
         </S.ButtonWrap>
-        <InputBox
-          label="인증 번호"
-          subTextProps={{
-            type: 'none',
-          }}
-          inputProps={{
-            value: form['code'],
-            onChange: onChange,
-            placeholder: '6자리 코드',
-            name: 'code',
-          }}
-          buttonElement={true}
-          onClickButton={handleClickConfirmCode}
-        />
+        <S.InputWrapper>
+          <InputBox
+            label="인증 번호"
+            subTextProps={{
+              type: 'show',
+              text: '수신함에 인증 메일이 없다면 스팸 메일함을 확인해주세요.',
+            }}
+            inputProps={{
+              value: form['code'],
+              onChange: onChange,
+              placeholder: '6자리 코드',
+              name: 'code',
+              style: {
+                marginRight: 8,
+              },
+            }}
+            buttonElement={true}
+            onClickButton={handleClickConfirmCode}
+          />
+          {timer && !isVisible ? (
+            <span>{formatTime(Number(timer))}</span>
+          ) : (
+            <></>
+          )}
+        </S.InputWrapper>
         {isVisible && (
           <>
             <BasicText

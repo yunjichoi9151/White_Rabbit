@@ -115,18 +115,21 @@ function Join() {
     const response = await userApi.generation();
     const optionGenType = response.data.data.map((gen) => {
       return {
-        key: gen.generationType,
-        value: gen.generationType,
-        name: gen.generationType,
+        key: gen.generation_type,
+        value: gen._id,
+        name: gen.generation_type,
       };
     });
     setGenerationType(optionGenType);
 
+    console.log('response', response);
+    console.log('optionGen', optionGenType);
+
     const optionGenNum = response.data.data.map((gen) => {
       return {
-        key: gen.generationNumber,
-        value: gen.generationNumber,
-        name: gen.generationNumber + '기',
+        key: gen.max_generation,
+        value: gen.max_generation,
+        name: gen.max_generation + '기',
       };
     });
     setGenerationNum(optionGenNum);
@@ -158,10 +161,11 @@ function Join() {
     } else if (genNum === '') {
       alert('기수를 선택해주세요.');
       return;
-    } else if (roles === '') {
-      alert('등급을 선택해주세요.');
-      return;
     }
+    // else if (roles === '') {
+    //   alert('등급을 선택해주세요.');
+    //   return;
+    // }
 
     /// {API} ///
     try {
@@ -171,7 +175,7 @@ function Join() {
         password,
         generation_type: genType,
         generation_number: Number(genNum),
-        roles,
+        // roles,
       });
       if (res.status === 201) {
         console.log(res.data);

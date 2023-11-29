@@ -9,7 +9,7 @@ import ProfileImg from '../../components/common/ProfileImg';
 import InputBar from '../../components/common/InputBar';
 import BasicButton from '../../components/common/BasicButton';
 import { postApi } from '../../../api/utils/Post';
-import { commentApi } from '../../../api/utils/Comment';
+import { commentApi } from '../../../api/utils/comment';
 import { userApi } from '../../../api/utils/user';
 import BottomModal from '../../components/board/BottomModal';
 import { ROUTER_LINK } from '../../router/routes';

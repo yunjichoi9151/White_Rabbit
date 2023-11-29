@@ -13,6 +13,7 @@ import EmptyContent from '../EmptyContent';
 import Header from '../../components/common/Header';
 
 import MyContent from '../MyContent';
+import UserPage from '../UserPage';
 
 const MyPage = () => {
   //user 정보
