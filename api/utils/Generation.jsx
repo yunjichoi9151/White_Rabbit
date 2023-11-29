@@ -1,5 +1,5 @@
 import { api } from '../index';
-
+// API 수정 필요
 export const generationApi = {
   // 기수 추가
   postFollow: () => api.post(`/users/generations/${toUserId}`),
