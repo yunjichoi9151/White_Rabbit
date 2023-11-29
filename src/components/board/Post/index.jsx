@@ -11,6 +11,7 @@ import { FaFireAlt } from 'react-icons/fa';
 import { FaRegEye } from 'react-icons/fa';
 import BasicImage from '../../common/BasicImage';
 import ProfileImg from '../../common/ProfileImg';
+import { SERVER_URL } from '../../../../api';
 
 const length = {
   LONG: 100,
@@ -116,7 +117,7 @@ const Post = ({
         </S.TitleWrapper>
         <S.ContentWrapper
           onClick={handleOnClickPost}
-          contentLength={contentLength}
+          style={{ display: contentLength === 'ALL' ? 'grid' : 'flex' }}
         >
           <BasicText
             text={substrContent}
@@ -126,17 +127,20 @@ const Post = ({
               marginBottom: '1rem',
             }}
           />
-          {imgSrc !== '' && (
+          {imgSrc !== SERVER_URL && (
             <S.ImgWrapper>
-              <ProfileImg
-                src={imgSrc}
-                // src="/assets/img/elice_icon.png"
-                style={{
-                  width: contentLength === 'ALL' ? '50%' : '4rem',
-                  height: contentLength === 'ALL' ? 'auto' : '4rem',
-                  borderRadius: '1rem',
-                }}
-              />
+              {contentLength === 'ALL' ? (
+                <BasicImage src={imgSrc} style={{ borderRadius: '0rem' }} />
+              ) : (
+                <ProfileImg
+                  src={imgSrc}
+                  style={{
+                    width: '4rem',
+                    height: '4rem',
+                    borderRadius: '1rem',
+                  }}
+                />
+              )}
             </S.ImgWrapper>
           )}
         </S.ContentWrapper>

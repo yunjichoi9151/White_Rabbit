@@ -6,14 +6,17 @@ import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { convertTimeAgo } from '../../../utils/convertTimeAgo';
-import { followApi } from '../../../../api/utils/Follow';
-import { userApi } from '../../../../api/utils/user';
-import { useParams } from 'react-router-dom';
 
 const ProfileImgSize = {
   1: '40px',
   2: '72px',
   3: '128px',
+};
+
+const userLabelText = {
+  USER: '레이서',
+  ADMIN: '관리자',
+  COACH: '코치',
 };
 
 const ProfileBar = ({
@@ -40,38 +43,9 @@ const ProfileBar = ({
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
 
-  const userLabelText = {
-    USER: '레이서',
-    ADMIN: '관리자',
-    COACH: '코치',
-  };
-
-  const [user, setUser] = useState({});
-
-  const userInfo = async () => {
-    try {
-      const res = await userApi.getLoginUserInfo();
-      setUser(res.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // const handleOnClickFollow = async () => {
-  //   try {
-  //     if(isFollow) {
-  //       await followApi.deleteFollow()
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     setTimeAgo(convertTimeAgo(createdAt));
   }, [createdAt]);
-
-  useEffect(() => {
-    userInfo();
-  }, []);
 
   return (
     <>

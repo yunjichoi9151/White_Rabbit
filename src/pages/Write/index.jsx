@@ -14,6 +14,7 @@ import { postApi } from '../../../api/utils/Post';
 import { ROUTER_LINK } from '../../router/routes';
 import BasicModal from '../../components/common/BasicModal';
 import { commonApi } from '../../../api/utils/Common';
+import { SERVER_URL } from '../../../api';
 
 const options = [
   { key: 'BOARD', value: 'BOARD', name: '자유게시판' },
@@ -29,10 +30,6 @@ const Write = ({ isEdit = false }) => {
   const [selectOption, setSelectOption] = useState('BOARD');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [image, setImage] = useState({
-    previewImgUrl: '',
-    file: {},
-  });
 
   // CHANGE Category Data
   const handleSelectChange = (selectValue) => {
@@ -50,7 +47,7 @@ const Write = ({ isEdit = false }) => {
     setContent(e.target.value);
   };
 
-  const goBack = () => navigate(-1);
+  // Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -61,16 +58,14 @@ const Write = ({ isEdit = false }) => {
     setIsModalOpen(false);
   };
 
+  // Add Image
   const [selectedImage, setSelectedImage] = useState(null);
-  // const [imageFileName, setImageFileName] = useState('');
   const [imgUrl, setImgUrl] = useState('');
-  const [newImg, setNewImg] = useState(false);
 
   const handleImageChange = async (event) => {
     try {
       const file = event.target.files[0];
       if (file) {
-        // setImageFileName(file.name);
         setSelectedImage(file);
         setImgUrl(URL.createObjectURL(file));
         const formData = new FormData();
@@ -104,7 +99,6 @@ const Write = ({ isEdit = false }) => {
             selectOption,
             imgUrl,
           );
-          // navigate(`/post/${res.data.data._id}`);
           navigate(
             ROUTER_LINK.DETAIL.path.replace(':postId', res.data.data._id),
           );
@@ -115,6 +109,7 @@ const Write = ({ isEdit = false }) => {
     }
   };
 
+  // EDIT & DELETE Image
   const [showImageInput, setShowImageInput] = useState(false);
 
   const handleEditImage = () => {
@@ -126,12 +121,6 @@ const Write = ({ isEdit = false }) => {
     setShowImageInput(false);
   };
 
-  // const extractFileNameFromUrl = (url) => {
-  //   if (!url) return '';
-  //   console.log(url.split('/').pop());
-  //   return url.split('/').pop();
-  // };
-
   useEffect(() => {
     const loadPostData = async () => {
       if (isEdit && postId) {
@@ -142,7 +131,6 @@ const Write = ({ isEdit = false }) => {
           setTitle(postData.title);
           setContent(postData.content);
           setImgUrl(postData.image_url);
-          // setImageFileName(extractFileNameFromUrl(postData.image_url));
         } catch (error) {
           console.error('Error loading post data:', error);
         }
@@ -153,7 +141,6 @@ const Write = ({ isEdit = false }) => {
 
   return (
     <S.WriteWrap>
-      {/* <button onClick={openModal}>Open Modal</button> */}
       {isModalOpen && (
         <BasicModal closeModal={closeModal}>
           <h2>Modal Content</h2>
@@ -170,7 +157,7 @@ const Write = ({ isEdit = false }) => {
         headerStyle={{
           borderBottom: `1px solid ${CS.color.borderTransparent}`,
         }}
-        leftOnClickEvent={goBack}
+        leftOnClickEvent={() => navigate(-1)}
         rightOnClickEvent={postHandler}
       />
       <SelectBar
@@ -232,7 +219,7 @@ const Write = ({ isEdit = false }) => {
       <S.PostImage>
         {imgUrl && (
           <BasicImage
-            src={'http://kdt-sw-6-team07.elicecoding.com' + imgUrl}
+            src={SERVER_URL + imgUrl}
             alt="Preview"
             style={{
               display: 'flex',
