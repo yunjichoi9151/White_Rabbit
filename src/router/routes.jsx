@@ -35,6 +35,7 @@ export const ROUTER_LINK = {
   ADMIN: { path: '/admin', link: '/admin' },
   FOLLOW: { path: '/follow/:type', link: '/follow' },
   USERPAGE: { path: '/userpage', link: '/userpage' },
+  POSTEDIT: { path: '/post/:postId/edit', link: '/posts' },
 };
 
 const router = createBrowserRouter([
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_LINK.USERPAGE.path,
         element: <UserPage />,
+      },
+      {
+        path: ROUTER_LINK.POSTEDIT.path,
+        element: <Write isEdit={true} />,
       },
     ],
   },

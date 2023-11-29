@@ -6,6 +6,9 @@ import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { convertTimeAgo } from '../../../utils/convertTimeAgo';
+import { followApi } from '../../../../api/utils/Follow';
+import { userApi } from '../../../../api/utils/user';
+import { useParams } from 'react-router-dom';
 
 const ProfileImgSize = {
   1: '40px',
@@ -30,7 +33,6 @@ const ProfileBar = ({
   existMoreBtn = false,
   profileSize,
   handleOnClickBar,
-  handleOnClickFollow,
   handleOnClickDots,
   style,
   onClickFollower,
@@ -44,9 +46,32 @@ const ProfileBar = ({
     COACH: '코치',
   };
 
+  const [user, setUser] = useState({});
+
+  const userInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      setUser(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const handleOnClickFollow = async () => {
+  //   try {
+  //     if(isFollow) {
+  //       await followApi.deleteFollow()
+  //     }
+  //   }
+  // }
+
   useEffect(() => {
     setTimeAgo(convertTimeAgo(createdAt));
   }, [createdAt]);
+
+  useEffect(() => {
+    userInfo();
+  }, []);
 
   return (
     <>
@@ -66,7 +91,7 @@ const ProfileBar = ({
           )}
           {existTimeAgo ? (
             <BasicText
-              text={`${userLabelText[rate.toUpperCase()]} ･ ${timeAgo}`}
+              text={`${userLabelText[rate]} ･ ${timeAgo}`}
               style={{ font: CS.font.paragraphSmall }}
             />
           ) : (
@@ -91,7 +116,7 @@ const ProfileBar = ({
         {existFollowBtn && (
           <BasicButton
             text={isFollow ? '팔로잉' : '팔로우'}
-            handleOnClickButton={handleOnClickFollow}
+            // handleOnClickButton={handleOnClickFollow}
             btnStyle={{
               width: '70px',
               height: '35px',
