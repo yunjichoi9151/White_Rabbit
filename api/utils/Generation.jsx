@@ -5,7 +5,7 @@ export const generationApi = {
   postFollow: () => api.post(`/users/generations/${toUserId}`),
 
   // 기수 전체 조회
-  getAllGenerations: () => api.get(`/users/generations`),
+  getAllGenerations: () => api.get(`/generations`),
 
   // 기수 삭제
   deleteGeneration: () => api.delete(`/users/generations/${followId}`),

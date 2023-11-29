@@ -11,10 +11,11 @@ import TableHeader from '../../components/admin/TableHeader';
 import TableRow from '../../components/admin/TableRow';
 import { skillApi } from '../../../api/utils/Skill';
 import { userApi } from '../../../api/utils/user';
+import { generationApi } from '../../../api/utils/Generation';
 
 const Admin = () => {
   const [isAdmittedOnly, setIsAdmittedOnly] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('0');
+  const [currentTabKey, setCurrentTabKey] = useState('1');
   const [members, setMembers] = useState([]);
   const [generations, setGenerations] = useState([]);
   const [skills, setSkills] = useState([]);
@@ -73,8 +74,17 @@ const Admin = () => {
   const fetchUsers = async () => {
     try {
       const res = await userApi.getAllUsers();
-      console.log(res.data.data);
       setMembers(res.data.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const fetchGenerations = async () => {
+    try {
+      const res = await generationApi.getAllGenerations();
+      console.log(res.data.data);
+      setGenerations(res.data.data);
     } catch (error) {
       console.log('error: ', error.response.data);
     }
@@ -91,9 +101,7 @@ const Admin = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
-
-  useEffect(() => {
+    fetchGenerations();
     fetchSkills();
   }, []);
 
@@ -174,12 +182,21 @@ const Admin = () => {
             />
           </S.ButtonWrap>
           <TableHeader haderTexts={['No.', '트랙명', '기수', '관리']} />
-          <TableRow
-            colTexts={['1', 'SW 엔지니어 트랙', '6기']}
-            btnText={'삭제'}
-            btnColor={CS.color.negative}
-            handleBtnClick={handleRemoveClick}
-          />
+          {generations.map((generation, index) =>
+            Array.from({ length: generation.max_generation }, (_, rowIndex) => (
+              <TableRow
+                key={`row-${index}-${rowIndex}`}
+                colTexts={[
+                  index + rowIndex + 1,
+                  generation.generation_type,
+                  rowIndex + 1 + '기',
+                ]}
+                btnText={'삭제'}
+                btnColor={CS.color.negative}
+                handleBtnClick={handleRemoveClick}
+              />
+            )),
+          )}
         </>
       ) : (
         <>
