@@ -8,5 +8,5 @@ export const generationApi = {
   getAllGenerations: () => api.get(`/generations`),
 
   // 기수 삭제
-  deleteGeneration: () => api.delete(`/users/generations/${followId}`),
+  deleteGeneration: (id) => api.delete(`/users/generations/${id}`),
 };

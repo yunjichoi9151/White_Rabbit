@@ -8,6 +8,7 @@ import TabBar from '../../components/profile/TabBar';
 import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
 import BasicModal from '../../components/common/BasicModal';
+import SelectBar from '../../components/common/SelectBar';
 import TableHeader from '../../components/admin/TableHeader';
 import TableRow from '../../components/admin/TableRow';
 import { skillApi } from '../../../api/utils/Skill';
@@ -18,7 +19,7 @@ import InputBar from '../../components/common/InputBar';
 const Admin = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAdmittedOnly, setIsAdmittedOnly] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('2');
+  const [currentTabKey, setCurrentTabKey] = useState('1');
   const [members, setMembers] = useState([]);
   const [generations, setGenerations] = useState([]);
   const [skills, setSkills] = useState([]);
@@ -49,7 +50,15 @@ const Admin = () => {
     }
   };
 
-  const handleRemoveClick = async (id) => {
+  const handleGenerationRemoveClick = async (id) => {
+    try {
+      const res = await generationApi.deleteGeneration(id);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const handleSkillRemoveClick = async (id) => {
     try {
       const res = await skillApi.delteSkill(id);
       fetchSkills();
@@ -239,39 +248,72 @@ const Admin = () => {
                 />
               </S.ButtonWrap>
               <TableHeader haderTexts={['No.', '트랙명', '기수', '관리']} />
-              {generations.map((generation, index) =>
-                Array.from(
-                  { length: generation.max_generation },
-                  (_, rowIndex) => (
-                    <TableRow
-                      key={`row-${index}-${rowIndex}`}
-                      colTexts={[
-                        index + rowIndex + 1,
-                        generation.generation_type,
-                        rowIndex + 1 + '기',
-                      ]}
-                      btnText={'삭제'}
-                      btnColor={CS.color.negative}
-                      handleBtnClick={handleRemoveClick}
-                    />
-                  ),
-                ),
-              )}
+              {generations.map((generation, index) => (
+                <TableRow
+                  key={`row-${index}`}
+                  colTexts={[
+                    index + 1,
+                    generation.type,
+                    generation.number + '기',
+                  ]}
+                  btnText={'삭제'}
+                  btnColor={CS.color.negative}
+                  handleBtnClick={() =>
+                    handleGenerationRemoveClick(generation._id)
+                  }
+                />
+              ))}
               {isGenerationModalOpen && (
                 <BasicModal
                   closeModal={closeModal}
                   children={
                     <>
                       <div style={{ paddingTop: '12px' }}>
+                        {/* <SelectBar
+                          value={genType}
+                          style={{
+                            display: 'flex',
+                            flex: 2,
+                            height: 50,
+
+                            font: CS.font.labelMedium,
+                            textAlign: 'left',
+                            outline: 'none',
+                            border: `1px solid ${CS.color.secondary}`,
+                            borderRadius: 10,
+                            marginBottom: 0,
+                            marginRight: 4,
+                            paddingBottom: 0,
+                            paddingLeft: 16,
+                          }}
+                          options={[
+                            {
+                              key: 'trackChoice',
+                              value: '',
+                              name: '트랙 선택',
+                              style: { display: 'none' },
+                            },
+                            ...generationType,
+                          ]}
+                          onChange={handleChangegenType}
+                        /> */}
                         <InputBar
+                          placeholder={'기수를 입력하세요.'}
+                          inputStyle={{ fontSize: '1.25rem' }}
+                          inputBarStyle={{
+                            padding: '4px',
+                            border: `solid 1px ${CS.color.borderTransparent}`,
+                            borderRadius: '4px',
+                          }}
                           handleOnChangeValue={(e) =>
                             setInputValue(e.target.value)
                           }
                         />
                         <BasicButton
-                          text="수정"
+                          text="추가"
                           textStyle={{ padding: '12px' }}
-                          // handleOnClickButton={editPost}
+                          btnStyle={{ width: '100%' }}
+                          // handleOnClickButton={addSkill}
                         />
                       </div>
                     </>
@@ -306,7 +348,7 @@ const Admin = () => {
                   colTexts={[index + 1, skill.skill]}
                   btnText={'삭제'}
                   btnColor={CS.color.negative}
-                  handleBtnClick={() => handleRemoveClick(skill._id)}
+                  handleBtnClick={() => handleSkillRemoveClick(skill._id)}
                 />
               ))}
               {isSkillModalOpen && (
