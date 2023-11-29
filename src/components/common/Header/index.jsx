@@ -33,8 +33,9 @@ const Header = ({
   leftOnClickEvent,
   rightOnClickEvent,
   inputChangeEvent,
-  inputKeyDownEvent,
+  handleKeyPress,
   headerStyle,
+  value,
 }) => {
   typeLeft = LeftType[typeLeft];
   typeCenter = CenterType[typeCenter];
@@ -89,6 +90,7 @@ const Header = ({
         )}
         {typeCenter === CenterType.SEARCH && (
           <InputBar
+            value={value}
             existLeft={true}
             inputBarStyle={{
               height: '2.5rem',
@@ -105,7 +107,7 @@ const Header = ({
             }}
             placeholder="제목, 내용, 작성자로 검색"
             handleOnChangeValue={inputChangeEvent}
-            handleOnKeyDownValue={inputKeyDownEvent}
+            handleOnKeyDownValue={handleKeyPress}
           />
         )}
       </S.CenterWrap>

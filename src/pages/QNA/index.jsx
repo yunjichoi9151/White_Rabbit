@@ -179,7 +179,7 @@ const QNA = () => {
         textLeft={'개발Q&A'}
         rightOnClickEvent={handleSearchClick}
         inputChangeEvent={handleSearchKeywordChange}
-        inputKeyDownEvent={(e) => {
+        handleKeyPress={(e) => {
           if (e.key === 'Enter') {
             handleSearchClick();
           }

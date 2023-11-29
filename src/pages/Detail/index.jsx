@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Post from '../../components/board/Post';
-import userData from '../../test/user.json';
 import Header from '../../components/common/Header';
 import Reply from '../../components/board/Reply';
 import ProfileImg from '../../components/common/ProfileImg';
@@ -14,6 +13,7 @@ import { commentApi } from '../../../api/utils/comment';
 import { userApi } from '../../../api/utils/user';
 import BottomModal from '../../components/board/BottomModal';
 import { ROUTER_LINK } from '../../router/routes';
+import { SERVER_URL } from '../../../api';
 
 const labelText = {
   BOARD: '자유게시판',
@@ -34,7 +34,6 @@ const Detail = () => {
     try {
       const res = await postApi.getPostByPostId(postId);
       setPost(res.data.data);
-      console.log(res.data.data);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -126,7 +125,6 @@ const Detail = () => {
     if (modalType === 'comment') {
       setEditableCommentId(targetId);
     } else if (modalType === 'post') {
-      // navigate(`/post/${postId}/edit`);
       navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', postId));
     }
   };
@@ -144,7 +142,6 @@ const Detail = () => {
     } else if (modalType === 'post') {
       try {
         await postApi.deletePost(postId);
-        // navigate('/home');
         navigate(ROUTER_LINK.HOME.link);
       } catch (error) {
         console.log('error: ', error);
@@ -168,27 +165,6 @@ const Detail = () => {
     }
   };
 
-  // GET Category
-  const getCategoryPath = (category) => {
-    switch (category) {
-      case 'BOARD':
-      case 'REVIEW':
-        return '/home';
-      case 'QNA':
-        return '/qna';
-      case 'PROJECT':
-      case 'STUDY':
-        return '/recruitment';
-      default:
-        return '/';
-    }
-  };
-
-  const handleBackClick = () => {
-    const path = getCategoryPath(post?.post?.category);
-    navigate(path);
-  };
-
   useEffect(() => {
     userInfo();
     postDetail();
@@ -205,7 +181,7 @@ const Detail = () => {
           borderBottom: `0.5px solid ${CS.color.contentTertiary}`,
           backgroundColor: CS.color.white,
         }}
-        leftOnClickEvent={handleBackClick}
+        leftOnClickEvent={() => navigate(-1)}
       />
       <S.BoardWrap>
         {post && (
@@ -231,9 +207,7 @@ const Detail = () => {
             handleOnClickDots={() => handleOnClickDots('post', post?.post?._id)}
             handleOnClickLikeBtn={() => likeHandler(post?.post?._id)}
             isFollow={post?.isFollowing}
-            imgSrc={
-              'http://kdt-sw-6-team07.elicecoding.com' + post?.post?.image_url
-            }
+            imgSrc={SERVER_URL + post?.post?.image_url}
             view={post?.post?.view_count}
           />
         )}

@@ -43,6 +43,9 @@ export const postApi = {
   // 게시물별 좋아요 목록 조회 API
   getLikePosts: (postId) => api.get(`/boards/${postId}/likes`),
 
+  // 검색 결과 조회 API
+  getSearchPost: (keyword) => api.get(`/boards?keyword=${keyword}`),
+
   // // 이미지 등록 API
   addImage: (image) =>
     api.post(`/image`, image, {
