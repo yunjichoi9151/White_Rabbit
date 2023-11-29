@@ -17,8 +17,17 @@ import BottomModal from '../../components/board/BottomModal';
 import { SERVER_URL } from '../../../api';
 
 const Home = () => {
-  const [active, setActive] = useState('all');
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+
+  // ONCLICK Active
+  const [active, setActive] = useState('all');
+
+  const handleClick = (category) => {
+    setActive(active === category ? 'all' : category);
+  };
+
+  // GET All PostList
   const [filteredPosts, setFilteredPosts] = useState([]);
 
   const postList = async () => {
@@ -47,13 +56,13 @@ const Home = () => {
           }
         }),
       );
-
       setPosts(postsWithDefaultImage);
     } catch (error) {
       console.log('error: ', error);
     }
   };
 
+  // ADD/DELETE Post Like
   const likeHandler = async (postId) => {
     try {
       await postApi.putLike(postId);
@@ -76,6 +85,7 @@ const Home = () => {
     }
   };
 
+  // GET UserInfo
   const [user, setUser] = useState({});
 
   const userInfo = async () => {
@@ -99,17 +109,19 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
+  // ONCLICK Dots Btn(Post)
   const handleOnClickDots = (postId) => {
     setIsModalOpen(true);
     setTargetPostId(postId);
   };
 
+  // ONCLICK Edit Btn(Post)
   const handleEdit = () => {
     setIsModalOpen(false);
-    // navigate(`/post/${targetPostId}/edit`);
     navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', targetPostId));
   };
 
+  // ONCLICK Delete Btn(Post)
   const handleDelete = async () => {
     setIsModalOpen(false);
     try {
@@ -122,12 +134,7 @@ const Home = () => {
     }
   };
 
-  const navigate = useNavigate();
-
-  const handleClick = (category) => {
-    setActive(active === category ? 'all' : category);
-  };
-
+  // Button Style
   const buttonStyle = (category) => ({
     backgroundColor: active === category ? CS.color.accent : CS.color.white,
     color: active === category ? CS.color.white : CS.color.accent,
