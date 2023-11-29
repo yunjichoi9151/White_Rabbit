@@ -296,8 +296,8 @@ const QNA = () => {
             }
           />
         )}
-        <WriteButton />
       </S.PostList>
+      <WriteButton />
     </S.QNAWrap>
   );
 };

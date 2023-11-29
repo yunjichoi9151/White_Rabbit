@@ -105,6 +105,40 @@ const Recruitment = () => {
     }
   };
 
+  const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
+
+  const openModal = (postId) => {
+    setClickedPostId(postId);
+    setIsMoreModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsMoreModalOpen(false);
+  };
+
+  const editPost = () => {
+    navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', clickedPostId));
+  };
+
+  const deletePost = () => {
+    try {
+      const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
+
+      if (isConfirmed) {
+        postApi.deletePost(clickedPostId);
+      }
+      alert('삭제 되었습니다.');
+
+      setFilteredPosts((prevPosts) =>
+        prevPosts.filter((post) => post._id !== clickedPostId),
+      );
+    } catch (error) {
+      alert('게시글 삭제에 실패했습니다.');
+    } finally {
+      setIsMoreModalOpen(false);
+    }
+  };
+
   useEffect(() => {
     fetchUserInfo();
   }, []);
@@ -186,20 +220,41 @@ const Recruitment = () => {
               // isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
+              view={post.view_count}
               comments={post.commentCount}
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
               // handleOnClickProfile={{}}
               handleOnClickFollow={() => handleFollowClick(post)}
-              // handleOnClickDots={{}}
+              handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
             />
           </S.PostWrap>
         ))}
       </S.PostList>
+      {isMoreModalOpen && (
+        <BasicModal
+          closeModal={closeModal}
+          children={
+            <>
+              <div style={{ paddingTop: '12px' }}>
+                <BasicButton
+                  text="수정"
+                  textStyle={{ padding: '12px' }}
+                  handleOnClickButton={editPost}
+                />
+                <BasicButton
+                  text="삭제"
+                  textStyle={{ padding: '12px' }}
+                  handleOnClickButton={deletePost}
+                />
+              </div>
+            </>
+          }
+        />
+      )}
       <WriteButton />
-      <NavBar />
     </S.RecruitmentWrap>
   );
 };
