@@ -231,7 +231,9 @@ const Detail = () => {
             handleOnClickDots={() => handleOnClickDots('post', post?.post?._id)}
             handleOnClickLikeBtn={() => likeHandler(post?.post?._id)}
             isFollow={post?.isFollowing}
-            imgSrc={'http://localhost:5000' + post?.post?.image_url}
+            imgSrc={
+              'http://kdt-sw-6-team07.elicecoding.com' + post?.post?.image_url
+            }
             view={post?.post?.view_count}
           />
         )}

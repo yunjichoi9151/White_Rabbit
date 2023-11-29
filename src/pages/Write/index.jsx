@@ -232,7 +232,7 @@ const Write = ({ isEdit = false }) => {
       <S.PostImage>
         {imgUrl && (
           <BasicImage
-            src={'http://localhost:5000' + imgUrl}
+            src={'http://kdt-sw-6-team07.elicecoding.com' + imgUrl}
             alt="Preview"
             style={{
               display: 'flex',

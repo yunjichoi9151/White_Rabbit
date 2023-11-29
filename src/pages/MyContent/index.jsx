@@ -4,7 +4,7 @@ import BasicText from '../../components/common/BasicText';
 import * as CS from '../../styles/CommonStyles';
 import * as S from './style';
 import Post from '../../components/board/Post';
-import { commentApi } from '../../../api/utils/Comment';
+import { commentApi } from '../../../api/utils/comment';
 import EmptyContent from '../EmptyContent';
 import { ROUTER_LINK } from '../../router/routes';
 import { Link } from 'react-router-dom';
