@@ -53,6 +53,7 @@ const Admin = () => {
   const handleGenerationRemoveClick = async (id) => {
     try {
       const res = await generationApi.deleteGeneration(id);
+      fetchGenerations();
     } catch (error) {
       console.log('error: ', error.response.data);
     }
