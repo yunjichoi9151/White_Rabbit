@@ -2,6 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import * as S from './style';
 import { MdModeEdit } from 'react-icons/md';
+import { SERVER_URL } from '../../../../api';
 
 const ProfileImg = ({
   src = '/assets/img/elice_icon.png',
@@ -13,7 +14,7 @@ const ProfileImg = ({
     <Fragment>
       {isEditable ? (
         <S.ProfileImage
-          src={`http://localhost:5000${src}`}
+          src={SERVER_URL + src}
           // src={src}
           style={style}
           onChange={onClickEvent}
