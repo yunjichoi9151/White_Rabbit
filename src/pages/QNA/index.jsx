@@ -57,7 +57,6 @@ const QNA = () => {
   const handleSearchClick = () => {
     fetchPosts();
   };
-
   const handleSortClick = (sortBy) => {
     setSort(sortBy);
   };
@@ -245,7 +244,6 @@ const QNA = () => {
         />
       </S.FilterBar>
       <S.PostList>
-        {/* <BasicModal children={'완료되었습니다.'} /> */}
         {filteredPosts.map((post, index) => (
           <S.PostWrap>
             <Post

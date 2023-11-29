@@ -7,6 +7,7 @@ import NavBar from '../../components/common/NavBar';
 import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
+import BasicModal from '../../components/common/BasicModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
@@ -23,6 +24,7 @@ const Recruitment = () => {
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState('PROJECT');
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [clickedPostId, setClickedPostId] = useState('');
 
   const navigate = useNavigate();
 
@@ -129,7 +131,7 @@ const Recruitment = () => {
       }
       alert('삭제 되었습니다.');
 
-      setFilteredPosts((prevPosts) =>
+      setPosts((prevPosts) =>
         prevPosts.filter((post) => post._id !== clickedPostId),
       );
     } catch (error) {
@@ -218,9 +220,9 @@ const Recruitment = () => {
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author !== userInfo._id}
+              existFollowBtn={post.author._id !== userInfo._id}
               isFollow={post.isFollowing}
-              existMoreBtn={post.author === userInfo._id}
+              existMoreBtn={post.author._id === userInfo._id}
               contentLength={'LONG'}
               // isHot={post.isPopular}
               isLike={post.isLiked}
