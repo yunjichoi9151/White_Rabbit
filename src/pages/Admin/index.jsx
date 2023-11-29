@@ -9,7 +9,7 @@ import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
 import TableHeader from '../../components/admin/TableHeader';
 import TableRow from '../../components/admin/TableRow';
-import { skillApi } from '../../../api/utils/skill';
+import { skillApi } from '../../../api/utils/Skill';
 import { userApi } from '../../../api/utils/user';
 
 const Admin = () => {
