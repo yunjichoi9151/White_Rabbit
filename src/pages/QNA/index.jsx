@@ -180,6 +180,11 @@ const QNA = () => {
         textLeft={'개발Q&A'}
         rightOnClickEvent={handleSearchClick}
         inputChangeEvent={handleSearchKeywordChange}
+        inputKeyDownEvent={(e) => {
+          if (e.key === 'Enter') {
+            handleSearchClick();
+          }
+        }}
       />
       <S.FilterBar>
         <S.ButtonWrap>

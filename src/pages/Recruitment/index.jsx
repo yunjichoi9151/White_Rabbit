@@ -156,6 +156,11 @@ const Recruitment = () => {
         textLeft={`${CategoryText[category]} 모집`}
         rightOnClickEvent={handleSearchClick}
         inputChangeEvent={handleSearchKeywordChange}
+        inputKeyDownEvent={(e) => {
+          if (e.key === 'Enter') {
+            handleSearchClick();
+          }
+        }}
       />
       <S.FilterBar>
         <BasicButton

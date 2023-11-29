@@ -7,15 +7,17 @@ import Header from '../../components/common/Header';
 import TabBar from '../../components/profile/TabBar';
 import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
+import BasicModal from '../../components/common/BasicModal';
 import TableHeader from '../../components/admin/TableHeader';
 import TableRow from '../../components/admin/TableRow';
 import { skillApi } from '../../../api/utils/Skill';
 import { userApi } from '../../../api/utils/user';
 import { generationApi } from '../../../api/utils/Generation';
+import InputBar from '../../components/common/InputBar';
 
 const Admin = () => {
   const [isAdmittedOnly, setIsAdmittedOnly] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('1');
+  const [currentTabKey, setCurrentTabKey] = useState('2');
   const [members, setMembers] = useState([]);
   const [generations, setGenerations] = useState([]);
   const [skills, setSkills] = useState([]);
@@ -44,10 +46,6 @@ const Admin = () => {
     } catch (error) {
       console.log('error: ', error.response.data);
     }
-  };
-
-  const handleAddClick = () => {
-    console.log('추가 버튼 클릭');
   };
 
   const handleRemoveClick = async (id) => {
@@ -96,6 +94,44 @@ const Admin = () => {
       setSkills(res.data);
     } catch (error) {
       console.log('error: ', error.response.data);
+    }
+  };
+
+  const [isGenerationModalOpen, setIsGenerationModalOpen] = useState(false);
+  const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
+
+  const openModal = () => {
+    switch (currentTabKey) {
+      case '1':
+        setIsGenerationModalOpen(true);
+        break;
+      case '2':
+        setIsSkillModalOpen(true);
+        break;
+    }
+  };
+
+  const closeModal = () => {
+    switch (currentTabKey) {
+      case '1':
+        setIsGenerationModalOpen(false);
+        break;
+      case '2':
+        setIsSkillModalOpen(false);
+        break;
+    }
+  };
+
+  const [inputValue, setInputValue] = useState('');
+
+  const addSkill = () => {
+    try {
+      skillApi.postSkill(inputValue);
+      alert('추가되었습니다.');
+      closeModal();
+      fetchSkills();
+    } catch (error) {
+      console.log('error: ', error);
     }
   };
 
@@ -178,7 +214,7 @@ const Admin = () => {
                 width: 'auto',
                 padding: '8px',
               }}
-              handleOnClickButton={handleAddClick}
+              handleOnClickButton={openModal}
             />
           </S.ButtonWrap>
           <TableHeader haderTexts={['No.', '트랙명', '기수', '관리']} />
@@ -196,6 +232,25 @@ const Admin = () => {
                 handleBtnClick={handleRemoveClick}
               />
             )),
+          )}
+          {isGenerationModalOpen && (
+            <BasicModal
+              closeModal={closeModal}
+              children={
+                <>
+                  <div style={{ paddingTop: '12px' }}>
+                    <InputBar
+                      handleOnChangeValue={(e) => setInputValue(e.target.value)}
+                    />
+                    <BasicButton
+                      text="수정"
+                      textStyle={{ padding: '12px' }}
+                      // handleOnClickButton={editPost}
+                    />
+                  </div>
+                </>
+              }
+            />
           )}
         </>
       ) : (
@@ -215,7 +270,7 @@ const Admin = () => {
                 width: 'auto',
                 padding: '8px',
               }}
-              handleOnClickButton={handleAddClick}
+              handleOnClickButton={openModal}
             />
           </S.ButtonWrap>
           <TableHeader haderTexts={['No.', '스킬', '관리']} />
@@ -228,6 +283,33 @@ const Admin = () => {
               handleBtnClick={() => handleRemoveClick(skill._id)}
             />
           ))}
+          {isSkillModalOpen && (
+            <BasicModal
+              closeModal={closeModal}
+              children={
+                <>
+                  <div style={{ paddingTop: '12px' }}>
+                    <InputBar
+                      placeholder={'스킬명을 입력하세요.'}
+                      inputStyle={{ fontSize: '1.25rem' }}
+                      inputBarStyle={{
+                        padding: '4px',
+                        border: `solid 1px ${CS.color.borderTransparent}`,
+                        borderRadius: '4px',
+                      }}
+                      handleOnChangeValue={(e) => setInputValue(e.target.value)}
+                    />
+                    <BasicButton
+                      text="추가"
+                      textStyle={{ padding: '12px' }}
+                      btnStyle={{ width: '100%' }}
+                      handleOnClickButton={addSkill}
+                    />
+                  </div>
+                </>
+              }
+            />
+          )}
         </>
       )}
     </S.AdminWrap>

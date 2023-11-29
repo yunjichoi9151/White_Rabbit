@@ -33,6 +33,7 @@ const Header = ({
   leftOnClickEvent,
   rightOnClickEvent,
   inputChangeEvent,
+  inputKeyDownEvent,
   headerStyle,
 }) => {
   typeLeft = LeftType[typeLeft];
@@ -104,6 +105,7 @@ const Header = ({
             }}
             placeholder="제목, 내용, 작성자로 검색"
             handleOnChangeValue={inputChangeEvent}
+            handleOnKeyDownValue={inputKeyDownEvent}
           />
         )}
       </S.CenterWrap>
