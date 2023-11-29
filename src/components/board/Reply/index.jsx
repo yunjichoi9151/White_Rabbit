@@ -6,7 +6,7 @@ import ProfileBar from '../../profile/ProfileBar';
 import BasicInput from '../../common/BasicInput';
 import InputBar from '../../common/InputBar';
 import BasicButton from '../../common/BasicButton';
-import { commentApi } from '../../../../api/utils/comment';
+import { commentApi } from '../../../../api/utils/Comment';
 
 const Reply = ({
   src,
