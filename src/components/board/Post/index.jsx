@@ -102,17 +102,21 @@ const Post = ({
             }}
           />
           {isHot && (
-            <>
-              <FaFireAlt size={16} color={CS.color.negative} />
+            <S.HotWrapper>
+              <FaFireAlt
+                size={16}
+                color={CS.color.negative}
+                // style={{ margin: '4px' }}/
+              />
               <BasicText
                 text={'HOT'}
                 style={{
                   font: CS.font.labelSmall,
                   color: CS.color.negative,
-                  padding: '4px',
+                  paddingLeft: '4px',
                 }}
               />
-            </>
+            </S.HotWrapper>
           )}
         </S.TitleWrapper>
         <S.ContentWrapper
