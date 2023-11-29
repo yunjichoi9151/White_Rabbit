@@ -8,17 +8,26 @@ import { FaFire } from 'react-icons/fa6';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { FiSend } from 'react-icons/fi';
 import Post from '../../components/board/Post';
-import userData from '../../test/user.json';
 import { postApi } from '../../../api/utils/Post';
 import Header from '../../components/common/Header';
 import WriteButton from '../../components/board/WriteButton';
 import { userApi } from '../../../api/utils/user';
 import BasicModal from '../../components/common/BasicModal';
 import BottomModal from '../../components/board/BottomModal';
+import { SERVER_URL } from '../../../api';
 
 const Home = () => {
-  const [active, setActive] = useState('all');
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+
+  // ONCLICK Active
+  const [active, setActive] = useState('all');
+
+  const handleClick = (category) => {
+    setActive(active === category ? 'all' : category);
+  };
+
+  // GET All PostList
   const [filteredPosts, setFilteredPosts] = useState([]);
 
   const postList = async () => {
@@ -47,13 +56,13 @@ const Home = () => {
           }
         }),
       );
-
       setPosts(postsWithDefaultImage);
     } catch (error) {
       console.log('error: ', error);
     }
   };
 
+  // ADD/DELETE Post Like
   const likeHandler = async (postId) => {
     try {
       await postApi.putLike(postId);
@@ -76,6 +85,7 @@ const Home = () => {
     }
   };
 
+  // GET UserInfo
   const [user, setUser] = useState({});
 
   const userInfo = async () => {
@@ -99,17 +109,19 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
+  // ONCLICK Dots Btn(Post)
   const handleOnClickDots = (postId) => {
     setIsModalOpen(true);
     setTargetPostId(postId);
   };
 
+  // ONCLICK Edit Btn(Post)
   const handleEdit = () => {
     setIsModalOpen(false);
-    // navigate(`/post/${targetPostId}/edit`);
     navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', targetPostId));
   };
 
+  // ONCLICK Delete Btn(Post)
   const handleDelete = async () => {
     setIsModalOpen(false);
     try {
@@ -122,12 +134,7 @@ const Home = () => {
     }
   };
 
-  const navigate = useNavigate();
-
-  const handleClick = (category) => {
-    setActive(active === category ? 'all' : category);
-  };
-
+  // Button Style
   const buttonStyle = (category) => ({
     backgroundColor: active === category ? CS.color.accent : CS.color.white,
     color: active === category ? CS.color.white : CS.color.accent,
@@ -135,6 +142,33 @@ const Home = () => {
     border: `1px solid ${CS.color.accent}`,
     marginRight: '0.5rem',
   });
+
+  // SEARCH
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const searchPosts = async () => {
+    try {
+      const res = await postApi.getSearchPost(searchKeyword);
+      setFilteredPosts(res.data.data.posts);
+      setSearchKeyword('');
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    searchPosts();
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      searchPosts();
+    }
+  };
 
   useEffect(() => {
     postList();
@@ -152,7 +186,15 @@ const Home = () => {
 
   return (
     <S.HomeWrap>
-      <Header typeLeft={'LOGO'} typeCenter={'SEARCH'} typeRight={'SEARCH'} />
+      <Header
+        typeLeft={'LOGO'}
+        typeCenter={'SEARCH'}
+        typeRight={'SEARCH'}
+        inputChangeEvent={handleSearchChange}
+        rightOnClickEvent={handleSearchSubmit}
+        handleKeyPress={handleKeyPress}
+        value={searchKeyword}
+      />
       <S.TopBtnWrap>
         <BasicButton
           handleOnClickButton={() => handleClick('POPULAR')}
@@ -218,7 +260,7 @@ const Home = () => {
             handleOnClickLikeBtn={() => likeHandler(post._id)}
             handleOnClickDots={() => handleOnClickDots(post._id)}
             isFollow={post.isFollowing}
-            imgSrc={'http://localhost:5000' + post.image_url}
+            imgSrc={SERVER_URL + post.image_url}
             view={post.view_count}
           />
         ))}
