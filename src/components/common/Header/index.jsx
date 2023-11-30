@@ -114,6 +114,8 @@ const Header = ({
             placeholder="제목, 내용, 작성자로 검색"
             handleOnChangeValue={inputChangeEvent}
             handleOnKeyDownValue={handleKeyPress}
+            existClearBtn={value !== ''}
+            btnOnClick={rightXOnClickEvent}
           />
         )}
       </S.CenterWrap>
@@ -134,18 +136,9 @@ const Header = ({
           <BasicButton
             existIcon={true}
             children={
-              !existXIcon ? (
-                <IoSearch color={CS.color.contentTertiary} size="1.5rem" />
-              ) : (
-                <RiDeleteBack2Fill
-                  color={CS.color.contentTertiary}
-                  size="1.5rem"
-                />
-              )
+              <IoSearch color={CS.color.contentTertiary} size="1.5rem" />
             }
-            handleOnClickButton={
-              !existXIcon ? rightOnClickEvent : rightXOnClickEvent
-            }
+            handleOnClickButton={rightOnClickEvent}
           />
         )}
       </S.RightWrap>
