@@ -35,6 +35,7 @@ const ProfileBar = ({
   isFollow,
   existMoreBtn = false,
   profileSize,
+  handleOnClickFollow,
   handleOnClickBar,
   handleOnClickDots,
   style,
@@ -101,6 +102,7 @@ const ProfileBar = ({
               font: CS.font.labelSmall,
               color: CS.color.white,
             }}
+            handleOnClickButton={handleOnClickFollow}
           />
         )}
         {existMoreBtn && (
