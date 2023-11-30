@@ -58,6 +58,7 @@ const Post = ({
   imgSrc = '',
   view,
   userId,
+  isDetail = false,
 }) => {
   const substrContent =
     contentLength !== 'ALL' && content.length > length[contentLength]
@@ -83,7 +84,10 @@ const Post = ({
           style={{ padding: '12px 20px' }}
           followId={userId}
         />
-        <S.TitleWrapper onClick={handleOnClickPost}>
+        <S.TitleWrapper
+          onClick={handleOnClickPost}
+          style={{ cursor: isDetail ? 'default' : 'cursor' }}
+        >
           <BasicText
             text={labelText[category]}
             style={{
@@ -119,7 +123,10 @@ const Post = ({
         </S.TitleWrapper>
         <S.ContentWrapper
           onClick={handleOnClickPost}
-          style={{ display: contentLength === 'ALL' ? 'grid' : 'flex' }}
+          style={{
+            display: contentLength === 'ALL' ? 'grid' : 'flex',
+            cursor: isDetail ? 'default' : 'cursor',
+          }}
         >
           <BasicText
             text={substrContent}
