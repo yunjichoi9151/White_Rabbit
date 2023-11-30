@@ -19,7 +19,7 @@ import InputBar from '../../components/common/InputBar';
 const Admin = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAdmittedOnly, setIsAdmittedOnly] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('1');
+  const [currentTabKey, setCurrentTabKey] = useState('0');
   const [members, setMembers] = useState([]);
   const [generations, setGenerations] = useState([]);
   const [skills, setSkills] = useState([]);

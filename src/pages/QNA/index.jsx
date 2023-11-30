@@ -45,6 +45,7 @@ const QNA = () => {
       const res = await postApi.getCategoryPosts(category, searchKeyword, sort);
       setPosts(res.data.data.posts);
       filterMyPosts(res.data.data.posts);
+      console.log(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -67,6 +68,7 @@ const QNA = () => {
 
   const handleFollowClick = async (clickedPost) => {
     try {
+      console.log('hi');
       let followId;
       if (clickedPost.isFollowing) {
         await followApi.deleteFollow(clickedPost.followList._id);
@@ -247,7 +249,7 @@ const QNA = () => {
         {filteredPosts.map((post, index) => (
           <S.PostWrap>
             <Post
-              key={index}
+              key={`post-${index}`}
               category={category}
               src={
                 post.author.profile_url === ''
