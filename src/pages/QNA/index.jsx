@@ -13,6 +13,7 @@ import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
 import { followApi } from '../../../api/utils/Follow';
+import { SERVER_URL } from '../../../api';
 
 const sortType = {
   NEW: 'new',
@@ -44,7 +45,6 @@ const QNA = () => {
       const res = await postApi.getCategoryPosts(category, sort);
       setPosts(res.data.data.posts);
       filterMyPosts(res.data.data.posts);
-      console.log(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -209,7 +209,7 @@ const QNA = () => {
       <S.PostList>
         {/* <BasicModal children={'완료되었습니다.'} /> */}
         {filteredPosts.map((post, index) => (
-          <S.PostWrap>
+          <S.PostWrap key={index}>
             <Post
               key={index}
               category={category}
@@ -227,7 +227,7 @@ const QNA = () => {
               existFollowBtn={post.author._id !== userInfo._id}
               isFollow={post.isFollowing}
               existMoreBtn={post.author._id === userInfo._id}
-              // isHot={post.isPopular}
+              isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
               comments={post.commentCount}
@@ -238,6 +238,8 @@ const QNA = () => {
               handleOnClickFollow={() => handleFollowClick(post)}
               // handleOnClickDots={{}}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
+              imgSrc={SERVER_URL + post.image_url}
+              view={post.view_count}
             />
           </S.PostWrap>
         ))}
