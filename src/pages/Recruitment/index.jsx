@@ -7,6 +7,7 @@ import NavBar from '../../components/common/NavBar';
 import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
+import BasicModal from '../../components/common/BasicModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
@@ -23,6 +24,7 @@ const Recruitment = () => {
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState('PROJECT');
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [clickedPostId, setClickedPostId] = useState('');
 
   const navigate = useNavigate();
 
@@ -37,7 +39,7 @@ const Recruitment = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category);
+      const res = await postApi.getCategoryPosts(category, searchKeyword);
       setPosts(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error);
@@ -49,8 +51,7 @@ const Recruitment = () => {
   };
 
   const handleSearchClick = () => {
-    console.log('Search keyword:', searchKeyword);
-    // 검색 조건 추가하여 API 호출
+    fetchPosts();
   };
 
   const handleCategoryClick = (category) => {
@@ -106,6 +107,40 @@ const Recruitment = () => {
     }
   };
 
+  const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
+
+  const openModal = (postId) => {
+    setClickedPostId(postId);
+    setIsMoreModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsMoreModalOpen(false);
+  };
+
+  const editPost = () => {
+    navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', clickedPostId));
+  };
+
+  const deletePost = () => {
+    try {
+      const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
+
+      if (isConfirmed) {
+        postApi.deletePost(clickedPostId);
+      }
+      alert('삭제 되었습니다.');
+
+      setPosts((prevPosts) =>
+        prevPosts.filter((post) => post._id !== clickedPostId),
+      );
+    } catch (error) {
+      alert('게시글 삭제에 실패했습니다.');
+    } finally {
+      setIsMoreModalOpen(false);
+    }
+  };
+
   useEffect(() => {
     fetchUserInfo();
   }, []);
@@ -123,6 +158,11 @@ const Recruitment = () => {
         textLeft={`${CategoryText[category]} 모집`}
         rightOnClickEvent={handleSearchClick}
         inputChangeEvent={handleSearchKeywordChange}
+        handleKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            handleSearchClick();
+          }
+        }}
       />
       <S.FilterBar>
         <BasicButton
@@ -180,27 +220,48 @@ const Recruitment = () => {
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author !== userInfo._id}
+              existFollowBtn={post.author._id !== userInfo._id}
               isFollow={post.isFollowing}
-              existMoreBtn={post.author === userInfo._id}
+              existMoreBtn={post.author._id === userInfo._id}
               contentLength={'LONG'}
               // isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
+              view={post.view_count}
               comments={post.commentCount}
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
               // handleOnClickProfile={{}}
               handleOnClickFollow={() => handleFollowClick(post)}
-              // handleOnClickDots={{}}
+              handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
             />
           </S.PostWrap>
         ))}
       </S.PostList>
+      {isMoreModalOpen && (
+        <BasicModal
+          closeModal={closeModal}
+          children={
+            <>
+              <div style={{ paddingTop: '12px' }}>
+                <BasicButton
+                  text="수정"
+                  textStyle={{ padding: '12px' }}
+                  handleOnClickButton={editPost}
+                />
+                <BasicButton
+                  text="삭제"
+                  textStyle={{ padding: '12px' }}
+                  handleOnClickButton={deletePost}
+                />
+              </div>
+            </>
+          }
+        />
+      )}
       <WriteButton />
-      <NavBar />
     </S.RecruitmentWrap>
   );
 };
