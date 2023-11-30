@@ -13,13 +13,14 @@ import EmptyContent from '../EmptyContent';
 import Header from '../../components/common/Header';
 
 import MyContent from '../MyContent';
+import { followApi } from '../../../api/utils/Follow';
 
 const UserPage = () => {
   const { userId } = useParams();
 
   //user 정보
   const [user, setUser] = useState({});
-  const [follow, setFollow] = useState({});
+  const [isFollow, setIsFollow] = useState(false);
   const [links, setLinks] = useState([]);
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const UserPage = () => {
     try {
       const res = await userApi.getUserInfoById(userId);
 
+      setIsFollow(res.data.user.is_follow);
       setUser(res.data);
       setLinks(res.data.links);
     } catch (error) {
@@ -79,16 +81,16 @@ const UserPage = () => {
   const handleOnClickFollow = async (e) => {
     e.preventDefault();
 
-    if (_isFollow) {
-      const response = await followApi.deleteFollow(followId);
+    if (isFollow) {
+      const response = await followApi.deleteFollowById(userId);
 
       if (response.status === 200) {
-        setIsFollow(!_isFollow);
+        setIsFollow(false);
       }
     } else {
-      const response = await followApi.postFollow(followId);
+      const response = await followApi.postFollow(userId);
       if (response.status === 201) {
-        setIsFollow(!_isFollow);
+        setIsFollow(true);
       }
     }
   };
@@ -137,7 +139,7 @@ const UserPage = () => {
         <S.ButtonWrap>
           <BasicButton
             handleOnClickButton={handleOnClickFollow}
-            text={follow ? '팔로잉' : '팔로우'}
+            text={isFollow ? '팔로잉' : '팔로우'}
             textStyle={{
               font: CS.font.labelSmall,
               color: CS.color.black,
@@ -178,13 +180,15 @@ const UserPage = () => {
         </S.TabWrap>
 
         {tabName === 'profile' && (
-          <SkillLinkPage
-            userId={user?.user?._id}
-            links={links}
-            setLinks={setLinks}
-            skills={user?.user?.skills}
-            isMe={false}
-          />
+          <div style={{ background: CS.color.secondary, flex: 1 }}>
+            <SkillLinkPage
+              userId={user?.user?._id}
+              links={links}
+              setLinks={setLinks}
+              skills={user?.user?.skills}
+              isMe={false}
+            />
+          </div>
         )}
         {tabName === 'content' && (
           <MyContent type="content" userId={user?.user?._id} />

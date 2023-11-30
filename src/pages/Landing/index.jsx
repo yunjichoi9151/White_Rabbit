@@ -42,6 +42,12 @@ const Landing = () => {
 
   /////////////////
 
+  const handleKeyDownEnter = (e) => {
+    if (e.keyCode === 13) {
+      handleLogin();
+    }
+  };
+
   return (
     <>
       <S.Container>
@@ -63,6 +69,7 @@ const Landing = () => {
           inputProps={{
             value: form['inputIdValue'],
             onChange: onChange,
+            onKeyDown: handleKeyDownEnter,
             placeholder: 'example@elice.com',
             name: 'inputIdValue',
           }}
@@ -80,6 +87,7 @@ const Landing = () => {
             type: 'password',
             value: form['inputPwValue'],
             onChange: onChange,
+            onKeyDown: handleKeyDownEnter,
             placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
             name: 'inputPwValue',
           }}

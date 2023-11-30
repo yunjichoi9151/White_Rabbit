@@ -2,10 +2,8 @@ import styled from 'styled-components';
 import * as CS from '../../styles/CommonStyles';
 
 export const Container = styled.div`
-  margin-top: 40px;
-  margin-left: 20px;
-  padding-bottom: 40px;
-  margin-right: 20px;
+  padding: 40px 20px;
+  background: ${CS.color.white};
 `;
 
 export const UnderLine = styled.div`

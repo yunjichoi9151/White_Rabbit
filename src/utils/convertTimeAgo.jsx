@@ -1,3 +1,5 @@
+import { Cookies } from 'react-cookie';
+
 export const convertTimeAgo = (date) => {
   const createdDate = new Date(date);
   const currentDate = new Date();
@@ -20,4 +22,14 @@ export const convertTimeAgo = (date) => {
   }
 
   return timeAgoString;
+};
+
+const cookies = new Cookies();
+
+export const setCookie = (name, value, options) => {
+  return cookies.set(name, value, { ...options });
+};
+
+export const getCookie = (name) => {
+  return cookies.get(name);
 };

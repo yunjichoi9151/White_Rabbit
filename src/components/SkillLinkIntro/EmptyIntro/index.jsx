@@ -7,7 +7,7 @@ import BasicButton from '../../common/BasicButton';
 
 function EmptyIntro({ text, onClickButton, type, userId, isMe = true }) {
   return (
-    <>
+    <div style={{ background: 'white' }}>
       <BasicText
         text={text}
         style={{
@@ -60,7 +60,7 @@ function EmptyIntro({ text, onClickButton, type, userId, isMe = true }) {
           </Link>
         )
       )}
-    </>
+    </div>
   );
 }
 

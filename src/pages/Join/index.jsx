@@ -46,7 +46,7 @@ function Join() {
   //   password: '',
   //   confirmPwd: '',
   // });
-
+  const [isDuplicateCheck, setIsDuplicateCheck] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -113,13 +113,21 @@ function Join() {
 
   const getSomething = async () => {
     const response = await userApi.generation();
-    const optionGenType = response.data.data.map((gen) => {
+
+    const types = response.data.data.map((gen) => gen.type);
+
+    const set = new Set(types);
+
+    const uniqueArr = [...set];
+
+    const optionGenType = uniqueArr.map((type) => {
       return {
-        key: gen.type,
-        value: gen.type,
-        name: gen.type,
+        key: type,
+        value: type,
+        name: type,
       };
     });
+
     setGenerationType(optionGenType);
 
     const optionGenNum = response.data.data.map((gen) => {
@@ -161,6 +169,9 @@ function Join() {
     } else if (!checked) {
       alert('(필수) 만 14세 이상 입니다.');
       return;
+    } else if (!isDuplicateCheck) {
+      alert('중복확인이 필요합니다.');
+      return;
     }
 
     /// {API} ///
@@ -185,6 +196,15 @@ function Join() {
         alert('등록 중 오류가 발생했습니다. 다시 시도해주세요.');
       }
     }
+  };
+
+  // 중복 확인 버튼
+  const handleClickDuplicateCheck = async () => {
+    const response = await userApi.duplicateCheck({
+      email,
+    });
+
+    setIsDuplicateCheck(response.data.isAvailable);
   };
 
   return (
@@ -225,8 +245,11 @@ function Join() {
             onChange: onChangeEmail,
             placeholder: 'example@elice.com',
             name: 'inputIdValue',
+            style: { marginRight: 8 },
           }}
-          buttonElement={false}
+          buttonElement={true}
+          text="중복확인"
+          onClickButton={handleClickDuplicateCheck}
         />
         <InputBox
           label="비밀번호"
