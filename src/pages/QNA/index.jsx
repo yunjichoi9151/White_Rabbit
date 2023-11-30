@@ -277,7 +277,6 @@ const QNA = () => {
               handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
               imgSrc={SERVER_URL + post.image_url}
-              view={post.view_count}
             />
           </S.PostWrap>
         ))}
