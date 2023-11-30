@@ -26,7 +26,7 @@ export const BoardWrap = styled.div`
   flex-direction: column;
   background-color: ${CS.color.secondary};
   gap: 0.5rem;
-  padding-top: 3.5rem;
+  padding-top: ${(props) => (props.$active === 'POPULAR' ? '5rem' : '3.5rem')};
   padding-bottom: 6.75rem;
   position: relative;
 `;
@@ -50,3 +50,22 @@ export const MenuItem = styled.div`
     background-color: #f7f7f7;
   }
 `;
+
+export const TopWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-direction: column;
+`;
+
+export const InfoTextWrap = styled.div`
+  padding: 0.5rem 1rem;
+  position: fixed;
+  background-color: ${CS.color.white};
+  margin-top: 2.5rem;
+  width: 100%;
+  max-width: 900px;
+  display: ${(props) => (props.$active === 'POPULAR' ? 'block' : 'none')};
+  z-index: 1000;
+`;
+
+export const EmptyDiv = styled.div``;
