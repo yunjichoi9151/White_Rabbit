@@ -62,3 +62,8 @@ export const ImgWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+export const HotWrapper = styled.div`
+  width: 3.5rem;
+  display: flex;
+  padding: 0.5rem;
+`;
