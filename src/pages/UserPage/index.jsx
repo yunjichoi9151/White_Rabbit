@@ -82,7 +82,7 @@ const UserPage = () => {
     e.preventDefault();
 
     if (isFollow) {
-      const response = await followApi.deleteFollow(userId);
+      const response = await followApi.deleteFollowById(userId);
 
       if (response.status === 200) {
         setIsFollow(false);
