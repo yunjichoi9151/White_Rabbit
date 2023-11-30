@@ -6,6 +6,7 @@ import BasicButton from '../BasicButton';
 import InputBar from '../InputBar';
 import { IoSearch, IoArrowBack } from 'react-icons/io5';
 import { BsTextCenter } from 'react-icons/bs';
+import { RiDeleteBack2Fill } from 'react-icons/ri';
 
 const LeftType = {
   TEXT: 'text',
@@ -30,8 +31,10 @@ const Header = ({
   textLeft,
   textCenter,
   textRight,
+  existXIcon = false,
   leftOnClickEvent,
   rightOnClickEvent,
+  rightXOnClickEvent,
   inputChangeEvent,
   handleKeyPress,
   headerStyle,
@@ -46,7 +49,10 @@ const Header = ({
       {/* header left */}
       <S.LeftWrap
         style={{
-          ...(typeLeft === LeftType.TEXT && { minWidth: '120px' }),
+          ...(typeLeft === LeftType.TEXT &&
+            textLeft === '개발Q&A' && { minWidth: '80px' }),
+          ...(typeLeft === LeftType.TEXT &&
+            textLeft === '프로젝트 모집' && { minWidth: '104px' }),
           ...(typeLeft === LeftType.LOGO && { minWidth: '52px' }),
         }}
       >
@@ -128,9 +134,18 @@ const Header = ({
           <BasicButton
             existIcon={true}
             children={
-              <IoSearch color={CS.color.contentTertiary} size="1.5rem" />
+              !existXIcon ? (
+                <IoSearch color={CS.color.contentTertiary} size="1.5rem" />
+              ) : (
+                <RiDeleteBack2Fill
+                  color={CS.color.contentTertiary}
+                  size="1.5rem"
+                />
+              )
             }
-            handleOnClickButton={rightOnClickEvent}
+            handleOnClickButton={
+              !existXIcon ? rightOnClickEvent : rightXOnClickEvent
+            }
           />
         )}
       </S.RightWrap>
