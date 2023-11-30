@@ -57,6 +57,7 @@ const Post = ({
   handleOnClickLikeBtn,
   imgSrc = '',
   view,
+  userId,
 }) => {
   const substrContent =
     contentLength !== 'ALL' && content.length > length[contentLength]
@@ -80,6 +81,7 @@ const Post = ({
           handleOnClickFollow={handleOnClickFollow}
           handleOnClickDots={handleOnClickDots}
           style={{ padding: '12px 20px' }}
+          followId={userId}
         />
         <S.TitleWrapper onClick={handleOnClickPost}>
           <BasicText
