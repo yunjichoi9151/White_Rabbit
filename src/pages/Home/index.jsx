@@ -5,7 +5,6 @@ import { ROUTER_LINK } from '../../router/routes';
 import { SERVER_URL } from '../../../api';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
-import { followApi } from '../../../api/utils/Follow';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Post from '../../components/board/Post';
@@ -339,11 +338,14 @@ const Home = () => {
             handleOnClickPost={() =>
               navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
             }
-            existFollowBtn={user._id === post.author._id ? false : true}
+            handleOnClickProfile={() =>
+              navigate(
+                ROUTER_LINK.USERPAGE.path.replace(':userId', post.author._id),
+              )
+            }
             existMoreBtn={user._id === post.author._id ? true : false}
             handleOnClickLikeBtn={() => likeHandler(post._id)}
             handleOnClickDots={() => handleOnClickDots(post._id)}
-            isFollow={post.isFollowing}
             imgSrc={SERVER_URL + post.image_url}
             view={post.view_count}
             userId={post.author._id}
