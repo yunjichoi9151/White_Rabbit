@@ -8,16 +8,25 @@ export const postApi = {
   getPostsByPage: (page, pageSize) =>
     api.get(`/boards?page=${page}&pageSize=${pageSize}`),
 
-  // 카테고리별 게시물 조회 API
+  // 카테고리별 게시물 조회 API(ALL)
+  getCategoryAllPosts: (category) => api.get(`/boards/categories/${category}`),
+
+  // 카테고리별 게시물 조회 API(sort)
   getCategoryPosts: (category, sortBy) =>
     api.get(`/boards/categories/${category}?sortBy=${sortBy}`),
 
   // 카테고리별 게시물 조회(페이징) API
-  getCategoryPostsByPage: (category, page, pageSize) =>
-    api.get(`/boards/categories/${category}?page=${page}&pageSize=${pageSize}`),
+  getCategoryPostsByPage: (category, sortBy, page, pageSize) =>
+    api.get(
+      `/boards/categories/${category}?sortBy=${sortBy}&page=${page}&pageSize=${pageSize}`,
+    ),
 
   // 인기 게시물 조회 API
   getPopularPosts: () => api.get('/boards/popular'),
+
+  // 인기 게시물 조회(페이징) API
+  getPopularPostsByPage: (page, pageSize) =>
+    api.get(`/boards/popular?page=${page}&pageSize=${pageSize}`),
 
   // 게시물 조회(게시물 id) API
   getPostByPostId: (postId) => api.get(`/boards/${postId}`),
@@ -43,6 +52,10 @@ export const postApi = {
 
   // 검색 결과 조회 API
   getSearchPost: (keyword) => api.get(`/boards?keyword=${keyword}`),
+
+  // 검색 결과 조회(페이징) API
+  getSearchPostByPage: (keyword, page, pageSize) =>
+    api.get(`/boards?keyword=${keyword}&page=${page}&pageSize=${pageSize}`),
 
   // // 이미지 등록 API
   addImage: (image) =>
