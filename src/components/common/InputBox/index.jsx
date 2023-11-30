@@ -50,7 +50,7 @@ function InputBox({
               marginBottom: 0,
               paddingBottom: 0,
               paddingLeft: 16,
-              marginRight: 8,
+              ...inputProps.style,
             }}
           />
           {buttonElement ? (

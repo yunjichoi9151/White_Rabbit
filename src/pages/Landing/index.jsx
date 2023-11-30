@@ -6,13 +6,14 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import BasicButton from '../../components/common/BasicButton';
+import BasicModal from '../../components/common/BasicModal';
 
 const Landing = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    inputIdValue: 'elice@elice.com',
-    inputPwValue: 'elice',
+    inputIdValue: '',
+    inputPwValue: '',
   });
 
   const onChange = (e) => {
@@ -35,8 +36,7 @@ const Landing = () => {
         navigate('/home');
       }
     } catch (error) {
-      alert('error: ', error.response.data.message);
-      console.log('error: ', error.response.data.message);
+      alert('아이디 또는 비밀번호를 확인해주세요.');
     }
   };
 
@@ -124,9 +124,11 @@ const Landing = () => {
           />
         </Link>
       </S.ButtonWrap>
-      <Link to={ROUTER_LINK.FINDPW.link}>
-        <S.PwStyle>비밀번호를 잊어버리셨나요?</S.PwStyle>
-      </Link>
+      <div style={{ display: 'flex', justifyContent: 'right' }}>
+        <Link to={ROUTER_LINK.FINDPW.link} style={{ width: 230 }}>
+          <S.PwStyle>비밀번호를 잊어버리셨나요?</S.PwStyle>
+        </Link>
+      </div>
     </>
   );
 };

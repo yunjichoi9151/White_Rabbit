@@ -9,7 +9,6 @@ export const Container = styled.div`
 export const Wrap = styled.div`
   padding: 8px 12px;
   margin-right: 4px;
-  margin-bottom: 4px;
   border-radius: 20px;
   display: flex;
   align-items: center;

@@ -7,6 +7,8 @@ import ProfileBar from '../../components/profile/ProfileBar';
 import { useNavigate, useParams, useLocation } from 'react-router';
 import { useEffect } from 'react';
 import { userApi } from '../../../api/utils/user';
+import { Link } from 'react-router-dom';
+import { ROUTER_LINK } from '../../router/routes';
 
 function Follow() {
   const location = useLocation();
@@ -44,7 +46,12 @@ function Follow() {
     getFollowList();
   }, []);
 
-  console.log('followData', followData);
+  const userLabelText = {
+    USER: '레이서',
+    ADMIN: '관리자',
+    COACH: '코치',
+  };
+
   return (
     <>
       <Header
@@ -69,18 +76,13 @@ function Follow() {
       {/* <S.ProfileWrap> */}
 
       {followData[tabName].map((follower, index) => (
-        <Fragment key={`${follower._id}_${index}`}>
+        <Link
+          key={`${follower._id}_${index}`}
+          to={`${ROUTER_LINK.USERPAGE.link}/${follower._id}`}
+        >
           <ProfileBar
             username={follower.name}
-            rate={
-              follower.roles === 'USER'
-                ? '레이서'
-                : follower.roles === 'COACH'
-                ? '코치'
-                : follower.roles === 'ADMIN'
-                ? '관리자'
-                : ''
-            }
+            rate={`${userLabelText[follower.roles]}`}
             genType={follower.generation_type}
             genNum={follower.generation_number + '기'}
             existGeneration={true}
@@ -95,9 +97,11 @@ function Follow() {
               paddingRight: 40,
               height: 'auto',
             }}
+            isFollow={follower.is_follow}
+            followId={follower.followId}
           />
           <S.UnderLine />
-        </Fragment>
+        </Link>
       ))}
 
       {/* </S.ProfileWrap> */}

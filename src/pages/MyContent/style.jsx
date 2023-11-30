@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import * as CS from '../../styles/CommonStyles';
 
 export const Container = styled.div`
-  height: 100%;
+  /* height: 100%; */
   background-color: ${CS.color.secondary};
 `;
 // export const BoardWrap = styled.div`
