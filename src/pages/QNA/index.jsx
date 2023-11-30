@@ -28,6 +28,7 @@ const QNA = () => {
   const [isMineOnly, setIsMineOnly] = useState(false);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [clickedPostId, setClickedPostId] = useState('');
 
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ const QNA = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category, sort);
+      const res = await postApi.getCategoryPosts(category, searchKeyword, sort);
       setPosts(res.data.data.posts);
       filterMyPosts(res.data.data.posts);
     } catch (error) {
@@ -55,10 +56,8 @@ const QNA = () => {
   };
 
   const handleSearchClick = () => {
-    console.log('Search keyword:', searchKeyword);
-    // 검색 조건 추가하여 API 호출
+    fetchPosts();
   };
-
   const handleSortClick = (sortBy) => {
     setSort(sortBy);
   };
@@ -91,6 +90,40 @@ const QNA = () => {
       setFilteredPosts(updatedPosts);
     } catch (error) {
       console.log('error: ', error);
+    }
+  };
+
+  const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
+
+  const openModal = (postId) => {
+    setClickedPostId(postId);
+    setIsMoreModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsMoreModalOpen(false);
+  };
+
+  const editPost = () => {
+    navigate(ROUTER_LINK.POSTEDIT.path.replace(':postId', clickedPostId));
+  };
+
+  const deletePost = () => {
+    try {
+      const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
+
+      if (isConfirmed) {
+        postApi.deletePost(clickedPostId);
+      }
+      alert('삭제 되었습니다.');
+
+      setFilteredPosts((prevPosts) =>
+        prevPosts.filter((post) => post._id !== clickedPostId),
+      );
+    } catch (error) {
+      alert('게시글 삭제에 실패했습니다.');
+    } finally {
+      setIsMoreModalOpen(false);
     }
   };
 
@@ -147,6 +180,11 @@ const QNA = () => {
         textLeft={'개발Q&A'}
         rightOnClickEvent={handleSearchClick}
         inputChangeEvent={handleSearchKeywordChange}
+        handleKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            handleSearchClick();
+          }
+        }}
       />
       <S.FilterBar>
         <S.ButtonWrap>
@@ -207,7 +245,6 @@ const QNA = () => {
         />
       </S.FilterBar>
       <S.PostList>
-        {/* <BasicModal children={'완료되었습니다.'} /> */}
         {filteredPosts.map((post, index) => (
           <S.PostWrap key={index}>
             <Post
@@ -230,21 +267,43 @@ const QNA = () => {
               isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
+              view={post.view_count}
               comments={post.commentCount}
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
               // handleOnClickProfile={{}}
               handleOnClickFollow={() => handleFollowClick(post)}
-              // handleOnClickDots={{}}
+              handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
               imgSrc={SERVER_URL + post.image_url}
               view={post.view_count}
             />
           </S.PostWrap>
         ))}
-        <WriteButton />
+        {isMoreModalOpen && (
+          <BasicModal
+            closeModal={closeModal}
+            children={
+              <>
+                <div style={{ paddingTop: '12px' }}>
+                  <BasicButton
+                    text="수정"
+                    textStyle={{ padding: '12px' }}
+                    handleOnClickButton={editPost}
+                  />
+                  <BasicButton
+                    text="삭제"
+                    textStyle={{ padding: '12px' }}
+                    handleOnClickButton={deletePost}
+                  />
+                </div>
+              </>
+            }
+          />
+        )}
       </S.PostList>
+      <WriteButton />
     </S.QNAWrap>
   );
 };

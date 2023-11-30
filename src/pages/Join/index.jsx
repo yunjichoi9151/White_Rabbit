@@ -47,10 +47,10 @@ function Join() {
   //   confirmPwd: '',
   // });
 
-  const [name, setName] = useState('엘리스');
-  const [email, setEmail] = useState('elice@naver.com');
-  const [password, setPassword] = useState('qwer1234!');
-  const [confirmPwd, setConfirmPwd] = useState('qwer1234!');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPwd, setConfirmPwd] = useState('');
 
   // const focusRef = useRef(null);
 
@@ -115,18 +115,18 @@ function Join() {
     const response = await userApi.generation();
     const optionGenType = response.data.data.map((gen) => {
       return {
-        key: gen.generationType,
-        value: gen.generationType,
-        name: gen.generationType,
+        key: gen.type,
+        value: gen.type,
+        name: gen.type,
       };
     });
     setGenerationType(optionGenType);
 
     const optionGenNum = response.data.data.map((gen) => {
       return {
-        key: gen.generationNumber,
-        value: gen.generationNumber,
-        name: gen.generationNumber + '기',
+        key: gen.number,
+        value: gen.number,
+        name: gen.number + '기',
       };
     });
     setGenerationNum(optionGenNum);
@@ -138,7 +138,7 @@ function Join() {
 
   const onClickButton = async () => {
     if (!isNameValid) {
-      alert('1글자 이상 20글자 미만으로 입력해주세요.');
+      alert('이름을 1글자 이상 20글자 미만으로 입력해주세요.');
       return;
     } else if (!isEmailValid) {
       alert('이메일 형식이 올바르지 않습니다.');
@@ -149,9 +149,6 @@ function Join() {
     } else if (!isConfirmPwd) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
-    } else if (!checked) {
-      alert('(필수) 만 14세 이상 입니다.');
-      return;
     } else if (genType === '') {
       alert('트랙을 선택해주세요.');
       return;
@@ -160,6 +157,9 @@ function Join() {
       return;
     } else if (roles === '') {
       alert('등급을 선택해주세요.');
+      return;
+    } else if (!checked) {
+      alert('(필수) 만 14세 이상 입니다.');
       return;
     }
 
@@ -173,14 +173,12 @@ function Join() {
         generation_number: Number(genNum),
         roles,
       });
-      if (res.status === 201) {
-        console.log(res.data);
 
+      if (res.status === 201) {
         navigate(ROUTER_LINK.LANDING.link);
       }
     } catch (error) {
       console.error('등록 중 오류 발생:', error);
-
       if (error.response && error.response.status === 409) {
         alert('이미 등록된 이메일 주소입니다.');
       } else {
@@ -188,8 +186,6 @@ function Join() {
       }
     }
   };
-
-  console.log('genType', genType);
 
   return (
     <>

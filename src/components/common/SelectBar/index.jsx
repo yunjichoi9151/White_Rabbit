@@ -4,7 +4,6 @@ import * as S from './style';
 const SelectBar = ({ style, options, onChange, value, name }) => {
   const handleSelectChange = (e) => {
     const selectValue = e.target.value;
-    console.log('selectValue', selectValue);
     if (onChange) {
       onChange(selectValue);
     }

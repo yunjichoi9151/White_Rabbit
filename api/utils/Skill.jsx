@@ -2,7 +2,7 @@ import { api } from '../index';
 
 export const skillApi = {
   // skill 추가
-  postSkill: () => api.post('/skills'),
+  postSkill: (skillName) => api.post('/skills', { skill: skillName }),
 
   // skill 전체 조회
   getAllSkills: () => api.get('/skills'),

@@ -12,8 +12,10 @@ export const postApi = {
   getCategoryAllPosts: (category) => api.get(`/boards/categories/${category}`),
 
   // 카테고리별 게시물 조회 API(sort)
-  getCategoryPosts: (category, sortBy) =>
-    api.get(`/boards/categories/${category}?sortBy=${sortBy}`),
+  getCategoryPosts: (category, keyword, sortBy) =>
+    api.get(
+      `/boards/categories/${category}?keyword=${keyword}&sortBy=${sortBy}`,
+    ),
 
   // 카테고리별 게시물 조회(페이징) API
   getCategoryPostsByPage: (category, sortBy, page, pageSize) =>

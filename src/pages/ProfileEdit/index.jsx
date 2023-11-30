@@ -22,7 +22,6 @@ function ProfileEdit() {
         inputNameValue: res.data.data.name,
         inputIdValue: res.data.data.email,
       });
-      console.log('res', res);
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +78,11 @@ function ProfileEdit() {
     }
   };
 
+  const userLabelText = {
+    USER: '레이서',
+    ADMIN: '관리자',
+    COACH: '코치',
+  };
   return (
     <S.ProfileEditWrapper>
       <Header
@@ -94,7 +98,7 @@ function ProfileEdit() {
         leftOnClickEvent={() => navigate(-1)}
       />
       <ProfileImg
-        src={`${imageURL}` || '/assets/img/account.png'}
+        src={`${imageURL}` || '/assets/img/elice_icon.png'}
         style={{
           width: 72,
           margin: 20,
@@ -151,7 +155,7 @@ function ProfileEdit() {
           type: 'none',
         }}
         inputProps={{
-          value: user?.roles,
+          value: `${userLabelText[user.roles]}`,
           name: 'inputRatingCheckValue',
           isReadOnly: 'true',
         }}
