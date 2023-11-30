@@ -5,5 +5,5 @@ export const followApi = {
   postFollow: (followId) => api.post(`/users/followings/${followId}`),
 
   // 팔로우 삭제(By UserId)
-  deleteFollow: (userId) => api.delete(`/users/followings/id/${userId}`),
+  deleteFollow: (userId) => api.delete(`/users/followings/${userId}`),
 };

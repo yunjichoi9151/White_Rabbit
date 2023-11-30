@@ -208,27 +208,6 @@ const Home = () => {
     postListByPage();
   };
 
-  // UPDATE Follow
-  const handleFollowChange = async (authorId, isFollowing) => {
-    try {
-      if (isFollowing) {
-        await followApi.deleteFollow(authorId);
-      } else {
-        await followApi.postFollow(authorId);
-      }
-      setPosts(
-        posts.map((post) => {
-          if (post.author._id === authorId) {
-            return { ...post, isFollowing: !isFollowing };
-          }
-          return post;
-        }),
-      );
-    } catch (error) {
-      console.error('error: ', error);
-    }
-  };
-
   // Button Style
   const buttonStyle = (category) => ({
     backgroundColor: active === category ? CS.color.accent : CS.color.white,
@@ -364,12 +343,10 @@ const Home = () => {
             existMoreBtn={user._id === post.author._id ? true : false}
             handleOnClickLikeBtn={() => likeHandler(post._id)}
             handleOnClickDots={() => handleOnClickDots(post._id)}
-            handleOnClickFollow={() =>
-              handleFollowChange(post.author._id, post.isFollowing)
-            }
             isFollow={post.isFollowing}
             imgSrc={SERVER_URL + post.image_url}
             view={post.view_count}
+            userId={post.author._id}
           />
         ))}
         <S.EmptyDiv ref={ref} />
