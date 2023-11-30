@@ -17,6 +17,8 @@ const InputBar = ({
   children,
   existLeft = false,
   existRight = false,
+  existClearBtn,
+  btnOnClick,
 }) => {
   return (
     <S.InputBar style={inputBarStyle}>
@@ -32,6 +34,8 @@ const InputBar = ({
         placeholder={placeholder}
         readOnly={isReadOnly}
         style={inputStyle}
+        existClearBtn={existClearBtn}
+        btnOnClick={btnOnClick}
       />
       {existRight && children}
     </S.InputBar>
