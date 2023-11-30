@@ -82,9 +82,10 @@ const MyPage = () => {
       <S.MyPageWrap>
         <Header
           typeLeft={'TEXT'}
-          textLeft={`내 프로필`}
+          textLeft={'내 프로필'}
           headerStyle={{
             borderBottom: `1px solid ${CS.color.contentTertiary}`,
+            whiteSpace: 'nowrap',
           }}
         />
         <S.ProfileWrap>

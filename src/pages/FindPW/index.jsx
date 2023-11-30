@@ -180,6 +180,7 @@ function FindPW() {
               },
             }}
             buttonElement={true}
+            text="인증"
             onClickButton={handleClickConfirmCode}
           />
           {timer && !isVisible ? (

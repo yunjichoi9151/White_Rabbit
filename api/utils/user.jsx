@@ -5,6 +5,9 @@ export const userApi = {
   // 이메일 중복과 같은 주소이므로 message 기준으로 처리해야함
   signUp: (userData) => api.post('/users', userData),
 
+  // 이메일 중복 체크
+  duplicateCheck: (email) => api.post('/users/email', email),
+
   // 로그인 API
   login: async (email, password) =>
     await api.post('/users/login', { email: email, password: password }),

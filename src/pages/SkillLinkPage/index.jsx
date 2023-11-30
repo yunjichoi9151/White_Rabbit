@@ -75,7 +75,7 @@ function SkillLinkPage({ userId, links, setLinks, skills, isMe = true }) {
           />
         ))}
       </S.Container>
-      <S.UnderLine />
+      {/* <S.UnderLine /> */}
     </>
   );
 }
