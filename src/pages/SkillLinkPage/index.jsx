@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { userApi } from '../../../api/utils/user';
+import React from 'react';
 import * as S from './style';
 import IntroHeader from '../../components/SkillLinkIntro/IntroHeader';
 import EmptyIntro from '../../components/SkillLinkIntro/EmptyIntro';
 import SkillIntro from '../../components/SkillLinkIntro/SkillIntro';
 import LinkIntro from '../../components/SkillLinkIntro/LinkIntro';
 
-function SkillLinkPage({ userId, links, setLinks, skills }) {
+function SkillLinkPage({ userId, links, setLinks, skills, isMe = true }) {
   /////// { API } /////////
 
   const isEmptyLinks = !links?.length;
@@ -21,15 +20,21 @@ function SkillLinkPage({ userId, links, setLinks, skills }) {
           type="skill"
           empty={isEmptySkills}
           userId={userId}
+          isMe={isMe}
         />
 
         {!isEmptySkills ? (
           <SkillIntro skills={skills} />
         ) : (
           <EmptyIntro
-            text="자신의 스킬을 추가해 주세요."
+            text={
+              isMe
+                ? '자신의 스킬을 추가해 주세요.'
+                : '아직 추가 된 스킬이 없습니다.'
+            }
             type="skill"
             userId={userId}
+            isMe={isMe}
           />
         )}
       </S.Container>
@@ -41,13 +46,19 @@ function SkillLinkPage({ userId, links, setLinks, skills }) {
           type="link"
           userId={userId}
           empty={isEmptyLinks}
+          isMe={isMe}
         />
         {/* 비어있을때 */}
         {isEmptyLinks ? (
           <EmptyIntro
-            text="자신의 링크를 추가해 주세요."
+            text={
+              isMe
+                ? '자신의 링크를 추가해 주세요.'
+                : '아직 추가 된 링크가 없습니다.'
+            }
             type="link"
             userId={userId}
+            isMe={isMe}
           />
         ) : (
           <></>

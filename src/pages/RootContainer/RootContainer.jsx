@@ -1,7 +1,6 @@
 import React from 'react';
 import * as CS from '../../styles/CommonStyles';
 import { Outlet, useLocation } from 'react-router-dom';
-import Header from '../../components/common/Header';
 import styled from 'styled-components';
 import NavBar from '../../components/common/NavBar';
 import { ROUTER_LINK } from '../../router/routes';
@@ -15,12 +14,15 @@ const RootContainer = () => {
     ROUTER_LINK.DETAIL.link,
     ROUTER_LINK.QNA.link,
     ROUTER_LINK.RECRUITMENT.link,
+    ROUTER_LINK.USERPAGE.link,
   ];
+
+  const splitPathName = location.pathname.split('/');
 
   return (
     <Container>
       <Outlet />
-      {routerNav.includes(location.pathname) ? <NavBar /> : <></>}
+      {routerNav.includes(`/${splitPathName[1]}`) ? <NavBar /> : <></>}
     </Container>
   );
 };

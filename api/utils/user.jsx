@@ -23,7 +23,7 @@ export const userApi = {
 
   getUserInfo: () => api.get(`/users`),
   // 정보조회(ID) API
-  getUserInfoById: (userId) => api.get(`/users/${userId}`),
+  getUserInfoById: (userId) => api.get(`/users/${userId}/public`),
 
   // 유저 정보 수정(ID) API
   // 수정 가능한 정보 확인 필요

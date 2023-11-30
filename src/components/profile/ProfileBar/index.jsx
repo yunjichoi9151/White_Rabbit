@@ -6,6 +6,7 @@ import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { convertTimeAgo } from '../../../utils/convertTimeAgo';
+import { followApi } from '../../../../api/utils/Follow';
 
 const ProfileImgSize = {
   1: '40px',
@@ -53,11 +54,18 @@ const ProfileBar = ({
 
   const handleOnClickFollow = async (e) => {
     e.preventDefault();
-    if (!_isFollow) return;
-    const response = await followApi.deleteFollow(followId);
 
-    if (response.status === 200) {
-      setIsFollow(!_isFollow);
+    if (_isFollow) {
+      const response = await followApi.deleteFollow(followId);
+
+      if (response.status === 200) {
+        setIsFollow(!_isFollow);
+      }
+    } else {
+      const response = await followApi.postFollow(followId);
+      if (response.status === 201) {
+        setIsFollow(!_isFollow);
+      }
     }
   };
 

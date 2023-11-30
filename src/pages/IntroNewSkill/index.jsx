@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { IoIosClose, IoIosSearch } from 'react-icons/io';
+import { IoIosSearch } from 'react-icons/io';
+import { PiPlus } from 'react-icons/pi';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -20,7 +21,6 @@ function NewSkill({ inputProps }) {
     try {
       const res = await userApi.getUserInfo();
       setMySkill(res.data.data.skills);
-      console.log('res', res);
     } catch (error) {
       console.log('error: ', error.response.data.message);
     }
@@ -233,7 +233,7 @@ function NewSkill({ inputProps }) {
               onKeyDown={(e) => handleKeyDownEnter(e, 'addSkill')}
             />
 
-            <IoIosSearch
+            <PiPlus
               onClick={handleClickPostSkill}
               style={{
                 position: 'absolute',

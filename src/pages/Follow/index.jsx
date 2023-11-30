@@ -46,15 +46,12 @@ function Follow() {
     getFollowList();
   }, []);
 
-  console.log('followData', followData);
-
   const userLabelText = {
     USER: '레이서',
     ADMIN: '관리자',
     COACH: '코치',
   };
 
-  console.log('state', state);
   return (
     <>
       <Header
@@ -100,7 +97,7 @@ function Follow() {
               paddingRight: 40,
               height: 'auto',
             }}
-            isFollow={tabName === 'following' ? true : false}
+            isFollow={follower.is_follow}
             followId={follower.followId}
           />
           <S.UnderLine />

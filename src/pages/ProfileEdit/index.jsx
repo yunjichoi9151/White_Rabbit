@@ -22,7 +22,6 @@ function ProfileEdit() {
         inputNameValue: res.data.data.name,
         inputIdValue: res.data.data.email,
       });
-      console.log('res', res);
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +98,7 @@ function ProfileEdit() {
         leftOnClickEvent={() => navigate(-1)}
       />
       <ProfileImg
-        src={`${imageURL}` || '/assets/img/account.png'}
+        src={`${imageURL}` || '/assets/img/elice_icon.png'}
         style={{
           width: 72,
           margin: 20,

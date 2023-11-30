@@ -7,7 +7,7 @@ import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 
-function IntroHeader({ type, empty, userId }) {
+function IntroHeader({ type, empty, userId, isMe = true }) {
   const link =
     type === 'skill'
       ? `${ROUTER_LINK.NEWSKILL.link}/${userId}`
@@ -36,7 +36,7 @@ function IntroHeader({ type, empty, userId }) {
             style={{
               cursor: 'pointer',
               color: CS.color.contentTertiary,
-              display: empty ? 'none' : 'block',
+              display: empty || !isMe ? 'none' : 'block',
             }}
           />
         </Link>

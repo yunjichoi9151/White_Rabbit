@@ -7,10 +7,11 @@ import BasicText from '../../components/common/BasicText';
 import { useNavigate } from 'react-router';
 import Header from '../../components/common/Header';
 import { userApi } from '../../../api/utils/user';
+import { ROUTER_LINK } from '../../router/routes';
 
 const initialForm = {
-  name: '엘리스',
-  email: 'hajw.study@gmail.com',
+  name: '',
+  email: '',
   password: '',
   passwordCheck: '',
   code: '',
@@ -70,14 +71,6 @@ function FindPW() {
     }
   };
 
-  // const handleClickConfirmCode = async () => {
-  //   const response = await userApi.confirmCode({
-  //     email: form.email,
-  //     code: form.code,
-  //   });
-  //   console.log('response', response);
-  // };
-
   const [isVisible, setIsVisible] = useState(false);
 
   const handleClickConfirmCode = async () => {
@@ -101,6 +94,7 @@ function FindPW() {
       code: form.code,
       password: form.password,
     });
+    navigate(ROUTER_LINK.LANDING.link);
   };
 
   const formatTime = (seconds) => {
@@ -124,10 +118,6 @@ function FindPW() {
           }}
           leftOnClickEvent={() => navigate(-1)}
         />
-        {/* <BasicText
-          text="비밀번호 찾기"
-          style={{ font: CS.font.headingXL, marginLeft: 20, marginBottom: 16 }}
-        /> */}
         <InputBox
           label="이름"
           subTextProps={{
@@ -219,6 +209,7 @@ function FindPW() {
                 onChange: onChange,
                 placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
                 name: 'password',
+                type: 'password',
               }}
               buttonElement={false}
             />
@@ -232,6 +223,7 @@ function FindPW() {
                 onChange: onChange,
                 placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
                 name: 'passwordCheck',
+                type: 'password',
               }}
               buttonElement={false}
             />

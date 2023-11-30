@@ -18,7 +18,6 @@ function MyContent({ type, userId }) {
         const res = await postApi.getPostByUserId(userId);
         const _res = res.data.data.map((data) => data.post);
         setPosts(_res);
-        console.log(_res);
       } catch (error) {
         // alert('error: ' + error.response);
         //.data.message
