@@ -27,6 +27,7 @@ export const Content = styled.div`
   width: 90%;
   max-width: 900px;
   padding: 0.5rem 0rem;
+  margin-top: 0.5rem;
   gap: 0.5rem;
 `;
 
@@ -43,4 +44,10 @@ export const ImgBtnWrap = styled.div`
   width: 90%;
   height: auto;
   margin-top: 1rem;
+`;
+
+export const BtnWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
 `;

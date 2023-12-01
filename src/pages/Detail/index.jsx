@@ -15,6 +15,7 @@ import { followApi } from '../../../api/utils/Follow';
 import BottomModal from '../../components/board/BottomModal';
 import { ROUTER_LINK } from '../../router/routes';
 import { SERVER_URL } from '../../../api';
+import BasicText from '../../components/common/BasicText';
 
 const labelText = {
   BOARD: '자유게시판',
@@ -35,6 +36,7 @@ const Detail = () => {
     try {
       const res = await postApi.getPostByPostId(postId);
       setPost(res.data.data);
+      console.log(res.data.data);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -240,7 +242,19 @@ const Detail = () => {
       <S.CommentWrap>
         {comments && (
           <>
-            <S.CommentTitle>댓글 {comments.length}</S.CommentTitle>
+            <S.CommentTopWrap>
+              <S.CommentTitle>댓글 {comments.length}</S.CommentTitle>
+              {post && post?.post?.category === 'QNA' && (
+                <BasicText
+                  text="※ 개발 Q&A 게시판은 코치님만 답변할 수 있습니다."
+                  style={{
+                    font: CS.font.labelXS,
+                    color: CS.color.negative,
+                    paddingTop: '0.5rem',
+                  }}
+                />
+              )}
+            </S.CommentTopWrap>
             {comments.map((comment, index) => (
               <React.Fragment key={index}>
                 <Reply
@@ -286,18 +300,27 @@ const Detail = () => {
           src={
             user?.profile_url === ''
               ? '/assets/img/elice_icon.png'
-              : user?.profile_url
+              : SERVER_URL + user?.profile_url
           }
           style={{ width: '2.5rem', height: '2.5rem' }}
         />
         <InputBar
           value={inputData}
-          placeholder="댓글을 남겨보세요."
+          placeholder={
+            (post?.post?.category === 'QNA' && user?.is_coach) ||
+            post?.post?.category !== 'QNA'
+              ? '댓글을 남겨보세요.'
+              : '코치님만 답변 가능합니다.'
+          }
           inputBarStyle={{
             height: '2.5rem',
             padding: '0.5rem 0.75rem',
             marginLeft: '0.75rem',
-            backgroundColor: CS.color.secondary,
+            backgroundColor:
+              (post?.post?.category === 'QNA' && user?.is_coach) ||
+              post?.post?.category !== 'QNA'
+                ? CS.color.secondary
+                : CS.color.accent,
             borderRadius: '1rem',
             display: 'flex',
           }}
@@ -306,6 +329,10 @@ const Detail = () => {
             textAlign: 'left',
             alignItems: 'center',
           }}
+          isReadOnly={
+            (post?.post?.category === 'QNA' && user?.is_coach) ||
+            post?.post?.category !== 'QNA'
+          }
           existRight={true}
           handleOnChangeValue={changeInputData}
           handleOnKeyDownValue={handleKeyPress}

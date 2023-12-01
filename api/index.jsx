@@ -10,7 +10,7 @@ const instance = axios.create({
   },
 });
 
-export const SERVER_URL = 'http://kdt-sw-6-team07.elicecoding.com/';
+export const SERVER_URL = 'http://kdt-sw-6-team07.elicecoding.com';
 // instance interceptors 활용한 로그인 작업
 
 export const api = instance;
