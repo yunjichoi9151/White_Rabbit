@@ -76,16 +76,31 @@ const MyPage = () => {
     });
   };
 
+  const handleLogoutClick = async () => {
+    try {
+      const res = await userApi.logout();
+      console.log(res);
+      if (res.status === 200) {
+        navigate(ROUTER_LINK.LANDING.path);
+      }
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
   return (
     <>
       <S.MyPageWrap>
         <Header
           typeLeft={'TEXT'}
+          typeRight={'TEXT'}
           textLeft={'내 프로필'}
+          textRight={'로그아웃'}
           headerStyle={{
             borderBottom: `1px solid ${CS.color.contentTertiary}`,
             whiteSpace: 'nowrap',
           }}
+          rightOnClickEvent={() => handleLogoutClick()}
         />
         <S.ProfileWrap>
           <ProfileBar
@@ -156,27 +171,6 @@ const MyPage = () => {
         )}
 
         {tabName === 'reply' && <MyContent type="reply" userId={user._id} />}
-        <S.LogoutBtn
-          style={{
-            backgroundColor: CS.color.secondary,
-          }}
-        >
-          <BasicButton
-            text="로그아웃"
-            textStyle={{
-              color: CS.color.contentTertiary,
-              font: CS.font.labelSmall,
-            }}
-            btnStyle={{
-              height: 50,
-              width: 70,
-              border: `1px solid ${CS.color.contentTertiary}`,
-              background: CS.color.white,
-              marginBottom: 12,
-            }}
-            handleOnClickButton={handleOnClickButton}
-          />
-        </S.LogoutBtn>
       </S.MyPageWrap>
     </>
   );
