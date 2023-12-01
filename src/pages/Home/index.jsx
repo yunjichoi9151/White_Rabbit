@@ -260,6 +260,7 @@ const Home = () => {
         typeRight={'SEARCH'}
         existXIcon={searchKeyword !== ''}
         inputChangeEvent={handleSearchChange}
+        leftOnClickEvent={() => (window.location.href = ROUTER_LINK.HOME.link)}
         rightOnClickEvent={handleSearchSubmit}
         rightXOnClickEvent={handleClearSearch}
         handleKeyPress={handleKeyPress}
