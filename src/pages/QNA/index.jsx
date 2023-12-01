@@ -7,12 +7,11 @@ import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
 import CheckBox from '../../components/common/CheckBox';
-import BasicModal from '../../components/common/BasicModal';
+import BottomModal from '../../components/board/BottomModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
-import { followApi } from '../../../api/utils/Follow';
 import { SERVER_URL } from '../../../api';
 
 const sortType = {
@@ -67,32 +66,18 @@ const QNA = () => {
     setIsMineOnly(e.target.checked);
   };
 
-  const handleFollowClick = async (clickedPost) => {
-    try {
-      console.log('hi');
-      let followId;
-      if (clickedPost.isFollowing) {
-        await followApi.deleteFollow(clickedPost.followList._id);
-      } else {
-        const res = await followApi.postFollow(clickedPost.author._id);
-        followId = res.data.followId;
-      }
-
-      const updatedPosts = filteredPosts.map((post) => {
-        if (post._id === clickedPost._id) {
-          return {
-            ...post,
-            isFollowing: !post.isFollowing,
-            followList: { _id: followId },
-          };
-        }
-        return post;
-      });
-
-      setFilteredPosts(updatedPosts);
-    } catch (error) {
-      console.log('error: ', error);
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      handleSearchClick();
     }
+  };
+
+  const handleClearSearch = () => {
+    // setPage(1);
+    // setNowSearch(false);
+    // setIsAllDataLoaded(false);
+    setSearchKeyword('');
+    // fetchPosts();
   };
 
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
@@ -173,6 +158,12 @@ const QNA = () => {
     filterMyPosts(posts);
   }, [isMineOnly]);
 
+  useEffect(() => {
+    if (searchKeyword === '') {
+      fetchPosts();
+    }
+  }, [searchKeyword]);
+
   return (
     <S.QNAWrap>
       <Header
@@ -180,13 +171,12 @@ const QNA = () => {
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
         textLeft={'개발Q&A'}
+        existXIcon={searchKeyword !== ''}
+        value={searchKeyword}
         rightOnClickEvent={handleSearchClick}
+        rightXOnClickEvent={handleClearSearch}
         inputChangeEvent={handleSearchKeywordChange}
-        handleKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            handleSearchClick();
-          }
-        }}
+        handleKeyPress={handleKeyPress}
       />
       <S.FilterBar>
         <S.ButtonWrap>
@@ -263,8 +253,6 @@ const QNA = () => {
               title={post.title}
               content={post.content}
               contentLength={'LONG'}
-              existFollowBtn={post.author._id !== userInfo._id}
-              isFollow={post.isFollowing}
               existMoreBtn={post.author._id === userInfo._id}
               isHot={post.isPopular}
               isLike={post.isLiked}
@@ -274,8 +262,11 @@ const QNA = () => {
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
-              // handleOnClickProfile={{}}
-              handleOnClickFollow={() => handleFollowClick(post)}
+              handleOnClickProfile={() =>
+                navigate(
+                  ROUTER_LINK.USERPAGE.path.replace(':userId', post.author._id),
+                )
+              }
               handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
               imgSrc={SERVER_URL + post.image_url}
@@ -283,24 +274,10 @@ const QNA = () => {
           </S.PostWrap>
         ))}
         {isMoreModalOpen && (
-          <BasicModal
-            closeModal={closeModal}
-            children={
-              <>
-                <div style={{ paddingTop: '12px' }}>
-                  <BasicButton
-                    text="수정"
-                    textStyle={{ padding: '12px' }}
-                    handleOnClickButton={editPost}
-                  />
-                  <BasicButton
-                    text="삭제"
-                    textStyle={{ padding: '12px' }}
-                    handleOnClickButton={deletePost}
-                  />
-                </div>
-              </>
-            }
+          <BottomModal
+            onClose={closeModal}
+            onEdit={editPost}
+            onDelete={deletePost}
           />
         )}
       </S.PostList>

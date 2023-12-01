@@ -3,16 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
-import NavBar from '../../components/common/NavBar';
 import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
-import BasicModal from '../../components/common/BasicModal';
+import BottomModal from '../../components/board/BottomModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
-import { followApi } from '../../../api/utils/Follow';
 import { SERVER_URL } from '../../../api';
 
 const CategoryText = {
@@ -21,13 +19,11 @@ const CategoryText = {
 };
 
 const Recruitment = () => {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState('PROJECT');
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [clickedPostId, setClickedPostId] = useState('');
-
-  const navigate = useNavigate();
 
   const fetchUserInfo = async () => {
     try {
@@ -41,7 +37,19 @@ const Recruitment = () => {
   const fetchPosts = async () => {
     try {
       const res = await postApi.getCategoryPosts(category, searchKeyword);
+      // const res = await postApi.getCategoryPostsByPage(
+      //   category,
+      //   searchKeyword,
+      //   '',
+      //   page,
+      //   100,
+      // );
+      // if (page !== 0 && res.data.data.posts.length === 0) {
+      // setIsAllDataLoaded(true);
+      // } else {
       setPosts(res.data.data.posts);
+      // setPage((prevPage) => prevPage + 1);
+      // }
     } catch (error) {
       console.log('error: ', error);
     }
@@ -57,33 +65,6 @@ const Recruitment = () => {
 
   const handleCategoryClick = (category) => {
     setCategory(category);
-  };
-
-  const handleFollowClick = async (clickedPost) => {
-    try {
-      let followId;
-      if (clickedPost.isFollowing) {
-        await followApi.deleteFollow(clickedPost.followList._id);
-      } else {
-        const res = await followApi.postFollow(clickedPost.author._id);
-        followId = res.data.followId;
-      }
-
-      const updatedPosts = posts.map((post) => {
-        if (post._id === clickedPost._id) {
-          return {
-            ...post,
-            isFollowing: !post.isFollowing,
-            followList: { _id: followId },
-          };
-        }
-        return post;
-      });
-
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.log('error: ', error);
-    }
   };
 
   const handleLikeClick = async (clickedPost) => {
@@ -108,7 +89,22 @@ const Recruitment = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      handleSearchClick();
+    }
+  };
+
+  const handleClearSearch = () => {
+    // setPage(1);
+    // setNowSearch(false);
+    // setIsAllDataLoaded(false);
+    setSearchKeyword('');
+    // fetchPosts();
+  };
+
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
+  const [clickedPostId, setClickedPostId] = useState('');
 
   const openModal = (postId) => {
     setClickedPostId(postId);
@@ -150,6 +146,12 @@ const Recruitment = () => {
     fetchPosts();
   }, [category]);
 
+  useEffect(() => {
+    if (searchKeyword === '') {
+      fetchPosts();
+    }
+  }, [searchKeyword]);
+
   return (
     <S.RecruitmentWrap>
       <Header
@@ -157,13 +159,12 @@ const Recruitment = () => {
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
         textLeft={`${CategoryText[category]} 모집`}
+        existXIcon={searchKeyword !== ''}
+        value={searchKeyword}
         rightOnClickEvent={handleSearchClick}
+        rightXOnClickEvent={handleClearSearch}
         inputChangeEvent={handleSearchKeywordChange}
-        handleKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            handleSearchClick();
-          }
-        }}
+        handleKeyPress={handleKeyPress}
       />
       <S.FilterBar>
         <BasicButton
@@ -221,8 +222,6 @@ const Recruitment = () => {
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author._id !== userInfo._id}
-              isFollow={post.isFollowing}
               existMoreBtn={post.author._id === userInfo._id}
               contentLength={'LONG'}
               isHot={post.isPopular}
@@ -233,8 +232,11 @@ const Recruitment = () => {
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
-              // handleOnClickProfile={{}}
-              handleOnClickFollow={() => handleFollowClick(post)}
+              handleOnClickProfile={() =>
+                navigate(
+                  ROUTER_LINK.USERPAGE.path.replace(':userId', post.author._id),
+                )
+              }
               handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
               imgSrc={SERVER_URL + post.image_url}
@@ -243,24 +245,10 @@ const Recruitment = () => {
         ))}
       </S.PostList>
       {isMoreModalOpen && (
-        <BasicModal
-          closeModal={closeModal}
-          children={
-            <>
-              <div style={{ paddingTop: '12px' }}>
-                <BasicButton
-                  text="수정"
-                  textStyle={{ padding: '12px' }}
-                  handleOnClickButton={editPost}
-                />
-                <BasicButton
-                  text="삭제"
-                  textStyle={{ padding: '12px' }}
-                  handleOnClickButton={deletePost}
-                />
-              </div>
-            </>
-          }
+        <BottomModal
+          onClose={closeModal}
+          onEdit={editPost}
+          onDelete={deletePost}
         />
       )}
       <WriteButton />
