@@ -24,8 +24,13 @@ export const CommentWrap = styled.div`
   gap: 1rem;
 `;
 
-export const CommentTitle = styled.div`
+export const CommentTopWrap = styled.div`
+  display: flex;
   width: 100%;
+`;
+
+export const CommentTitle = styled.div`
+  /* width: 100%; */
   padding: 0.5rem 1rem 0rem 1rem;
   font: ${CS.font.labelSmall};
 `;
