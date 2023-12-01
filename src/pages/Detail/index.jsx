@@ -259,6 +259,14 @@ const Detail = () => {
                   }
                   isEditable={editableCommentId === comment._id}
                   onCommentUpdated={handleCommentUpdated}
+                  handleOnClickProfile={() =>
+                    navigate(
+                      ROUTER_LINK.USERPAGE.path.replace(
+                        ':userId',
+                        comment.author?._id,
+                      ),
+                    )
+                  }
                 />
               </React.Fragment>
             ))}
