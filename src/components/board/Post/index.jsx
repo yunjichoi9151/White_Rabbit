@@ -59,6 +59,7 @@ const Post = ({
   view,
   userId,
   isDetail = false,
+  type,
 }) => {
   const substrContent =
     contentLength !== 'ALL' && content.length > length[contentLength]
@@ -136,7 +137,7 @@ const Post = ({
               marginBottom: '1rem',
             }}
           />
-          {imgSrc !== SERVER_URL && (
+          {imgSrc !== SERVER_URL && type !== 'reply' && (
             <S.ImgWrapper>
               {contentLength === 'ALL' ? (
                 <BasicImage src={imgSrc} style={{ borderRadius: '0rem' }} />
