@@ -46,9 +46,9 @@ const RootContainer = () => {
         alert('로그인 후 접근 가능합니다.');
         navigate(ROUTER_LINK.LANDING.path);
       }
-    } finally {
-      // 로그인 체크 전 화면 렌더링 방지
-      setIsLoginChecked(true);
+      // } finally {
+      //   // 로그인 체크 전 화면 렌더링 방지
+      //   setIsLoginChecked(true);
     }
   };
 
@@ -58,12 +58,12 @@ const RootContainer = () => {
 
   return (
     <Container>
-      {isLoginChecked && (
-        <>
-          <Outlet />
-          {routerNav.includes(`/${splitPathName[1]}`) ? <NavBar /> : <></>}
-        </>
-      )}
+      {/* {isLoginChecked && ( */}
+      <>
+        <Outlet />
+        {routerNav.includes(`/${splitPathName[1]}`) ? <NavBar /> : <></>}
+      </>
+      {/* )} */}
     </Container>
   );
 };
