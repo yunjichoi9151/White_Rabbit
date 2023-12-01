@@ -75,7 +75,7 @@ function MyContent({ type, userId }) {
                   <Post
                     key={index}
                     category={post.category}
-                    src={post.profile_url}
+                    src={SERVER_URL + post.profile_url}
                     imgSrc={SERVER_URL + post.image_url}
                     username={post.author.name}
                     rate={post.author.roles}

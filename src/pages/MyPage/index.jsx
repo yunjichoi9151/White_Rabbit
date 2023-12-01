@@ -102,7 +102,7 @@ const MyPage = () => {
             genType={user.generation_type}
             genNum={user.generation_number + '기'}
             existGeneration={true}
-            src={user.profile_url || '/assets/img/elice_icon.png'}
+            src={user?.profile_url || '/assets/img/elice_icon.png'}
             isEditable={false}
             profileSize={2}
             existFollow={true}
@@ -167,7 +167,13 @@ const MyPage = () => {
               color: CS.color.contentTertiary,
               font: CS.font.labelSmall,
             }}
-            btnStyle={{ height: 50 }}
+            btnStyle={{
+              height: 50,
+              width: 70,
+              border: `1px solid ${CS.color.contentTertiary}`,
+              background: CS.color.white,
+              marginBottom: 12,
+            }}
             handleOnClickButton={handleOnClickButton}
           />
         </S.LogoutBtn>
