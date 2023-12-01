@@ -7,7 +7,7 @@ const FormLabel = ({
   infoMessage,
 }) => {
   return (
-    <Container>
+    <Container status={infoMessage.status}>
       <div style={{ width: '100%' }}>{children}</div>
 
       {infoMessage && (
@@ -25,4 +25,8 @@ export default FormLabel;
 
 const Container = styled.div`
   width: 100%;
+
+  input {
+    border: ${({ status }) => status === "error" ? `2px solid red` : ''} !important
+  }
 `;

@@ -25,22 +25,22 @@ function Join() {
   const initialInfoMessage = {
     name: {
       children: '',
-      status: 'error',
+      status: 'success',
       validate: getUserNameValidateMessage,
     },
     email: {
       children: '',
-      status: 'error',
+      status: 'success',
       validate: getEmailValidateMessage,
     },
     password: {
       children: '',
-      status: 'error',
+      status: 'success',
       validate: getPasswordValidateMessage,
     },
     confirmPwd: {
       children: '',
-      status: 'error',
+      status: 'success',
       validate: (value, params) =>
         getPasswordCheckValidateMessage(value, params, 'password'),
     },
