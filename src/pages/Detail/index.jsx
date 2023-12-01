@@ -233,7 +233,11 @@ const Detail = () => {
                 ),
               )
             }
-            imgSrc={SERVER_URL + post?.post?.image_url}
+            imgSrc={
+              post?.post?.image_url
+                ? SERVER_URL + post?.post?.image_url
+                : '/assets/img/elice_icon.png'
+            }
             view={post?.post?.view_count}
             isDetail={true}
           />
