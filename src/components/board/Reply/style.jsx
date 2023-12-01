@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import * as CS from '../../../styles/CommonStyles';
 
 export const Wrapper = styled.div`
   width: 100%;

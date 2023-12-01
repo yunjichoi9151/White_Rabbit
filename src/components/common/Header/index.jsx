@@ -1,12 +1,10 @@
-import React, { Children } from 'react';
+import React from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../BasicText';
 import BasicButton from '../BasicButton';
 import InputBar from '../InputBar';
 import { IoSearch, IoArrowBack } from 'react-icons/io5';
-import { BsTextCenter } from 'react-icons/bs';
-import { RiDeleteBack2Fill } from 'react-icons/ri';
 
 const LeftType = {
   TEXT: 'text',

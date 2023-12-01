@@ -334,8 +334,10 @@ const Detail = () => {
             alignItems: 'center',
           }}
           isReadOnly={
-            (post?.post?.category === 'QNA' && user?.is_coach) ||
-            post?.post?.category !== 'QNA'
+            !(
+              (post?.post?.category === 'QNA' && user?.is_coach) ||
+              post?.post?.category !== 'QNA'
+            )
           }
           existRight={true}
           handleOnChangeValue={changeInputData}
