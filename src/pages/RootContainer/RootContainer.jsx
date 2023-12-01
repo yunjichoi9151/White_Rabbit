@@ -39,11 +39,11 @@ const RootContainer = () => {
     }
   };
 
-  useEffect(() => {
-    if (!guestRoute.includes(location.pathname)) {
-      fetchUserInfo();
-    }
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   if (!guestRoute.includes(location.pathname)) {
+  //     fetchUserInfo();
+  //   }
+  // }, [location.pathname]);
 
   return (
     <Container>

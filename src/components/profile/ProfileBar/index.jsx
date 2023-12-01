@@ -113,38 +113,42 @@ const ProfileBar = ({
             </div>
           )}
         </S.InfoBox>
-        {existFollowBtn && (
-          <BasicButton
-            text={_isFollow ? '팔로잉' : '팔로우'}
-            handleOnClickButton={handleOnClickFollow}
-            btnStyle={{
-              width: '70px',
-              height: '35px',
-              borderRadius: '4px',
-              backgroundColor: _isFollow ? CS.color.primary : CS.color.accent,
-            }}
-            textStyle={{
-              font: CS.font.labelSmall,
-              color: CS.color.white,
-            }}
-          />
-        )}
-        {existMoreBtn && (
-          <BasicButton
-            existIcon={true}
-            existText={false}
-            handleOnClickButton={handleOnClickDots}
-            btnStyle={{
-              width: '24px',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <BsThreeDotsVertical size="24px" color={CS.color.contentTertiary} />
-          </BasicButton>
-        )}
+        <div style={{ width: '70px' }}>
+          {existFollowBtn && (
+            <BasicButton
+              text={_isFollow ? '팔로잉' : '팔로우'}
+              handleOnClickButton={handleOnClickFollow}
+              btnStyle={{
+                width: '70px',
+                height: '35px',
+                borderRadius: '4px',
+                backgroundColor: _isFollow ? CS.color.primary : CS.color.accent,
+              }}
+              textStyle={{
+                font: CS.font.labelSmall,
+                color: CS.color.white,
+              }}
+            />
+          )}
+          {existMoreBtn && (
+            <BasicButton
+              existIcon={true}
+              existText={false}
+              handleOnClickButton={handleOnClickDots}
+              btnStyle={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <BsThreeDotsVertical
+                size="24px"
+                color={CS.color.contentTertiary}
+              />
+            </BasicButton>
+          )}
+        </div>
       </S.Wrapper>
     </>
   );

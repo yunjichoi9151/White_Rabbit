@@ -105,6 +105,7 @@ const Post = ({
             style={{
               font: CS.font.headingMedium,
               padding: '4px 12px',
+              lineBreak: 'anywhere',
             }}
           />
           {isHot && (
