@@ -11,7 +11,6 @@ const BottomModal = ({ onClose, onEdit, onDelete }) => {
     border: 'none',
     cursor: 'pointer',
     font: CS.font.labelLarge,
-    // borderBottom: `1px solid ${CS.color.borderTransparent}`,
     zIndex: '2000',
     hoverBackgroundColor: CS.color.secondary,
   });
