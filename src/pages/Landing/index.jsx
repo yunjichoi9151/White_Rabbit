@@ -29,16 +29,21 @@ const Landing = () => {
     try {
       const { inputIdValue, inputPwValue } = form;
 
-      const res = await userApi.login(inputIdValue, inputPwValue);
+      const login = await userApi.login(inputIdValue, inputPwValue);
+      const res = await userApi.getUserInfo();
 
       if (res.status === 200) {
-        navigate('/home');
+        // 관리자면 관리자 페이지로 이동
+        if (res.data.data.roles === 'ADMIN') {
+          navigate('/admin');
+        } else {
+          navigate('/home');
+        }
       }
     } catch (error) {
       alert('아이디 또는 비밀번호를 확인해주세요.');
     }
   };
-
   /////////////////
 
   const handleKeyDownEnter = (e) => {
