@@ -15,7 +15,8 @@ const TableRow = ({ colTexts, btnText, btnColor, handleBtnClick }) => {
             style={{
               font: CS.font.labelSmall,
               justifyContent: 'center',
-              minWidth: index === 1 ? '100px' : '30px',
+              minWidth: '30px',
+              width: index === 1 && '100px',
             }}
           />
         ))}

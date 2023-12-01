@@ -59,6 +59,7 @@ const Post = ({
   view,
   userId,
   isDetail = false,
+  type,
 }) => {
   const substrContent =
     contentLength !== 'ALL' && content.length > length[contentLength]
@@ -137,7 +138,7 @@ const Post = ({
               marginBottom: '1rem',
             }}
           />
-          {imgSrc !== SERVER_URL && (
+          {imgSrc !== SERVER_URL && type !== 'reply' && (
             <S.ImgWrapper>
               {contentLength === 'ALL' ? (
                 <BasicImage src={imgSrc} style={{ borderRadius: '0rem' }} />
@@ -158,7 +159,13 @@ const Post = ({
           <S.IconWrapper>
             <BasicButton
               existIcon={true}
-              children={isLike ? <BiSolidLike /> : <BiLike />}
+              children={
+                isLike ? (
+                  <BiSolidLike color={CS.color.black} />
+                ) : (
+                  <BiLike color={CS.color.black} />
+                )
+              }
               btnStyle={{ width: '16px' }}
               handleOnClickButton={handleOnClickLikeBtn}
             />
