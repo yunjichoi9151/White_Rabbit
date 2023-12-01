@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ROUTER_LINK } from '../../router/routes';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { postApi } from '../../../api/utils/Post';
 import { commentApi } from '../../../api/utils/comment';
 import * as CS from '../../styles/CommonStyles';
@@ -8,9 +8,12 @@ import * as S from './style';
 import Post from '../../components/board/Post';
 import EmptyContent from '../EmptyContent';
 import BasicText from '../../components/common/BasicText';
+import { SERVER_URL } from '../../../api';
 
 function MyContent({ type, userId }) {
   const [posts, setPosts] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -28,7 +31,10 @@ function MyContent({ type, userId }) {
         const res = await commentApi.getCommentsByUser(userId);
         setPosts(res.data.data);
       } catch (error) {
-        console.log('error: ', error.response.data.message);
+        console.log('error: ', error.response.status);
+        // if (error.response.status === 404) {
+        //   navigate(-1);
+        // }
       }
     };
 
@@ -60,12 +66,17 @@ function MyContent({ type, userId }) {
           />
           <S.PostList>
             {posts?.map((post, index) => (
-              <Link to={`${ROUTER_LINK.DETAIL.link}/${post._id}`}>
+              <Link
+                to={`${ROUTER_LINK.DETAIL.link}/${
+                  type === 'content' ? post._id : post.post
+                }`}
+              >
                 <S.PostWrap>
                   <Post
                     key={index}
                     category={post.category}
-                    src={''}
+                    src={SERVER_URL + post.profile_url}
+                    imgSrc={SERVER_URL + post.image_url}
                     username={post.author.name}
                     rate={post.author.roles}
                     createdAt={post.createdAt}
@@ -79,6 +90,7 @@ function MyContent({ type, userId }) {
                     isLike={false}
                     likes={0}
                     comments={post.commentCount}
+                    type={type}
                   />
                 </S.PostWrap>
               </Link>

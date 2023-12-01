@@ -76,16 +76,31 @@ const MyPage = () => {
     });
   };
 
+  const handleLogoutClick = async () => {
+    try {
+      const res = await userApi.logout();
+      console.log(res);
+      if (res.status === 200) {
+        navigate(ROUTER_LINK.LANDING.path);
+      }
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
   return (
     <>
       <S.MyPageWrap>
         <Header
           typeLeft={'TEXT'}
+          typeRight={'TEXT'}
           textLeft={'내 프로필'}
+          textRight={'로그아웃'}
           headerStyle={{
             borderBottom: `1px solid ${CS.color.contentTertiary}`,
             whiteSpace: 'nowrap',
           }}
+          rightOnClickEvent={() => handleLogoutClick()}
         />
         <S.ProfileWrap>
           <ProfileBar
@@ -102,7 +117,7 @@ const MyPage = () => {
             genType={user.generation_type}
             genNum={user.generation_number + '기'}
             existGeneration={true}
-            src={user.profile_url || '/assets/img/elice_icon.png'}
+            src={user?.profile_url || '/assets/img/elice_icon.png'}
             isEditable={false}
             profileSize={2}
             existFollow={true}
@@ -156,21 +171,6 @@ const MyPage = () => {
         )}
 
         {tabName === 'reply' && <MyContent type="reply" userId={user._id} />}
-        <S.LogoutBtn
-          style={{
-            backgroundColor: CS.color.secondary,
-          }}
-        >
-          <BasicButton
-            text="로그아웃"
-            textStyle={{
-              color: CS.color.contentTertiary,
-              font: CS.font.labelSmall,
-            }}
-            btnStyle={{ height: 50 }}
-            handleOnClickButton={handleOnClickButton}
-          />
-        </S.LogoutBtn>
       </S.MyPageWrap>
     </>
   );

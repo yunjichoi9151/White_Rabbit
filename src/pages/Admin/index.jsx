@@ -25,6 +25,51 @@ const Admin = () => {
 
   const navigate = useNavigate();
 
+  // 로그인 정보 조회 => 관리자가 아니면 HOME 으로 이동
+  const fetchUserInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      const userRole = res.data.data.roles;
+
+      if (userRole === 'ADMIN') {
+        setIsAdmin(true);
+      } else {
+        alert('관리자만 접근 가능합니다.');
+        navigate(ROUTER_LINK.HOME.path);
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const res = await userApi.getAllUsers();
+      setMembers(res.data.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const fetchGenerations = async () => {
+    try {
+      const res = await generationApi.getAllGenerations();
+      console.log(res.data.data);
+      setGenerations(res.data.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
+  const fetchSkills = async () => {
+    try {
+      const res = await skillApi.getAllSkills();
+      setSkills(res.data);
+    } catch (error) {
+      console.log('error: ', error.response.data);
+    }
+  };
+
   const handleTabClick = (tabKey) => {
     setCurrentTabKey(tabKey);
   };
@@ -79,51 +124,7 @@ const Admin = () => {
     }
   };
 
-  // 로그인 정보 조회 => 관리자가 아니면 HOME 으로 이동
-  const fetchUserInfo = async () => {
-    try {
-      const res = await userApi.getLoginUserInfo();
-      const userRole = res.data.data.roles;
-
-      if (userRole === 'ADMIN') {
-        setIsAdmin(true);
-      } else {
-        alert('관리자만 접근 가능합니다.');
-        navigate(ROUTER_LINK.HOME.path);
-      }
-    } catch (error) {
-      console.log('error: ', error);
-    }
-  };
-
-  const fetchUsers = async () => {
-    try {
-      const res = await userApi.getAllUsers();
-      setMembers(res.data.data);
-    } catch (error) {
-      console.log('error: ', error.response.data);
-    }
-  };
-
-  const fetchGenerations = async () => {
-    try {
-      const res = await generationApi.getAllGenerations();
-      console.log(res.data.data);
-      setGenerations(res.data.data);
-    } catch (error) {
-      console.log('error: ', error.response.data);
-    }
-  };
-
-  const fetchSkills = async () => {
-    try {
-      const res = await skillApi.getAllSkills();
-      setSkills(res.data);
-    } catch (error) {
-      console.log('error: ', error.response.data);
-    }
-  };
-
+  // modal
   const [isGenerationModalOpen, setIsGenerationModalOpen] = useState(false);
   const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
 
