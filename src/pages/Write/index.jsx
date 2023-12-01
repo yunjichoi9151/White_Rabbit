@@ -85,7 +85,6 @@ const Write = ({ isEdit = false }) => {
         const res = await commonApi.postImage(formData);
 
         setImgUrl(res.data.data);
-        console.log(res.data.data);
       }
     } catch (error) {
       console.error('Image upload failed:', error);

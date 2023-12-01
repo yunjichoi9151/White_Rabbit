@@ -36,7 +36,6 @@ const Detail = () => {
     try {
       const res = await postApi.getPostByPostId(postId);
       setPost(res.data.data);
-      console.log(res.data.data);
     } catch (error) {
       console.log('error: ', error);
     }

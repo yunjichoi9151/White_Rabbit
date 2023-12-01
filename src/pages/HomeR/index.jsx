@@ -186,10 +186,8 @@ const HomeR = () => {
   const handleFollowChange = async (authorId, postId, isFollowing) => {
     try {
       if (isFollowing) {
-        console.log('delete Follow');
         await followApi.deleteFollow(authorId);
       } else {
-        console.log('add Follow');
         await followApi.postFollow(authorId);
       }
       setPosts(

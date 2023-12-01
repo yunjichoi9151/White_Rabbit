@@ -114,7 +114,6 @@ const Admin = () => {
   const handleLogoutClick = async () => {
     try {
       const res = await userApi.logout();
-      console.log(res);
       if (res.status === 200) {
         navigate(ROUTER_LINK.LANDING.path);
       }
