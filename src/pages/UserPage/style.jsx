@@ -36,6 +36,3 @@ export const TabBar = styled.div`
   height: 100%;
   display: flex;
 `;
-export const ButtonWrap = styled.div`
-  height: 0;
-`;
