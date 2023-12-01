@@ -114,7 +114,7 @@ const UserPage = () => {
             genType={user?.user?.generation_type}
             genNum={user?.user?.generation_number + '기'}
             existGeneration={true}
-            src={user?.user?.profile_url}
+            src={user?.user?.profile_url || '/assets/img/elice_icon.png'}
             isEditable={false}
             profileSize={2}
             existFollow={true}
