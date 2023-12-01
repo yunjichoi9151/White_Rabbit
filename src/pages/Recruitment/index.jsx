@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
@@ -24,6 +25,9 @@ const Recruitment = () => {
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState('PROJECT');
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [ref, inView] = useInView();
+  const [page, setPage] = useState(1);
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
 
   const fetchUserInfo = async () => {
     try {
@@ -36,20 +40,21 @@ const Recruitment = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category, searchKeyword);
-      // const res = await postApi.getCategoryPostsByPage(
-      //   category,
-      //   searchKeyword,
-      //   '',
-      //   page,
-      //   100,
-      // );
-      // if (page !== 0 && res.data.data.posts.length === 0) {
-      // setIsAllDataLoaded(true);
-      // } else {
-      setPosts(res.data.data.posts);
-      // setPage((prevPage) => prevPage + 1);
-      // }
+      // const res = await postApi.getCategoryPosts(category, searchKeyword);
+      const res = await postApi.getCategoryPostsByPage(
+        category,
+        searchKeyword,
+        '',
+        page,
+        4,
+      );
+      if (res.data.data.posts.length > 0) {
+        setPosts((prevPosts) => [...prevPosts, ...res.data.data.posts]);
+        setPage((prevPage) => prevPage + 1);
+      } else {
+        setIsAllDataLoaded(true);
+      }
+      console.log(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -60,10 +65,30 @@ const Recruitment = () => {
   };
 
   const handleSearchClick = () => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
     fetchPosts();
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      handleSearchClick();
+    }
+  };
+
+  const handleClearSearch = () => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
+    setSearchKeyword('');
+  };
+
   const handleCategoryClick = (category) => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
+    setSearchKeyword('');
     setCategory(category);
   };
 
@@ -89,20 +114,7 @@ const Recruitment = () => {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && searchKeyword.length !== 0) {
-      handleSearchClick();
-    }
-  };
-
-  const handleClearSearch = () => {
-    // setPage(1);
-    // setNowSearch(false);
-    // setIsAllDataLoaded(false);
-    setSearchKeyword('');
-    // fetchPosts();
-  };
-
+  // modal
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
   const [clickedPostId, setClickedPostId] = useState('');
 
@@ -143,14 +155,10 @@ const Recruitment = () => {
   }, []);
 
   useEffect(() => {
-    fetchPosts();
-  }, [category]);
-
-  useEffect(() => {
-    if (searchKeyword === '') {
+    if (!isAllDataLoaded && searchKeyword === '') {
       fetchPosts();
     }
-  }, [searchKeyword]);
+  }, [category, searchKeyword, inView]);
 
   return (
     <S.RecruitmentWrap>
@@ -243,6 +251,7 @@ const Recruitment = () => {
             />
           </S.PostWrap>
         ))}
+        <div ref={ref} />
       </S.PostList>
       {isMoreModalOpen && (
         <BottomModal

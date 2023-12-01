@@ -14,13 +14,14 @@ import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
 import { SERVER_URL } from '../../../api';
 
+const category = 'QNA';
+
 const sortType = {
   NEW: 'new',
   COMMENT: 'comment',
 };
 
 const QNA = () => {
-  const category = 'QNA';
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState(sortType.NEW);

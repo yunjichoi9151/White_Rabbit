@@ -76,6 +76,7 @@ const Home = () => {
       try {
         const res = await postApi.getCategoryPostsByPage(
           category,
+          '',
           'new',
           page,
           4,
