@@ -114,7 +114,7 @@ function Follow() {
             genType={follower.generation_type}
             genNum={follower.generation_number + '기'}
             existGeneration={true}
-            src={follower.profile_url}
+            src={follower.profile_url || '/assets/img/elice_icon.png'}
             isEditable={false}
             profileSize={2}
             existFollowBtn={loginUser._id !== follower._id}
