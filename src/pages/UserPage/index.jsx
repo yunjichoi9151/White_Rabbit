@@ -8,7 +8,6 @@ import * as CS from '../../styles/CommonStyles';
 import ProfileBar from '../../components/profile/ProfileBar';
 import TabBar from '../../components/profile/TabBar';
 import SkillLinkPage from '../SkillLinkPage';
-import BasicButton from '../../components/common/BasicButton';
 import Header from '../../components/common/Header';
 import MyContent from '../MyContent';
 
@@ -115,7 +114,7 @@ const UserPage = () => {
             genType={user?.user?.generation_type}
             genNum={user?.user?.generation_number + '기'}
             existGeneration={true}
-            src={user?.user?.profile_url}
+            src={user?.user?.profile_url || '/assets/img/elice_icon.png'}
             isEditable={false}
             profileSize={2}
             existFollow={true}

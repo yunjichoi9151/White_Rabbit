@@ -42,7 +42,6 @@ const ProfileBar = ({
   style,
   onClickFollower,
   onClickFollowing,
-  followId,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
 

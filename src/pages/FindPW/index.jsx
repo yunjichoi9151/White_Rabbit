@@ -8,6 +8,14 @@ import { useNavigate } from 'react-router';
 import Header from '../../components/common/Header';
 import { userApi } from '../../../api/utils/user';
 import { ROUTER_LINK } from '../../router/routes';
+import useInfoMessage from '../../components/hooks/useInfomessage';
+import {
+  getEmailValidateMessage,
+  getPasswordCheckValidateMessage,
+  getPasswordValidateMessage,
+  getUserNameValidateMessage,
+} from '../Join/util';
+import FormLabel from '../../components/FormLabel/FormLabel';
 
 const initialForm = {
   name: '',
@@ -17,10 +25,37 @@ const initialForm = {
   code: '',
 };
 
+const initialInfoMessage = {
+  name: {
+    children: '',
+    status: 'success',
+    validate: getUserNameValidateMessage,
+  },
+  email: {
+    children: '',
+    status: 'success',
+    validate: getEmailValidateMessage,
+  },
+  password: {
+    children: '',
+    status: 'success',
+    validate: getPasswordValidateMessage,
+  },
+  passwordCheck: {
+    children: '',
+    status: 'success',
+    validate: (value, params) =>
+      getPasswordCheckValidateMessage(value, params, 'password'),
+  },
+};
+
 function FindPW() {
   const navigate = useNavigate();
 
   const [timer, setTimer] = useState(0);
+
+  const { infoMessages, onChangeInfoMessage } =
+    useInfoMessage(initialInfoMessage);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -33,9 +68,17 @@ function FindPW() {
   const [form, setForm] = useState(initialForm);
 
   const onChange = (e) => {
+    const { value, name } = e.target;
+
+    const infoMessageName = name;
+
+    if (name in infoMessages && 'validate' in infoMessages[infoMessageName]) {
+      onChangeInfoMessage(value, infoMessageName, form);
+    }
+
     setForm((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
@@ -122,34 +165,38 @@ function FindPW() {
           }}
           leftOnClickEvent={() => navigate(-1)}
         />
-        <InputBox
-          label="이름"
-          subTextProps={{
-            type: 'show',
-            text: `${form['name'].length}/20`,
-          }}
-          inputProps={{
-            value: form['name'],
-            onChange: onChange,
-            placeholder: '프로필 이름',
-            name: 'name',
-            maxLength: 20,
-          }}
-          buttonElement={false}
-        />
-        <InputBox
-          label="가입 이메일"
-          subTextProps={{
-            type: 'none',
-          }}
-          inputProps={{
-            value: form['email'],
-            onChange: onChange,
-            placeholder: 'example@elice.com',
-            name: 'email',
-          }}
-          buttonElement={false}
-        />
+        <FormLabel infoMessage={infoMessages?.name}>
+          <InputBox
+            label="이름"
+            subTextProps={{
+              type: 'show',
+              text: `${form['name'].length}/20`,
+            }}
+            inputProps={{
+              value: form['name'],
+              onChange: onChange,
+              placeholder: '프로필 이름',
+              name: 'name',
+              maxLength: 20,
+            }}
+            buttonElement={false}
+          />
+        </FormLabel>
+        <FormLabel infoMessage={infoMessages?.email}>
+          <InputBox
+            label="가입 이메일"
+            subTextProps={{
+              type: 'none',
+            }}
+            inputProps={{
+              value: form['email'],
+              onChange: onChange,
+              placeholder: 'example@elice.com',
+              name: 'email',
+            }}
+            buttonElement={false}
+          />
+        </FormLabel>
         <S.ButtonWrap>
           <BasicButton
             handleOnClickButton={handleClickSendEmail}
@@ -204,35 +251,38 @@ function FindPW() {
                 marginTop: 20,
               }}
             />
-            <InputBox
-              label="새 비밀번호"
-              subTextProps={{
-                type: 'none',
-              }}
-              inputProps={{
-                value: form['password'],
-                onChange: onChange,
-                placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-                name: 'password',
-                type: 'password',
-              }}
-              buttonElement={false}
-            />
-            <InputBox
-              label="새 비밀번호 확인"
-              subTextProps={{
-                type: 'none',
-              }}
-              inputProps={{
-                value: form['passwordCheck'],
-                onChange: onChange,
-                placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-                name: 'passwordCheck',
-                type: 'password',
-              }}
-              buttonElement={false}
-            />
-
+            <FormLabel infoMessage={infoMessages?.password}>
+              <InputBox
+                label="새 비밀번호"
+                subTextProps={{
+                  type: 'none',
+                }}
+                inputProps={{
+                  value: form['password'],
+                  onChange: onChange,
+                  placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
+                  name: 'password',
+                  type: 'password',
+                }}
+                buttonElement={false}
+              />
+            </FormLabel>
+            <FormLabel infoMessage={infoMessages?.passwordCheck}>
+              <InputBox
+                label="새 비밀번호 확인"
+                subTextProps={{
+                  type: 'none',
+                }}
+                inputProps={{
+                  value: form['passwordCheck'],
+                  onChange: onChange,
+                  placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
+                  name: 'passwordCheck',
+                  type: 'password',
+                }}
+                buttonElement={false}
+              />
+            </FormLabel>
             <S.ButtonWrap>
               <BasicButton
                 handleOnClickButton={handleClickResetPw}
