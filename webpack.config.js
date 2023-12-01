@@ -44,7 +44,10 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
-      patterns: [{ from: 'public/manifest.json', to: 'manifest.json' }],
+      patterns: [
+        { from: 'public/manifest.json', to: 'manifest.json' },
+        { from: 'public/service-worker.js', to: 'service-worker.js' },
+      ],
     }),
   ],
 };
