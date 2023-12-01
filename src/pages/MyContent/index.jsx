@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { ROUTER_LINK } from '../../router/routes';
+import { Link } from 'react-router-dom';
 import { postApi } from '../../../api/utils/Post';
-import BasicText from '../../components/common/BasicText';
+import { commentApi } from '../../../api/utils/comment';
 import * as CS from '../../styles/CommonStyles';
 import * as S from './style';
 import Post from '../../components/board/Post';
-import { commentApi } from '../../../api/utils/comment';
 import EmptyContent from '../EmptyContent';
-import { ROUTER_LINK } from '../../router/routes';
-import { Link } from 'react-router-dom';
+import BasicText from '../../components/common/BasicText';
 
 function MyContent({ type, userId }) {
   const [posts, setPosts] = useState([]);
@@ -19,8 +19,6 @@ function MyContent({ type, userId }) {
         const _res = res.data.data.map((data) => data.post);
         setPosts(_res);
       } catch (error) {
-        // alert('error: ' + error.response);
-        //.data.message
         console.log('error: ', error.response.data.message);
       }
     };
@@ -28,11 +26,8 @@ function MyContent({ type, userId }) {
     const fetchComments = async () => {
       try {
         const res = await commentApi.getCommentsByUser(userId);
-
         setPosts(res.data.data);
       } catch (error) {
-        // alert('error: ' + error.response);
-        //.data.message
         console.log('error: ', error.response.data.message);
       }
     };

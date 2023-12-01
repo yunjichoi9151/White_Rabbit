@@ -1,14 +1,14 @@
-import React, { Fragment, useState } from 'react';
-import * as S from './style';
-import * as CS from '../../styles/CommonStyles';
-import Header from '../../components/common/Header';
-import TabBar from '../../components/profile/TabBar';
-import ProfileBar from '../../components/profile/ProfileBar';
+import React, { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router';
 import { useEffect } from 'react';
 import { userApi } from '../../../api/utils/user';
 import { Link } from 'react-router-dom';
 import { ROUTER_LINK } from '../../router/routes';
+import * as S from './style';
+import * as CS from '../../styles/CommonStyles';
+import Header from '../../components/common/Header';
+import TabBar from '../../components/profile/TabBar';
+import ProfileBar from '../../components/profile/ProfileBar';
 
 function Follow() {
   const location = useLocation();
@@ -73,7 +73,6 @@ function Follow() {
           currentTabKey={tabName}
         />
       </S.TabWrap>
-      {/* <S.ProfileWrap> */}
 
       {followData[tabName].map((follower, index) => (
         <Link
@@ -103,8 +102,6 @@ function Follow() {
           <S.UnderLine />
         </Link>
       ))}
-
-      {/* </S.ProfileWrap> */}
     </>
   );
 }

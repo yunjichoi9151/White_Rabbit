@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import { userApi } from '../../../api/utils/user';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import Header from '../../components/common/Header';
-import { useNavigate, useParams } from 'react-router';
 
 function NewLink() {
   const { userId } = useParams();

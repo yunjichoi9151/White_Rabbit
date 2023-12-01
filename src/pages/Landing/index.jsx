@@ -6,7 +6,6 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import BasicButton from '../../components/common/BasicButton';
-import BasicModal from '../../components/common/BasicModal';
 
 const Landing = () => {
   const navigate = useNavigate();
