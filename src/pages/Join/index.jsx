@@ -98,6 +98,11 @@ function Join() {
   /// {트랙 기수 API} ///
 
   const getSomething = async () => {
+    const test = {
+      generationType: [],
+      generationNumber: [],
+    };
+
     const response = await userApi.generation();
 
     const types = response.data.data.map((gen) => gen.type);
@@ -116,14 +121,30 @@ function Join() {
 
     setGenerationType(optionGenType);
 
-    const optionGenNum = response.data.data.map((gen) => {
-      return {
-        key: gen.number,
-        value: gen.number,
-        name: gen.number + '기',
-      };
+    const result = {};
+
+    response.data.data.forEach((item) => {
+      const trackType = item.type;
+      const trackNumber = item.number;
+
+      if (result.hasOwnProperty(trackType)) {
+        result[trackType].push({
+          key: trackNumber,
+          value: trackNumber,
+          name: trackNumber + '기',
+        });
+      } else {
+        result[trackType] = [
+          {
+            key: trackNumber,
+            value: trackNumber,
+            name: trackNumber + '기',
+          },
+        ];
+      }
     });
-    setGenerationNum(optionGenNum);
+
+    setGenerationNum(result);
   };
 
   useEffect(() => {
@@ -325,7 +346,15 @@ function Join() {
                   name: '기수 선택',
                   style: { display: 'none' },
                 },
-                ...generationNum,
+                ...(generationNum[genType] || [
+                  {
+                    key: 'stageChoice',
+                    value: '',
+                    name: '기수 선택',
+                    style: { display: 'none' },
+                  },
+                ]),
+                ,
               ]}
               onChange={handleChangegenNum}
             />
