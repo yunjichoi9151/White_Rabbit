@@ -54,7 +54,6 @@ const Admin = () => {
   const fetchGenerations = async () => {
     try {
       const res = await generationApi.getAllGenerations();
-      console.log(res.data.data);
       setGenerations(res.data.data);
     } catch (error) {
       console.log('error: ', error.response.data);
