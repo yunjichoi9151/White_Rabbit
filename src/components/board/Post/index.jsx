@@ -136,6 +136,7 @@ const Post = ({
               font: CS.font.paragraphSmall,
               width: 'auto',
               marginBottom: '1rem',
+              whiteSpace: contentLength === 'ALL' ? 'pre-wrap' : 'normal',
             }}
           />
           {imgSrc !== SERVER_URL && type !== 'reply' && (
