@@ -6,12 +6,9 @@ import SkillIntro from '../../components/SkillLinkIntro/SkillIntro';
 import LinkIntro from '../../components/SkillLinkIntro/LinkIntro';
 
 function SkillLinkPage({ userId, links, setLinks, skills, isMe = true }) {
-  /////// { API } /////////
-
   const isEmptyLinks = !links?.length;
   const isEmptySkills = !skills?.length;
 
-  /////////////////
   return (
     <>
       <S.Container>
@@ -75,7 +72,6 @@ function SkillLinkPage({ userId, links, setLinks, skills, isMe = true }) {
           />
         ))}
       </S.Container>
-      {/* <S.UnderLine /> */}
     </>
   );
 }

@@ -40,12 +40,6 @@ function Join() {
 
   //
 
-  // const [form, setForm] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   confirmPwd: '',
-  // });
   const [isDuplicateCheck, setIsDuplicateCheck] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -82,14 +76,6 @@ function Join() {
     const currConfirmPwd = e.target.value;
     setConfirmPwd(currConfirmPwd);
   };
-
-  // const isAllValid = isEmailValid;
-  // isPwdValid &&
-  // isConfirmPwd &&
-  // isNameValid &&
-  // isAccepted &&
-  // checkMail &&
-  // checkName;
 
   ///////////
   const [genType, setGenType] = useState('');
@@ -175,26 +161,19 @@ function Join() {
     }
 
     /// {API} ///
-    try {
-      const res = await userApi.signUp({
-        name,
-        email,
-        password,
-        generation_type: genType,
-        generation_number: Number(genNum),
-        roles,
-      });
 
-      if (res.status === 201) {
-        navigate(ROUTER_LINK.LANDING.link);
-      }
-    } catch (error) {
-      console.error('등록 중 오류 발생:', error);
-      if (error.response && error.response.status === 409) {
-        alert('이미 등록된 이메일 주소입니다.');
-      } else {
-        alert('등록 중 오류가 발생했습니다. 다시 시도해주세요.');
-      }
+    const res = await userApi.signUp({
+      name,
+      email,
+      password,
+      generation_type: genType,
+      generation_number: Number(genNum),
+      roles,
+    });
+
+    if (res.status === 201) {
+      alert('회원가입 완료!');
+      navigate(ROUTER_LINK.LANDING.link);
     }
   };
 
@@ -203,6 +182,9 @@ function Join() {
     const response = await userApi.duplicateCheck({
       email,
     });
+    if (response.status === 200) {
+      alert('이미 등록된 이메일 입니다.');
+    }
 
     setIsDuplicateCheck(response.data.isAvailable);
   };

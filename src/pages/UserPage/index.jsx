@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { userApi } from '../../../api/utils/user';
+import { followApi } from '../../../api/utils/Follow';
 import { ROUTER_LINK } from '../../router/routes';
-import { IoSettingsOutline } from 'react-icons/io5';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import ProfileBar from '../../components/profile/ProfileBar';
 import TabBar from '../../components/profile/TabBar';
 import SkillLinkPage from '../SkillLinkPage';
 import BasicButton from '../../components/common/BasicButton';
-import EmptyContent from '../EmptyContent';
 import Header from '../../components/common/Header';
-
 import MyContent from '../MyContent';
-import { followApi } from '../../../api/utils/Follow';
 
 const UserPage = () => {
   const { userId } = useParams();
@@ -140,32 +137,18 @@ const UserPage = () => {
           <BasicButton
             handleOnClickButton={handleOnClickFollow}
             text={isFollow ? '팔로잉' : '팔로우'}
+            btnStyle={{
+              width: '70px',
+              height: '35px',
+              borderRadius: '4px',
+              backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
+              position: 'relative',
+              left: 612,
+              bottom: 89,
+            }}
             textStyle={{
               font: CS.font.labelSmall,
-              color: CS.color.black,
-            }}
-            btnStyle={{
-              border: `1px solid ${CS.color.contentTertiary}`,
-              background: CS.color.white,
-              width: '50%',
-              height: 30,
-              borderRadius: 7,
-              marginRight: 4,
-            }}
-          />
-          <BasicButton
-            text="메세지"
-            textStyle={{
-              font: CS.font.labelSmall,
-              color: CS.color.black,
-            }}
-            btnStyle={{
-              border: `1px solid ${CS.color.contentTertiary}`,
-              background: CS.color.white,
-              width: '50%',
-              height: 30,
-              borderRadius: 7,
-              marginLeft: 4,
+              color: CS.color.white,
             }}
           />
         </S.ButtonWrap>
@@ -197,7 +180,6 @@ const UserPage = () => {
         {tabName === 'reply' && (
           <MyContent type="reply" userId={user?.user?._id} />
         )}
-        {/* <EmptyContent type={tabName} /> */}
       </S.MyPageWrap>
     </>
   );

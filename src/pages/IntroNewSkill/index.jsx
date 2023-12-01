@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { PiPlus } from 'react-icons/pi';
+import { useNavigate, useParams } from 'react-router';
+import { userApi } from '../../../api/utils/user';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
 import BasicText from '../../components/common/BasicText';
 import BasicInput from '../../components/common/BasicInput';
 import SkillText from '../../components/common/SkillText';
-import { useNavigate, useParams } from 'react-router';
-import { userApi } from '../../../api/utils/user';
 
 function NewSkill({ inputProps }) {
   const navigate = useNavigate();

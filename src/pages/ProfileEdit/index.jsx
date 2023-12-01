@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { ROUTER_LINK } from '../../router/routes';
+import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import InputBox from '../../components/common/InputBox';
 import ProfileImg from '../../components/common/ProfileImg';
 import Header from '../../components/common/Header';
-import { useNavigate, useParams } from 'react-router';
-import { ROUTER_LINK } from '../../router/routes';
-import { postApi } from '../../../api/utils/Post';
 
 function ProfileEdit() {
   //user 정보
@@ -54,6 +54,7 @@ function ProfileEdit() {
     );
 
     if (res.status === 200) {
+      alert('프로필 편집 완료!');
       navigate(ROUTER_LINK.MYPAGE.link);
     }
   };
