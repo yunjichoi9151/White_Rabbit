@@ -44,7 +44,7 @@ function LinkIntro({ url, content, linkId, userId, setLinks }) {
               font: CS.font.paragraphSmall,
             }}
           />
-          <a href={url} style={{ font: CS.font.labelSmall }}>
+          <a href={url} target="_blank" style={{ font: CS.font.labelSmall }}>
             {content}
           </a>
         </S.ContentWrap>
