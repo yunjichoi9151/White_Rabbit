@@ -132,26 +132,29 @@ const UserPage = () => {
             onClickFollower={handleOnClickFollower}
             onClickFollowing={handleOnClickFollowing}
           />
+          <div
+            style={{
+              paddingTop: 30,
+              paddingRight: 20,
+            }}
+          >
+            <BasicButton
+              handleOnClickButton={handleOnClickFollow}
+              text={isFollow ? '팔로잉' : '팔로우'}
+              btnStyle={{
+                width: '70px',
+                height: '35px',
+                borderRadius: '4px',
+                backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
+              }}
+              textStyle={{
+                font: CS.font.labelSmall,
+                color: CS.color.white,
+              }}
+            />
+          </div>
         </S.ProfileWrap>
-        <S.ButtonWrap>
-          <BasicButton
-            handleOnClickButton={handleOnClickFollow}
-            text={isFollow ? '팔로잉' : '팔로우'}
-            btnStyle={{
-              width: '70px',
-              height: '35px',
-              borderRadius: '4px',
-              backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
-              position: 'relative',
-              left: 612,
-              bottom: 89,
-            }}
-            textStyle={{
-              font: CS.font.labelSmall,
-              color: CS.color.white,
-            }}
-          />
-        </S.ButtonWrap>
+
         <S.TabWrap>
           <TabBar
             tabNames={{ profile: '프로필', content: '게시물', reply: '댓글' }}
@@ -173,13 +176,9 @@ const UserPage = () => {
             />
           </div>
         )}
-        {tabName === 'content' && (
-          <MyContent type="content" userId={user?.user?._id} />
-        )}
+        {tabName === 'content' && <MyContent type="content" userId={userId} />}
 
-        {tabName === 'reply' && (
-          <MyContent type="reply" userId={user?.user?._id} />
-        )}
+        {tabName === 'reply' && <MyContent type="reply" userId={userId} />}
       </S.MyPageWrap>
     </>
   );
