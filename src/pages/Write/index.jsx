@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -30,21 +30,32 @@ const Write = ({ isEdit = false }) => {
   const [selectOption, setSelectOption] = useState('BOARD');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isTitleOver, setIsTitleOver] = useState(false);
+  const [isContentOver, setIsContentOver] = useState(false);
 
   // CHANGE Category Data
   const handleSelectChange = (selectValue) => {
     setSelectOption(selectValue);
-    console.log(selectValue);
   };
 
   // CHANGE Title InputData
   const changeTitleData = (e) => {
     setTitle(e.target.value);
+    if (e.target.value.length > 30) {
+      setIsTitleOver(true);
+    } else {
+      setIsTitleOver(false);
+    }
   };
 
   // CHANGE Content InputData
   const changeContentData = (e) => {
     setContent(e.target.value);
+    if (e.target.value.length > 1000) {
+      setIsContentOver(true);
+    } else {
+      setIsContentOver(false);
+    }
   };
 
   // Modal
@@ -74,6 +85,7 @@ const Write = ({ isEdit = false }) => {
         const res = await commonApi.postImage(formData);
 
         setImgUrl(res.data.data);
+        console.log(res.data.data);
       }
     } catch (error) {
       console.error('Image upload failed:', error);
@@ -82,7 +94,7 @@ const Write = ({ isEdit = false }) => {
 
   // POST New Post & Edit Post
   const postHandler = async () => {
-    if (title !== '' && content !== '') {
+    if (title !== '' && content !== '' && !isTitleOver && !isContentOver) {
       try {
         if (isEdit) {
           await postApi.modifyPost(postId, {
@@ -106,7 +118,16 @@ const Write = ({ isEdit = false }) => {
       } catch (error) {
         console.error('Error submitting post:', error);
       }
+    } else {
+      setIsModalOpen(true);
     }
+  };
+
+  // UPLOAD Image
+  const fileInputRef = useRef(null);
+
+  const handleFileButtonClick = () => {
+    fileInputRef.current.click();
   };
 
   // EDIT & DELETE Image
@@ -143,9 +164,26 @@ const Write = ({ isEdit = false }) => {
     <S.WriteWrap>
       {isModalOpen && (
         <BasicModal closeModal={closeModal}>
-          <h2>Modal Content</h2>
-          <p>This is the modal content.</p>
-          <button onClick={closeModal}>Close Modal</button>
+          <BasicText
+            text={
+              title.length === 0 || content.length === 0
+                ? '입력하지 않은 항목이 있습니다.'
+                : '글자 수 제한을 초과했습니다.'
+            }
+            style={{ padding: '1rem', marginBottom: '0.5rem' }}
+          />
+          <S.BtnWrapper>
+            <BasicButton
+              handleOnClickButton={closeModal}
+              text="닫기"
+              btnStyle={{
+                width: '5rem',
+                height: '2rem',
+                border: `1px solid ${CS.color.primary}`,
+              }}
+              textStyle={{ font: CS.font.labelSmall }}
+            />
+          </S.BtnWrapper>
         </BasicModal>
       )}
       <Header
@@ -167,6 +205,7 @@ const Write = ({ isEdit = false }) => {
         style={{
           width: '90%',
           padding: '0.75rem',
+          height: '2.5rem',
           margin: '1rem 0rem',
           borderRadius: '0.75rem',
           font: CS.font.labelSmall,
@@ -176,16 +215,23 @@ const Write = ({ isEdit = false }) => {
       />
       <S.Title>
         <BasicText text="제목" style={{ font: CS.font.labelMedium }} />
-        <BasicText text="*" style={{ color: CS.color.warning }} />
+        <BasicText text="*" style={{ color: CS.color.negative }} />
+        <BasicText
+          text={title.length + '/30자'}
+          style={{
+            color: isTitleOver ? CS.color.negative : CS.color.warning,
+            font: CS.font.labelXS,
+          }}
+        />
       </S.Title>
       <InputBar
         value={title}
-        placeholder="제목을 입력해주세요."
+        placeholder="제목을 입력해주세요(최대 30자)"
         inputBarStyle={{
           width: '90%',
           height: '2.5rem',
           padding: '0.75rem',
-          margin: '1rem 0rem',
+          margin: '1rem 0rem 0.5rem 0rem',
           backgroundColor: CS.color.white,
           borderRadius: '0.75rem',
           border: `0.5px solid ${CS.color.contentTertiary}`,
@@ -196,18 +242,34 @@ const Write = ({ isEdit = false }) => {
         }}
         handleOnChangeValue={changeTitleData}
       ></InputBar>
+      <BasicText
+        text="글자 수 제한을 초과했습니다"
+        style={{
+          color: CS.color.negative,
+          font: CS.font.labelXS,
+          display: isTitleOver ? 'block' : 'none',
+          width: '90%',
+        }}
+      />
       <S.Content>
         <BasicText text="내용" style={{ font: CS.font.labelMedium }} />
-        <BasicText text="*" style={{ color: CS.color.warning }} />
+        <BasicText text="*" style={{ color: CS.color.negative }} />
+        <BasicText
+          text={content.length + '/1000자'}
+          style={{
+            color: isContentOver ? CS.color.negative : CS.color.warning,
+            font: CS.font.labelXS,
+          }}
+        />
       </S.Content>
       <TextArea
         value={content}
-        placeholder="내용을 입력해주세요."
+        placeholder="내용을 입력해주세요(최대 1000자)"
         style={{
           width: '90%',
           height: '10rem',
           padding: '0.75rem',
-          margin: '1rem 0rem',
+          margin: '1rem 0rem 0.5rem 0rem',
           backgroundColor: CS.color.white,
           borderRadius: '0.75rem',
           border: `0.5px solid ${CS.color.contentTertiary}`,
@@ -216,10 +278,19 @@ const Write = ({ isEdit = false }) => {
         }}
         handleOnChangeValue={changeContentData}
       />
+      <BasicText
+        text="글자 수 제한을 초과했습니다"
+        style={{
+          color: CS.color.negative,
+          font: CS.font.labelXS,
+          display: isContentOver ? 'block' : 'none',
+          width: '90%',
+        }}
+      />
       <S.PostImage>
         {imgUrl && (
           <BasicImage
-            src={SERVER_URL + imgUrl}
+            src={`${imgUrl}` || '/assets/img/elice_icon.png'}
             alt="Preview"
             style={{
               display: 'flex',
@@ -233,6 +304,18 @@ const Write = ({ isEdit = false }) => {
         )}
       </S.PostImage>
 
+      <BasicButton
+        text="이미지 업로드"
+        handleOnClickButton={handleFileButtonClick}
+        btnStyle={{
+          width: '90%',
+          height: '2.5rem',
+          padding: '0.75rem',
+          marginTop: '1rem',
+          backgroundColor: CS.color.primary,
+        }}
+        textStyle={{ font: CS.font.labelSmall, color: CS.color.white }}
+      />
       {(!isEdit || showImageInput) && (
         <InputBar
           existLeft={true}
@@ -243,7 +326,9 @@ const Write = ({ isEdit = false }) => {
           inputBarStyle={{
             width: '90%',
             margin: '1rem 0rem',
+            display: 'none',
           }}
+          ref={fileInputRef}
         ></InputBar>
       )}
       {isEdit && !showImageInput && (
