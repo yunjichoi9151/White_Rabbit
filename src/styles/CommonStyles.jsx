@@ -28,6 +28,7 @@ export const font = {
   paragraphLarge: "24px/1.6 'NanumGothic'",
   paragraphXL: "32px/1.6 'NanumGothic'",
 
+  labelXS: "bold 8px/1.5 'NanumBarunGothic'",
   labelSmall: "bold 12px/1.5 'NanumBarunGothic'",
   labelMedium: "bold 16px/1.5 'NanumBarunGothic'",
   labelLarge: "bold 24px/1.5 'NanumBarunGothic'",

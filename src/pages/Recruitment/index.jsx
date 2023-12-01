@@ -13,6 +13,7 @@ import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
 import { followApi } from '../../../api/utils/Follow';
+import { SERVER_URL } from '../../../api';
 
 const CategoryText = {
   PROJECT: '프로젝트',
@@ -206,7 +207,7 @@ const Recruitment = () => {
       </S.FilterBar>
       <S.PostList>
         {posts.map((post, index) => (
-          <S.PostWrap>
+          <S.PostWrap key={index}>
             <Post
               key={index}
               category={category}
@@ -224,7 +225,7 @@ const Recruitment = () => {
               isFollow={post.isFollowing}
               existMoreBtn={post.author._id === userInfo._id}
               contentLength={'LONG'}
-              // isHot={post.isPopular}
+              isHot={post.isPopular}
               isLike={post.isLiked}
               likes={post.like_count}
               view={post.view_count}
@@ -236,6 +237,7 @@ const Recruitment = () => {
               handleOnClickFollow={() => handleFollowClick(post)}
               handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
+              imgSrc={SERVER_URL + post.image_url}
             />
           </S.PostWrap>
         ))}

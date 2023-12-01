@@ -28,7 +28,7 @@ export const LandingText = styled.p`
   margin-bottom: 4px;
 `;
 export const LandingSubText = styled.p`
-  color: #ab98dc; //CS.color.primary
+  color: ${CS.color.primary};
   font-weight: 600px;
   font-size: 20px;
   margin: 0;
@@ -47,7 +47,7 @@ export const InputStyle = styled.div`
 `;
 
 export const PwStyle = styled.div`
-  color: #a6a6a6; //CS.color.contentTertiary;
+  color: ${CS.color.contentTertiary};
   display: flex;
   justify-content: right;
   margin: 20px;

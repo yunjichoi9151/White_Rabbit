@@ -5,6 +5,9 @@ export const userApi = {
   // 이메일 중복과 같은 주소이므로 message 기준으로 처리해야함
   signUp: (userData) => api.post('/users', userData),
 
+  // 이메일 중복 체크
+  duplicateCheck: (email) => api.post('/users/email', email),
+
   // 로그인 API
   login: async (email, password) =>
     await api.post('/users/login', { email: email, password: password }),
@@ -23,7 +26,7 @@ export const userApi = {
 
   getUserInfo: () => api.get(`/users`),
   // 정보조회(ID) API
-  getUserInfoById: (userId) => api.get(`/users/${userId}`),
+  getUserInfoById: (userId) => api.get(`/users/${userId}/public`),
 
   getAllUsers: () => api.get(`/users/admin/userlist`),
 
@@ -45,6 +48,9 @@ export const userApi = {
 
   //팔로우 전체 목록 조회 API
   followList: (userId) => api.get(`/users/followings/${userId}`),
+
+  //팔로우 삭제
+  deleteFollow: (userId) => api.delete(`/users/followings/${userId}`),
 
   //새로운 링크 추가 API
   links: (userId, title, url) =>
@@ -80,7 +86,7 @@ export const userApi = {
   getAllSkill: () => api.get('/skills'),
 
   //트랙 기수 API
-  generation: () => api.get('/users/generations'),
+  generation: () => api.get('/generations'),
 
   //ID로 유저 정보 수정
   editUserById: (userId, userName, userEmail, image) =>
@@ -91,8 +97,8 @@ export const userApi = {
     }),
 
   //스킬 추가
-  addSkill: (userId, skill) =>
-    api.patch(`/users/skill/add/${userId}`, {
+  addSkill: (skill) =>
+    api.post(`/skills`, {
       skill,
     }),
 
@@ -105,4 +111,7 @@ export const userApi = {
   // 스킬 업데이트
   updateSkill: (userId, skill) =>
     api.patch(`/users/skills/${userId}`, { skills: skill }),
+
+  //기수 트랙 조회 API
+  // generationType: () => api.get('generation_type'),
 };

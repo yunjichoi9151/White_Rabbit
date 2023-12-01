@@ -12,6 +12,7 @@ function InputBox({
   buttonElement,
   onClickButton,
   signType,
+  text,
 }) {
   return (
     <>
@@ -50,13 +51,13 @@ function InputBox({
               marginBottom: 0,
               paddingBottom: 0,
               paddingLeft: 16,
-              marginRight: 8,
+              ...inputProps.style,
             }}
           />
           {buttonElement ? (
             <BasicButton
               handleOnClickButton={onClickButton}
-              text="인증"
+              text={text}
               textStyle={{
                 color: CS.color.white,
                 font: CS.font.labelMedium,

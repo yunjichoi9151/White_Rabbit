@@ -18,7 +18,6 @@ function MyContent({ type, userId }) {
         const res = await postApi.getPostByUserId(userId);
         const _res = res.data.data.map((data) => data.post);
         setPosts(_res);
-        console.log(_res);
       } catch (error) {
         // alert('error: ' + error.response);
         //.data.message
@@ -29,8 +28,8 @@ function MyContent({ type, userId }) {
     const fetchComments = async () => {
       try {
         const res = await commentApi.getCommentsByUser(userId);
-        const _res = res.data.data.map((data) => data.post);
-        setPosts(_res);
+
+        setPosts(res.data.data);
       } catch (error) {
         // alert('error: ' + error.response);
         //.data.message
@@ -47,7 +46,7 @@ function MyContent({ type, userId }) {
 
   return (
     <>
-      {posts.length ? (
+      {posts?.length ? (
         <S.Container>
           <BasicText
             text={
@@ -92,7 +91,7 @@ function MyContent({ type, userId }) {
           </S.PostList>
         </S.Container>
       ) : (
-        <EmptyContent />
+        <EmptyContent type={type} />
       )}
     </>
   );

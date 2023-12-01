@@ -207,8 +207,17 @@ const Detail = () => {
             handleOnClickDots={() => handleOnClickDots('post', post?.post?._id)}
             handleOnClickLikeBtn={() => likeHandler(post?.post?._id)}
             isFollow={post?.isFollowing}
+            handleOnClickProfile={() =>
+              navigate(
+                ROUTER_LINK.USERPAGE.path.replace(
+                  ':userId',
+                  post?.post?.author?._id,
+                ),
+              )
+            }
             imgSrc={SERVER_URL + post?.post?.image_url}
             view={post?.post?.view_count}
+            isDetail={true}
           />
         )}
       </S.BoardWrap>

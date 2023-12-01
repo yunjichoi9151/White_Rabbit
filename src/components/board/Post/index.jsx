@@ -1,17 +1,17 @@
 import React from 'react';
+import { SERVER_URL } from '../../../../api';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
-import BasicButton from '../../common/BasicButton';
-import ProfileBar from '../../profile/ProfileBar';
-import { BiLike } from 'react-icons/bi';
-import { BiSolidLike } from 'react-icons/bi';
-import { TbMessage2 } from 'react-icons/tb';
-import { FaFireAlt } from 'react-icons/fa';
-import { FaRegEye } from 'react-icons/fa';
 import BasicImage from '../../common/BasicImage';
 import ProfileImg from '../../common/ProfileImg';
-import { SERVER_URL } from '../../../../api';
+import ProfileBar from '../../profile/ProfileBar';
+import BasicButton from '../../common/BasicButton';
+import { BiLike } from 'react-icons/bi';
+import { FaRegEye } from 'react-icons/fa';
+import { FaFireAlt } from 'react-icons/fa';
+import { TbMessage2 } from 'react-icons/tb';
+import { BiSolidLike } from 'react-icons/bi';
 
 const length = {
   LONG: 100,
@@ -57,6 +57,8 @@ const Post = ({
   handleOnClickLikeBtn,
   imgSrc = '',
   view,
+  userId,
+  isDetail = false,
 }) => {
   const substrContent =
     contentLength !== 'ALL' && content.length > length[contentLength]
@@ -80,8 +82,12 @@ const Post = ({
           handleOnClickFollow={handleOnClickFollow}
           handleOnClickDots={handleOnClickDots}
           style={{ padding: '12px 20px' }}
+          followId={userId}
         />
-        <S.TitleWrapper onClick={handleOnClickPost}>
+        <S.TitleWrapper
+          onClick={handleOnClickPost}
+          style={{ cursor: isDetail ? 'default' : 'cursor' }}
+        >
           <BasicText
             text={labelText[category]}
             style={{
@@ -103,11 +109,7 @@ const Post = ({
           />
           {isHot && (
             <S.HotWrapper>
-              <FaFireAlt
-                size={16}
-                color={CS.color.negative}
-                // style={{ margin: '4px' }}/
-              />
+              <FaFireAlt size={16} color={CS.color.negative} />
               <BasicText
                 text={'HOT'}
                 style={{
@@ -121,7 +123,10 @@ const Post = ({
         </S.TitleWrapper>
         <S.ContentWrapper
           onClick={handleOnClickPost}
-          style={{ display: contentLength === 'ALL' ? 'grid' : 'flex' }}
+          style={{
+            display: contentLength === 'ALL' ? 'grid' : 'flex',
+            cursor: isDetail ? 'default' : 'cursor',
+          }}
         >
           <BasicText
             text={substrContent}
@@ -148,12 +153,6 @@ const Post = ({
             </S.ImgWrapper>
           )}
         </S.ContentWrapper>
-        {/* <S.ShowWrapper>
-          <BasicText
-            text={'조회 ' + view}
-            style={{ font: CS.font.labelSmall }}
-          />
-        </S.ShowWrapper> */}
         <S.IconBar>
           <S.IconWrapper>
             <BasicButton

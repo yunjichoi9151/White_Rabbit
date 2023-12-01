@@ -27,7 +27,6 @@ const MyPage = () => {
       const res = await userApi.getUserInfo();
       setUser(res.data.data);
       setLinks(res.data.data.links);
-      console.log('res', res);
     } catch (error) {
       console.log('error: ', error.response.data.message);
     }
@@ -37,9 +36,7 @@ const MyPage = () => {
     try {
       const res = await userApi.follow(user._id);
       setFollow(res.data.data);
-    } catch (error) {
-      // console.log('error: ', error.response.data.message);
-    }
+    } catch (error) {}
   };
 
   const handleOnClickButton = async () => {
@@ -79,16 +76,16 @@ const MyPage = () => {
       state: user,
     });
   };
-  console.log('user', user);
 
   return (
     <>
       <S.MyPageWrap>
         <Header
           typeLeft={'TEXT'}
-          textLeft={`내 프로필`}
+          textLeft={'내 프로필'}
           headerStyle={{
             borderBottom: `1px solid ${CS.color.contentTertiary}`,
+            whiteSpace: 'nowrap',
           }}
         />
         <S.ProfileWrap>
@@ -106,12 +103,12 @@ const MyPage = () => {
             genType={user.generation_type}
             genNum={user.generation_number + '기'}
             existGeneration={true}
-            src={user.profile_url}
+            src={user.profile_url || '/assets/img/elice_icon.png'}
             isEditable={false}
             profileSize={2}
             existFollow={true}
-            followers={follow?.followingNumber}
-            followings={follow?.followerNumber}
+            followers={follow?.followerNumber}
+            followings={follow?.followingNumber}
             style={{
               margin: 20,
               height: 'auto',

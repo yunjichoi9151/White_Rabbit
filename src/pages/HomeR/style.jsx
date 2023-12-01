@@ -54,6 +54,8 @@ export const MenuItem = styled.div`
 export const TopWrap = styled.div`
   display: flex;
   flex-direction: column;
+  /* height: 100%; */
+  /* max-height: 4rem; */
   flex-direction: column;
 `;
 
@@ -62,10 +64,9 @@ export const InfoTextWrap = styled.div`
   position: fixed;
   background-color: ${CS.color.white};
   margin-top: 2.5rem;
+  /* top: 3rem; // TopBtnWrap의 높이와 동일한 값 */
   width: 100%;
   max-width: 900px;
   display: ${(props) => (props.$active === 'POPULAR' ? 'block' : 'none')};
   z-index: 1000;
 `;
-
-export const EmptyDiv = styled.div``;

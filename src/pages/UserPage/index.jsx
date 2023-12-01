@@ -13,33 +13,35 @@ import EmptyContent from '../EmptyContent';
 import Header from '../../components/common/Header';
 
 import MyContent from '../MyContent';
+import { followApi } from '../../../api/utils/Follow';
 
 const UserPage = () => {
+  const { userId } = useParams();
+
   //user 정보
   const [user, setUser] = useState({});
-  const [follow, setFollow] = useState({});
-
+  const [isFollow, setIsFollow] = useState(false);
   const [links, setLinks] = useState([]);
   const navigate = useNavigate();
 
   const userInfo = async () => {
     try {
-      const res = await userApi.getUserInfo();
-      setUser(res.data.data);
-      setLinks(res.data.data.links);
-      console.log('res', res);
+      const res = await userApi.getUserInfoById(userId);
+
+      setIsFollow(res.data.user.is_follow);
+      setUser(res.data);
+      setLinks(res.data.links);
     } catch (error) {
-      console.log('error: ', error.response.data.message);
+      console.log('error: ', error.res.data.message);
     }
   };
 
   const followInfo = async () => {
     try {
       const res = await userApi.follow(user._id);
+
       setFollow(res.data.data);
-    } catch (error) {
-      // console.log('error: ', error.response.data.message);
-    }
+    } catch (error) {}
   };
 
   const [tabName, setTabName] = useState('profile');
@@ -49,8 +51,8 @@ const UserPage = () => {
   };
 
   useEffect(() => {
-    userInfo();
-  }, []);
+    userId && userInfo();
+  }, [userId]);
 
   useEffect(() => {
     if (user._id) {
@@ -60,16 +62,38 @@ const UserPage = () => {
 
   const handleOnClickFollower = () => {
     navigate(`${ROUTER_LINK.FOLLOW.link}/follower`, {
-      state: user,
+      state: {
+        ...user.user,
+        _id: userId,
+      },
     });
   };
 
   const handleOnClickFollowing = () => {
     navigate(`${ROUTER_LINK.FOLLOW.link}/following`, {
-      state: user,
+      state: {
+        ...user.user,
+        _id: userId,
+      },
     });
   };
-  console.log('user', user);
+
+  const handleOnClickFollow = async (e) => {
+    e.preventDefault();
+
+    if (isFollow) {
+      const response = await followApi.deleteFollowById(userId);
+
+      if (response.status === 200) {
+        setIsFollow(false);
+      }
+    } else {
+      const response = await followApi.postFollow(userId);
+      if (response.status === 201) {
+        setIsFollow(true);
+      }
+    }
+  };
 
   return (
     <>
@@ -77,7 +101,7 @@ const UserPage = () => {
         <Header
           typeLeft={'BACK'}
           typeCenter={'TEXT'}
-          textCenter={user.name}
+          textCenter={user?.user?.name}
           headerStyle={{
             borderBottom: `1px solid ${CS.color.contentTertiary}`,
           }}
@@ -85,25 +109,25 @@ const UserPage = () => {
         />
         <S.ProfileWrap>
           <ProfileBar
-            username={user.name}
+            username={user?.user?.name}
             rate={
-              user.roles === 'USER'
+              user?.user?.roles === 'USER'
                 ? '레이서'
-                : user.roles === 'COACH'
+                : user?.user?.roles === 'COACH'
                 ? '코치'
-                : user.roles === 'ADMIN'
+                : user?.user?.roles === 'ADMIN'
                 ? '관리자'
                 : ''
             }
-            genType={user.generation_type}
-            genNum={user.generation_number + '기'}
+            genType={user?.user?.generation_type}
+            genNum={user?.user?.generation_number + '기'}
             existGeneration={true}
-            src={user.profile_url}
+            src={user?.user?.profile_url}
             isEditable={false}
             profileSize={2}
             existFollow={true}
-            followers={follow?.followingNumber}
-            followings={follow?.followerNumber}
+            followers={user.follower}
+            followings={user.following}
             style={{
               margin: 20,
               height: 'auto',
@@ -114,7 +138,8 @@ const UserPage = () => {
         </S.ProfileWrap>
         <S.ButtonWrap>
           <BasicButton
-            text="팔로우"
+            handleOnClickButton={handleOnClickFollow}
+            text={isFollow ? '팔로잉' : '팔로우'}
             textStyle={{
               font: CS.font.labelSmall,
               color: CS.color.black,
@@ -155,18 +180,23 @@ const UserPage = () => {
         </S.TabWrap>
 
         {tabName === 'profile' && (
-          <SkillLinkPage
-            userId={user._id}
-            links={links}
-            setLinks={setLinks}
-            skills={user.skills}
-          />
+          <div style={{ background: CS.color.secondary, flex: 1 }}>
+            <SkillLinkPage
+              userId={user?.user?._id}
+              links={links}
+              setLinks={setLinks}
+              skills={user?.user?.skills}
+              isMe={false}
+            />
+          </div>
         )}
         {tabName === 'content' && (
-          <MyContent type="content" userId={user._id} />
+          <MyContent type="content" userId={user?.user?._id} />
         )}
 
-        {tabName === 'reply' && <MyContent type="reply" userId={user._id} />}
+        {tabName === 'reply' && (
+          <MyContent type="reply" userId={user?.user?._id} />
+        )}
         {/* <EmptyContent type={tabName} /> */}
       </S.MyPageWrap>
     </>

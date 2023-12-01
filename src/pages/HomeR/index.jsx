@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { ROUTER_LINK } from '../../router/routes';
-import { SERVER_URL } from '../../../api';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
+import { SERVER_URL } from '../../../api';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Post from '../../components/board/Post';
@@ -16,81 +16,63 @@ import BasicButton from '../../components/common/BasicButton';
 import { FiSend } from 'react-icons/fi';
 import { FaFire } from 'react-icons/fa6';
 import { IoDocumentTextOutline } from 'react-icons/io5';
+import { followApi } from '../../../api/utils/Follow';
 
-const Home = () => {
+const HomeR = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [ref, inView] = useInView();
-  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-
-  // GET PostList(By Page)
-  const postListByPage = async () => {
-    if (!isAllDataLoaded) {
-      try {
-        const res = await postApi.getPostsByPage(page, 4);
-        if (page !== 0 && res.data.data.posts.length === 0) {
-          setIsAllDataLoaded(true);
-        } else {
-          setPosts([...posts, ...res.data.data.posts]);
-          setPage((page) => page + 1);
-        }
-      } catch (error) {
-        console.log('error: ', error);
-      }
-    }
-  };
 
   // ONCLICK Active
   const [active, setActive] = useState('all');
 
-  // CLICK Category Btn
   const handleClick = (category) => {
-    if (active === category) {
-      setActive('all');
-    } else {
-      setActive(category);
+    setActive(active === category ? 'all' : category);
+  };
+
+  // GET All PostList
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const postList = async () => {
+    try {
+      const res = await postApi.getAllPosts();
+      const filteredPosts = res.data.data.posts;
+      const postsWithDefaultImage = await Promise.all(
+        filteredPosts.map(async (post) => {
+          try {
+            await new Promise((resolve, reject) => {
+              const img = new Image();
+              img.src = post.author.profile_url;
+              img.onload = resolve;
+              img.onerror = reject;
+            });
+            return post;
+          } catch (error) {
+            return {
+              ...post,
+              author: {
+                ...post.author,
+                profile_url: '/assets/img/elice_icon.png',
+              },
+            };
+          }
+        }),
+      );
+      setPosts(postsWithDefaultImage);
+    } catch (error) {
+      console.log('error: ', error);
     }
   };
 
-  // GET Popular PostList(By Page)
-  const loadPopularPosts = async () => {
-    if (!isAllDataLoaded) {
-      try {
-        const res = await postApi.getPopularPostsByPage(page, 4);
-        if (page !== 0 && res.data.data.posts.length === 0) {
-          setIsAllDataLoaded(true);
-        } else {
-          setPosts([...posts, ...res.data.data.posts]);
-          setPage((page) => page + 1);
-        }
-      } catch (error) {
-        console.log('error: ', error);
-      }
-    }
-  };
+  // GET PostList(By Page)
+  // const [filteredPosts, setFilteredPosts] = useState([]);
 
-  // GET Category Posts(By Page)
-  const loadCategoryPosts = async (category) => {
-    if (!isAllDataLoaded) {
-      try {
-        const res = await postApi.getCategoryPostsByPage(
-          category,
-          'new',
-          page,
-          4,
-        );
-        if (page !== 0 && res.data.data.posts.length === 0) {
-          setIsAllDataLoaded(true);
-        } else {
-          setPosts([...posts, ...res.data.data.posts]);
-          setPage((page) => page + 1);
-        }
-      } catch (error) {
-        console.log('error: ', error);
-      }
-    }
-  };
+  // const postListByPage = async () => {
+  //   try {
+
+  //   }
+  // }
 
   // ADD/DELETE Post Like
   const likeHandler = async (postId) => {
@@ -123,7 +105,7 @@ const Home = () => {
       const res = await userApi.getLoginUserInfo();
       setUser(res.data.data);
     } catch (error) {
-      console.log('error: ', error);
+      console.log(error);
     }
   };
 
@@ -157,54 +139,11 @@ const Home = () => {
     try {
       await postApi.deletePost(targetPostId);
       setPosts(posts.filter((post) => post._id !== targetPostId));
+      // navigate('/home');
       navigate(ROUTER_LINK.HOME.link);
     } catch (error) {
       console.log('error: ', error);
     }
-  };
-
-  // SEARCH
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [nowSearch, setNowSearch] = useState(false);
-
-  const searchPosts = async () => {
-    if (!isAllDataLoaded) {
-      try {
-        const res = await postApi.getSearchPostByPage(searchKeyword, page, 4);
-        if (page !== 0 && res.data.data.posts.length === 0) {
-          setIsAllDataLoaded(true);
-        } else {
-          setPosts([...posts, ...res.data.data.posts]);
-          setPage((page) => page + 1);
-        }
-      } catch (error) {
-        console.log('error: ', error);
-      }
-    }
-  };
-
-  const handleSearchSubmit = () => {
-    setNowSearch(true);
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchKeyword(e.target.value);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && searchKeyword.length !== 0) {
-      setNowSearch(true);
-    }
-  };
-
-  const handleClearSearch = () => {
-    setActive('all');
-    setPosts([]);
-    setPage(1);
-    setNowSearch(false);
-    setIsAllDataLoaded(false);
-    setSearchKeyword('');
-    postListByPage();
   };
 
   // Button Style
@@ -216,40 +155,75 @@ const Home = () => {
     marginRight: '0.5rem',
   });
 
-  useEffect(() => {
-    userInfo();
-  }, []);
+  // SEARCH
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const searchPosts = async () => {
+    try {
+      const res = await postApi.getSearchPost(searchKeyword);
+      setFilteredPosts(res.data.data.posts);
+      setSearchKeyword('');
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    searchPosts();
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      searchPosts();
+    }
+  };
+
+  // UPDATE Follow
+  const handleFollowChange = async (authorId, postId, isFollowing) => {
+    try {
+      if (isFollowing) {
+        console.log('delete Follow');
+        await followApi.deleteFollow(authorId);
+      } else {
+        console.log('add Follow');
+        await followApi.postFollow(authorId);
+      }
+      setPosts(
+        posts.map((post) => {
+          if (post.author._id === authorId) {
+            return { ...post, isFollowing: !isFollowing };
+          }
+          return post;
+        }),
+      );
+    } catch (error) {
+      console.error('error: ', error);
+    }
+  };
 
   useEffect(() => {
-    setPosts([]);
-    setPage(1);
-    setNowSearch(false);
-    setIsAllDataLoaded(false);
+    postList();
+    userInfo();
   }, [active]);
 
   useEffect(() => {
-    setPosts([]);
-    setPage(1);
-    setIsAllDataLoaded(false);
-  }, [nowSearch]);
+    if (inView) {
+      postListByPage();
+    }
+  }, [inView]);
 
   useEffect(() => {
-    if (!nowSearch && inView && !isAllDataLoaded) {
-      if (active === 'all') {
-        postListByPage();
-      } else if (active === 'POPULAR') {
-        loadPopularPosts();
-      } else {
-        loadCategoryPosts(active);
-      }
-    }
-  }, [inView, active, page]);
-
-  useEffect(() => {
-    if (nowSearch && inView && !isAllDataLoaded && searchKeyword !== '') {
-      searchPosts();
-    }
-  }, [inView, page]);
+    const filtered = posts.filter((post) => {
+      if (active === 'all') return true;
+      if (active === 'POPULAR') return post.isPopular === true;
+      return post.category === active;
+    });
+    setFilteredPosts(filtered);
+  }, [posts, active]);
 
   return (
     <S.HomeWrap>
@@ -257,10 +231,8 @@ const Home = () => {
         typeLeft={'LOGO'}
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
-        existXIcon={searchKeyword !== ''}
         inputChangeEvent={handleSearchChange}
         rightOnClickEvent={handleSearchSubmit}
-        rightXOnClickEvent={handleClearSearch}
         handleKeyPress={handleKeyPress}
         value={searchKeyword}
       />
@@ -320,7 +292,7 @@ const Home = () => {
         </S.InfoTextWrap>
       </S.TopWrap>
       <S.BoardWrap $active={active}>
-        {posts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
           <Post
             key={index}
             title={post.title}
@@ -338,20 +310,18 @@ const Home = () => {
             handleOnClickPost={() =>
               navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
             }
-            handleOnClickProfile={() =>
-              navigate(
-                ROUTER_LINK.USERPAGE.path.replace(':userId', post.author._id),
-              )
-            }
+            existFollowBtn={user._id === post.author._id ? false : true}
             existMoreBtn={user._id === post.author._id ? true : false}
             handleOnClickLikeBtn={() => likeHandler(post._id)}
             handleOnClickDots={() => handleOnClickDots(post._id)}
+            handleOnClickFollow={() =>
+              handleFollowChange(post.author._id, post._id, post.isFollowing)
+            }
+            isFollow={post.isFollowing}
             imgSrc={SERVER_URL + post.image_url}
             view={post.view_count}
-            userId={post.author._id}
           />
         ))}
-        <S.EmptyDiv ref={ref} />
       </S.BoardWrap>
       <WriteButton />
       {isModalOpen && (
@@ -365,4 +335,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeR;
