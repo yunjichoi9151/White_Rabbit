@@ -133,6 +133,7 @@ function ProfileEdit() {
           placeholder: 'example@elice.com',
           name: 'inputIdValue',
           isReadOnly: 'true',
+          style: { color: CS.color.contentTertiary },
         }}
         signType="none"
         buttonElement={false}
@@ -146,6 +147,7 @@ function ProfileEdit() {
           value: user?.generation_type + ' ' + user?.generation_number + '기',
           name: 'inputStageValue',
           isReadOnly: 'true',
+          style: { color: CS.color.contentTertiary },
         }}
         signType="none"
         buttonElement={false}
@@ -159,6 +161,7 @@ function ProfileEdit() {
           value: `${userLabelText[user.roles]}`,
           name: 'inputRatingCheckValue',
           isReadOnly: 'true',
+          style: { color: CS.color.contentTertiary },
         }}
         signType="none"
         buttonElement={false}

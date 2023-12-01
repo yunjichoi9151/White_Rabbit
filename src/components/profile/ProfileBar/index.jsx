@@ -6,6 +6,7 @@ import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { convertTimeAgo } from '../../../utils/convertTimeAgo';
+import { SERVER_URL } from '../../../../api';
 
 const ProfileImgSize = {
   1: '40px',
@@ -53,7 +54,7 @@ const ProfileBar = ({
     <>
       <S.Wrapper style={style}>
         <ProfileImg
-          src={src}
+          src={SERVER_URL + src}
           style={{ width: ProfileImgSize[profileSize] }}
           onClickEvent={handleOnClickBar}
         />

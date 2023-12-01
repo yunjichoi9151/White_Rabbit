@@ -14,6 +14,7 @@ import MyContent from '../MyContent';
 
 const UserPage = () => {
   const { userId } = useParams();
+  const [followerLength, setFollowerLength] = useState(0);
 
   //user 정보
   const [user, setUser] = useState({});
@@ -26,6 +27,7 @@ const UserPage = () => {
       const res = await userApi.getUserInfoById(userId);
 
       setIsFollow(res.data.user.is_follow);
+      setFollowerLength(res.data.follower);
       setUser(res.data);
       setLinks(res.data.links);
     } catch (error) {
@@ -83,11 +85,13 @@ const UserPage = () => {
 
       if (response.status === 200) {
         setIsFollow(false);
+        setFollowerLength((prev) => prev - 1);
       }
     } else {
       const response = await followApi.postFollow(userId);
       if (response.status === 201) {
         setIsFollow(true);
+        setFollowerLength((prev) => prev + 1);
       }
     }
   };
@@ -123,7 +127,7 @@ const UserPage = () => {
             isEditable={false}
             profileSize={2}
             existFollow={true}
-            followers={user.follower}
+            followers={followerLength}
             followings={user.following}
             style={{
               margin: 20,
@@ -157,9 +161,9 @@ const UserPage = () => {
 
         <S.TabWrap>
           <TabBar
-            tabNames={{ profile: '프로필', content: '게시물', reply: '댓글' }}
+            tabNames={{ profile: '프로필', content: '게시물' }}
             existCounter={true}
-            countNum={{ content: 0, reply: 0 }}
+            countNum={{ content: 0 }}
             onTabClick={handleClickTab}
             currentTabKey={tabName}
           />
@@ -177,8 +181,6 @@ const UserPage = () => {
           </div>
         )}
         {tabName === 'content' && <MyContent type="content" userId={userId} />}
-
-        {tabName === 'reply' && <MyContent type="reply" userId={userId} />}
       </S.MyPageWrap>
     </>
   );
