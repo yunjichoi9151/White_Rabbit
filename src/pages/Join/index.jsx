@@ -10,9 +10,44 @@ import BasicText from '../../components/common/BasicText';
 import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
 import Header from '../../components/common/Header';
+import FormLabel from '../../components/FormLabel/FormLabel';
+import useInfoMessage from '../../components/hooks/useInfomessage';
+import {
+  getEmailValidateMessage,
+  getPasswordCheckValidateMessage,
+  getPasswordValidateMessage,
+  getUserNameValidateMessage,
+} from './util';
 
 function Join() {
   const navigate = useNavigate();
+
+  const initialInfoMessage = {
+    name: {
+      children: '',
+      status: 'success',
+      validate: getUserNameValidateMessage,
+    },
+    email: {
+      children: '',
+      status: 'success',
+      validate: getEmailValidateMessage,
+    },
+    password: {
+      children: '',
+      status: 'success',
+      validate: getPasswordValidateMessage,
+    },
+    confirmPwd: {
+      children: '',
+      status: 'success',
+      validate: (value, params) =>
+        getPasswordCheckValidateMessage(value, params, 'password'),
+    },
+  };
+
+  const { infoMessages, onChangeInfoMessage } =
+    useInfoMessage(initialInfoMessage);
 
   const [checked, setChecked] = useState(false);
 
@@ -41,40 +76,34 @@ function Join() {
   //
 
   const [isDuplicateCheck, setIsDuplicateCheck] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPwd, setConfirmPwd] = useState('');
+
+  const [input, setInput] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPwd: '',
+  });
 
   // const focusRef = useRef(null);
 
-  const isNameValid = validateName(name);
-  const isEmailValid = validateEmail(email);
-  const isPwdValid = validatePwd(password);
-  const isConfirmPwd = password === confirmPwd;
+  const isNameValid = validateName(input.name);
+  const isEmailValid = validateEmail(input.email);
+  const isPwdValid = validatePwd(input.password);
+  const isConfirmPwd = input.password === input.confirmPwd;
 
-  //이름
-  const onChangeName = (e) => {
-    const currName = e.target.value;
-    setName(currName);
-  };
+  const onChange = (e) => {
+    const { value, name } = e.target;
 
-  //이메일
-  const onChangeEmail = (e) => {
-    const currEmail = e.target.value;
-    setEmail(currEmail);
-  };
+    const infoMessageName = name;
 
-  //비밀번호
-  const onChangePwd = (e) => {
-    const currPwd = e.target.value;
-    setPassword(currPwd);
-  };
+    if (name in infoMessages && 'validate' in infoMessages[infoMessageName]) {
+      onChangeInfoMessage(value, infoMessageName, input);
+    }
 
-  //비밀번호 확인
-  const onChangeConfirmPwd = (e) => {
-    const currConfirmPwd = e.target.value;
-    setConfirmPwd(currConfirmPwd);
+    setInput({
+      ...input,
+      [name]: value,
+    });
   };
 
   ///////////
@@ -184,9 +213,9 @@ function Join() {
     /// {API} ///
 
     const res = await userApi.signUp({
-      name,
-      email,
-      password,
+      name: input.name,
+      email: input.email,
+      password: input.password,
       generation_type: genType,
       generation_number: Number(genNum),
       roles,
@@ -201,9 +230,12 @@ function Join() {
   // 중복 확인 버튼
   const handleClickDuplicateCheck = async () => {
     const response = await userApi.duplicateCheck({
-      email,
+      email: input.email,
     });
-    if (response.status === 200) {
+
+    if (response?.data?.isAvailable) {
+      alert('사용 가능한 이메일 입니다.');
+    } else {
       alert('이미 등록된 이메일 입니다.');
     }
 
@@ -223,65 +255,73 @@ function Join() {
         leftOnClickEvent={() => navigate(-1)}
       />
       <S.Container>
-        <InputBox
-          label="이름"
-          subTextProps={{
-            type: 'show',
-            text: `${name.length}/20`,
-          }}
-          inputProps={{
-            value: name,
-            onChange: onChangeName,
-            placeholder: '프로필 이름',
-            name: 'inputNameValue',
-            maxLength: 20,
-          }}
-          buttonElement={false}
-        />
-        <InputBox
-          label="이메일"
-          subTextProps={{
-            type: 'none',
-          }}
-          inputProps={{
-            value: email,
-            onChange: onChangeEmail,
-            placeholder: 'example@elice.com',
-            name: 'inputIdValue',
-            style: { marginRight: 8 },
-          }}
-          buttonElement={true}
-          text="중복확인"
-          onClickButton={handleClickDuplicateCheck}
-        />
-        <InputBox
-          label="비밀번호"
-          subTextProps={{
-            type: 'none',
-          }}
-          inputProps={{
-            value: password,
-            type: 'password',
-            onChange: onChangePwd,
-            placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-            name: 'inputPwValue',
-          }}
-          buttonElement={false}
-        />
-        <InputBox
-          label="비밀번호 확인"
-          subTextProps={{
-            type: 'none',
-          }}
-          inputProps={{
-            value: confirmPwd,
-            type: 'password',
-            onChange: onChangeConfirmPwd,
-            placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
-            name: 'inputPwCheckValue',
-          }}
-          buttonElement={false}
-        />
+        <FormLabel infoMessage={infoMessages?.name}>
+          <InputBox
+            label="이름"
+            subTextProps={{
+              type: 'show',
+              text: `${input.name.length}/20`,
+            }}
+            inputProps={{
+              value: input.name,
+              onChange: onChange,
+              placeholder: '프로필 이름',
+              name: 'name',
+              maxLength: 20,
+            }}
+            buttonElement={false}
+          />
+        </FormLabel>
+        <FormLabel infoMessage={infoMessages?.email}>
+          <InputBox
+            label="이메일"
+            subTextProps={{
+              type: 'none',
+            }}
+            inputProps={{
+              value: input.email,
+              onChange: onChange,
+              placeholder: 'example@elice.com',
+              name: 'email',
+              style: { marginRight: 8 },
+            }}
+            buttonElement={true}
+            text="중복확인"
+            onClickButton={handleClickDuplicateCheck}
+          />
+        </FormLabel>
+        <FormLabel infoMessage={infoMessages?.password}>
+          <InputBox
+            label="비밀번호"
+            subTextProps={{
+              type: 'none',
+            }}
+            inputProps={{
+              value: input.password,
+              type: 'password',
+              onChange: onChange,
+              placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
+              name: 'password',
+            }}
+            buttonElement={false}
+          />
+        </FormLabel>
+        <FormLabel infoMessage={infoMessages?.confirmPwd}>
+          <InputBox
+            label="비밀번호 확인"
+            subTextProps={{
+              type: 'none',
+            }}
+            inputProps={{
+              value: input.confirmPwd,
+              type: 'password',
+              onChange: onChange,
+              placeholder: '영문, 숫자, 특수문자 포함 8자 이상',
+              name: 'confirmPwd',
+            }}
+            buttonElement={false}
+          />
+        </FormLabel>
         <S.SelectContainer>
           <S.TextWrap>
             <BasicText
