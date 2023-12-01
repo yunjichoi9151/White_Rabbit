@@ -38,7 +38,6 @@ function Follow() {
     try {
       const res = await userApi.getLoginUserInfo();
       setLoginUser(res.data.data);
-      console.log('loginUser:', res.data.data);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -58,8 +57,6 @@ function Follow() {
       follower,
       following,
     });
-
-    console.log('followData:', response.data);
   };
 
   // follow click
