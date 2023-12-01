@@ -6,7 +6,6 @@ import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { convertTimeAgo } from '../../../utils/convertTimeAgo';
-import { followApi } from '../../../../api/utils/Follow';
 
 const ProfileImgSize = {
   1: '40px',
@@ -37,6 +36,7 @@ const ProfileBar = ({
   existMoreBtn = false,
   profileSize,
   handleOnClickBar,
+  handleOnClickFollow,
   handleOnClickDots,
   style,
   onClickFollower,
@@ -44,30 +44,6 @@ const ProfileBar = ({
   followId,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
-  const [_isFollow, setIsFollow] = useState(isFollow);
-
-  const userLabelText = {
-    USER: '레이서',
-    ADMIN: '관리자',
-    COACH: '코치',
-  };
-
-  const handleOnClickFollow = async (e) => {
-    e.preventDefault();
-
-    if (_isFollow) {
-      const response = await followApi.deleteFollow(followId);
-
-      if (response.status === 200) {
-        setIsFollow(!_isFollow);
-      }
-    } else {
-      const response = await followApi.postFollow(followId);
-      if (response.status === 201) {
-        setIsFollow(!_isFollow);
-      }
-    }
-  };
 
   useEffect(() => {
     setTimeAgo(convertTimeAgo(createdAt));
@@ -116,13 +92,13 @@ const ProfileBar = ({
         <div style={{ width: '70px' }}>
           {existFollowBtn && (
             <BasicButton
-              text={_isFollow ? '팔로잉' : '팔로우'}
+              text={isFollow ? '팔로잉' : '팔로우'}
               handleOnClickButton={handleOnClickFollow}
               btnStyle={{
                 width: '70px',
                 height: '35px',
                 borderRadius: '4px',
-                backgroundColor: _isFollow ? CS.color.primary : CS.color.accent,
+                backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
               }}
               textStyle={{
                 font: CS.font.labelSmall,
