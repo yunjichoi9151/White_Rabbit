@@ -9,7 +9,12 @@ import Header from '../../components/common/Header';
 import { userApi } from '../../../api/utils/user';
 import { ROUTER_LINK } from '../../router/routes';
 import useInfoMessage from '../../components/hooks/useInfomessage';
-import { getEmailValidateMessage, getPasswordCheckValidateMessage, getPasswordValidateMessage, getUserNameValidateMessage } from '../Join/util';
+import {
+  getEmailValidateMessage,
+  getPasswordCheckValidateMessage,
+  getPasswordValidateMessage,
+  getUserNameValidateMessage,
+} from '../Join/util';
 import FormLabel from '../../components/FormLabel/FormLabel';
 
 const initialForm = {
@@ -23,22 +28,22 @@ const initialForm = {
 const initialInfoMessage = {
   name: {
     children: '',
-    status: 'error',
+    status: 'success',
     validate: getUserNameValidateMessage,
   },
   email: {
     children: '',
-    status: 'error',
+    status: 'success',
     validate: getEmailValidateMessage,
   },
   password: {
     children: '',
-    status: 'error',
+    status: 'success',
     validate: getPasswordValidateMessage,
   },
   passwordCheck: {
     children: '',
-    status: 'error',
+    status: 'success',
     validate: (value, params) =>
       getPasswordCheckValidateMessage(value, params, 'password'),
   },
