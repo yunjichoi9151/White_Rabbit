@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Header from '../../components/common/Header';
@@ -8,13 +8,11 @@ import BasicImage from '../../components/common/BasicImage';
 import SelectBar from '../../components/common/SelectBar';
 import BasicText from '../../components/common/BasicText';
 import TextArea from '../../components/common/TextArea';
-import { FaRegImage } from 'react-icons/fa6';
 import { useNavigate, useParams } from 'react-router-dom';
 import { postApi } from '../../../api/utils/Post';
 import { ROUTER_LINK } from '../../router/routes';
 import BasicModal from '../../components/common/BasicModal';
 import { commonApi } from '../../../api/utils/Common';
-import { SERVER_URL } from '../../../api';
 
 const options = [
   { key: 'BOARD', value: 'BOARD', name: '자유게시판' },

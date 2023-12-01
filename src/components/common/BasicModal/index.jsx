@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import * as S from './style';
-import * as CS from '../../../styles/CommonStyles';
 import BasicButton from '../BasicButton';
 import { IoCloseSharp } from 'react-icons/io5';
 

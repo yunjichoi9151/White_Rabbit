@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import * as CS from '../../styles/CommonStyles';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBar from '../../components/common/NavBar';
 import { ROUTER_LINK } from '../../router/routes';
-import { getCookie } from '../../utils/convertTimeAgo';
 import { userApi } from '../../../api/utils/user';
 
 const RootContainer = () => {

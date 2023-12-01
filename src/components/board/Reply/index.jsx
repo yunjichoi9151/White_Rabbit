@@ -3,7 +3,6 @@ import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../../common/BasicText';
 import ProfileBar from '../../profile/ProfileBar';
-import BasicInput from '../../common/BasicInput';
 import InputBar from '../../common/InputBar';
 import BasicButton from '../../common/BasicButton';
 import { commentApi } from '../../../../api/utils/comment';

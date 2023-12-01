@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import * as S from './style';
-import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../BasicText';
 
 function CheckBox({ checked = false, onChange, text, textStyle, style }) {

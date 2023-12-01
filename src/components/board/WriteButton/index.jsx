@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ROUTER_LINK } from '../../../router/routes';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';

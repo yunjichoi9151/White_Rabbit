@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import * as CS from './CommonStyles';
 import NanumBarunGothic from '../fonts/NanumBarunGothic.woff';
 import NanumBarunGothicBold from '../fonts/NanumBarunGothicBold.woff';
 import NanumBarunGothicLight from '../fonts/NanumBarunGothicLight.woff';

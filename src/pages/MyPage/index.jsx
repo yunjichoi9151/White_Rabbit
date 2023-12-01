@@ -8,7 +8,6 @@ import * as CS from '../../styles/CommonStyles';
 import ProfileBar from '../../components/profile/ProfileBar';
 import TabBar from '../../components/profile/TabBar';
 import SkillLinkPage from '../SkillLinkPage';
-import BasicButton from '../../components/common/BasicButton';
 import Header from '../../components/common/Header';
 
 import MyContent from '../MyContent';
