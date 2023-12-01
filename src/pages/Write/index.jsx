@@ -303,57 +303,47 @@ const Write = ({ isEdit = false }) => {
           />
         )}
       </S.PostImage>
-
-      <BasicButton
-        text="이미지 업로드"
-        handleOnClickButton={handleFileButtonClick}
-        btnStyle={{
-          width: '90%',
-          height: '2.5rem',
-          padding: '0.75rem',
-          marginTop: '1rem',
-          backgroundColor: CS.color.primary,
-        }}
-        textStyle={{ font: CS.font.labelSmall, color: CS.color.white }}
-      />
-      {(!isEdit || showImageInput) && (
-        <InputBar
-          existLeft={true}
-          handleOnChangeValue={handleImageChange}
-          type="file"
-          accept="image/*"
-          inputStyle={{ font: CS.font.labelSmall }}
-          inputBarStyle={{
+      {imgUrl === '' ? (
+        <>
+          <BasicButton
+            text="이미지 업로드"
+            handleOnClickButton={handleFileButtonClick}
+            btnStyle={{
+              width: '90%',
+              height: '2.5rem',
+              padding: '0.75rem',
+              marginTop: '1rem',
+              backgroundColor: CS.color.primary,
+            }}
+            textStyle={{ font: CS.font.labelSmall, color: CS.color.white }}
+          />
+          <InputBar
+            existLeft={true}
+            handleOnChangeValue={handleImageChange}
+            type="file"
+            accept="image/*"
+            inputStyle={{ font: CS.font.labelSmall }}
+            inputBarStyle={{
+              width: '90%',
+              margin: '1rem 0rem',
+              display: 'none',
+            }}
+            ref={fileInputRef}
+          ></InputBar>
+        </>
+      ) : (
+        <BasicButton
+          text="이미지 삭제"
+          handleOnClickButton={() => setImgUrl('')}
+          btnStyle={{
             width: '90%',
-            margin: '1rem 0rem',
-            display: 'none',
+            height: '2.5rem',
+            padding: '0.75rem',
+            marginTop: '1rem',
+            backgroundColor: CS.color.negative,
           }}
-          ref={fileInputRef}
-        ></InputBar>
-      )}
-      {isEdit && !showImageInput && (
-        <S.ImgBtnWrap>
-          <BasicButton
-            text="이미지 수정"
-            handleOnClickButton={handleEditImage}
-            btnStyle={{
-              padding: '0.5rem 1rem',
-              backgroundColor: CS.color.accent2,
-              marginRight: '0.5rem',
-            }}
-            textStyle={{ font: CS.font.labelSmall }}
-          />
-          <BasicButton
-            text="이미지 삭제"
-            handleOnClickButton={handleDeleteImage}
-            btnStyle={{
-              padding: '0.5rem 1rem',
-              backgroundColor: CS.color.negative,
-              marginLeft: '0.5rem',
-            }}
-            textStyle={{ font: CS.font.labelSmall }}
-          />
-        </S.ImgBtnWrap>
+          textStyle={{ font: CS.font.labelSmall, color: CS.color.white }}
+        />
       )}
     </S.WriteWrap>
   );
