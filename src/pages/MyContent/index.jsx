@@ -67,15 +67,15 @@ function MyContent({ type, userId }) {
           <S.PostList>
             {posts?.map((post, index) => (
               <Link
+                key={index}
                 to={`${ROUTER_LINK.DETAIL.link}/${
                   type === 'content' ? post._id : post.post
                 }`}
               >
                 <S.PostWrap>
                   <Post
-                    key={index}
                     category={post.category}
-                    src={SERVER_URL + post.profile_url}
+                    src={post.author.profile_url}
                     imgSrc={SERVER_URL + post.image_url}
                     username={post.author.name}
                     rate={post.author.roles}
