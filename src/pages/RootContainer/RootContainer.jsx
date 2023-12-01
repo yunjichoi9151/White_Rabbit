@@ -53,7 +53,9 @@ const RootContainer = () => {
   };
 
   useEffect(() => {
-    validateLogin();
+    if (!guestRoute.includes(location.pathname)) {
+      validateLogin();
+    }
   }, [location.pathname]);
 
   return (

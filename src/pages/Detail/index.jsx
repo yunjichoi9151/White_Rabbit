@@ -11,6 +11,7 @@ import BasicButton from '../../components/common/BasicButton';
 import { postApi } from '../../../api/utils/Post';
 import { commentApi } from '../../../api/utils/comment';
 import { userApi } from '../../../api/utils/user';
+import { followApi } from '../../../api/utils/Follow';
 import BottomModal from '../../components/board/BottomModal';
 import { ROUTER_LINK } from '../../router/routes';
 import { SERVER_URL } from '../../../api';
@@ -165,6 +166,20 @@ const Detail = () => {
     }
   };
 
+  // follow btn handler
+  const handleOnClickFollow = async () => {
+    try {
+      if (post.isFollowing) {
+        const response = await followApi.deleteFollowById(post.post.author._id);
+      } else {
+        const response = await followApi.postFollow(post.post.author._id);
+      }
+      postDetail();
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
   useEffect(() => {
     userInfo();
     postDetail();
@@ -207,6 +222,7 @@ const Detail = () => {
             handleOnClickDots={() => handleOnClickDots('post', post?.post?._id)}
             handleOnClickLikeBtn={() => likeHandler(post?.post?._id)}
             isFollow={post?.isFollowing}
+            handleOnClickFollow={() => handleOnClickFollow()}
             handleOnClickProfile={() =>
               navigate(
                 ROUTER_LINK.USERPAGE.path.replace(
@@ -243,6 +259,14 @@ const Detail = () => {
                   }
                   isEditable={editableCommentId === comment._id}
                   onCommentUpdated={handleCommentUpdated}
+                  handleOnClickProfile={() =>
+                    navigate(
+                      ROUTER_LINK.USERPAGE.path.replace(
+                        ':userId',
+                        comment.author?._id,
+                      ),
+                    )
+                  }
                 />
               </React.Fragment>
             ))}

@@ -6,7 +6,6 @@ import BasicButton from '../../common/BasicButton';
 import ProfileImg from '../../common/ProfileImg';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { convertTimeAgo } from '../../../utils/convertTimeAgo';
-import { followApi } from '../../../../api/utils/Follow';
 import { SERVER_URL } from '../../../../api';
 
 const ProfileImgSize = {
@@ -38,6 +37,7 @@ const ProfileBar = ({
   existMoreBtn = false,
   profileSize,
   handleOnClickBar,
+  handleOnClickFollow,
   handleOnClickDots,
   style,
   onClickFollower,
@@ -45,30 +45,6 @@ const ProfileBar = ({
   followId,
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
-  const [_isFollow, setIsFollow] = useState(isFollow);
-
-  const userLabelText = {
-    USER: '레이서',
-    ADMIN: '관리자',
-    COACH: '코치',
-  };
-
-  const handleOnClickFollow = async (e) => {
-    e.preventDefault();
-
-    if (_isFollow) {
-      const response = await followApi.deleteFollow(followId);
-
-      if (response.status === 200) {
-        setIsFollow(!_isFollow);
-      }
-    } else {
-      const response = await followApi.postFollow(followId);
-      if (response.status === 201) {
-        setIsFollow(!_isFollow);
-      }
-    }
-  };
 
   useEffect(() => {
     setTimeAgo(convertTimeAgo(createdAt));
@@ -114,38 +90,42 @@ const ProfileBar = ({
             </div>
           )}
         </S.InfoBox>
-        {existFollowBtn && (
-          <BasicButton
-            text={_isFollow ? '팔로잉' : '팔로우'}
-            handleOnClickButton={handleOnClickFollow}
-            btnStyle={{
-              width: '70px',
-              height: '35px',
-              borderRadius: '4px',
-              backgroundColor: _isFollow ? CS.color.primary : CS.color.accent,
-            }}
-            textStyle={{
-              font: CS.font.labelSmall,
-              color: CS.color.white,
-            }}
-          />
-        )}
-        {existMoreBtn && (
-          <BasicButton
-            existIcon={true}
-            existText={false}
-            handleOnClickButton={handleOnClickDots}
-            btnStyle={{
-              width: '24px',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <BsThreeDotsVertical size="24px" color={CS.color.contentTertiary} />
-          </BasicButton>
-        )}
+        <div style={{ width: '70px' }}>
+          {existFollowBtn && (
+            <BasicButton
+              text={isFollow ? '팔로잉' : '팔로우'}
+              handleOnClickButton={handleOnClickFollow}
+              btnStyle={{
+                width: '70px',
+                height: '35px',
+                borderRadius: '4px',
+                backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
+              }}
+              textStyle={{
+                font: CS.font.labelSmall,
+                color: CS.color.white,
+              }}
+            />
+          )}
+          {existMoreBtn && (
+            <BasicButton
+              existIcon={true}
+              existText={false}
+              handleOnClickButton={handleOnClickDots}
+              btnStyle={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <BsThreeDotsVertical
+                size="24px"
+                color={CS.color.contentTertiary}
+              />
+            </BasicButton>
+          )}
+        </div>
       </S.Wrapper>
     </>
   );

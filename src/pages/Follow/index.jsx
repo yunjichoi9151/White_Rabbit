@@ -25,6 +25,7 @@ function Follow() {
   const [tabName, setTabName] = useState(
     type === 'follower' ? 'follower' : 'following',
   );
+
   const navigate = useNavigate();
 
   const handleClickTab = (tabKey) => {
@@ -42,7 +43,18 @@ function Follow() {
     });
   };
 
+  const [loginUser, setLoginUser] = useState([]);
+  const getLoginUserInfo = async () => {
+    try {
+      const res = await userApi.getLoginUserInfo();
+      setLoginUser(res.data.data);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
   useEffect(() => {
+    getLoginUserInfo();
     getFollowList();
   }, []);
 
@@ -88,7 +100,7 @@ function Follow() {
             src={follower.profile_url}
             isEditable={false}
             profileSize={2}
-            existFollowBtn={true}
+            existFollowBtn={loginUser._id !== follower._id}
             style={{
               marginTop: 20,
               marginLeft: 20,

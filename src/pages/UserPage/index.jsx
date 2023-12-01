@@ -13,51 +13,30 @@ import Header from '../../components/common/Header';
 import MyContent from '../MyContent';
 
 const UserPage = () => {
+  const navigate = useNavigate();
   const { userId } = useParams();
-  const [followerLength, setFollowerLength] = useState(0);
 
   //user 정보
   const [user, setUser] = useState({});
-  const [isFollow, setIsFollow] = useState(false);
-  const [links, setLinks] = useState([]);
-  const navigate = useNavigate();
+  const [loginUser, setLoginUser] = useState({});
 
   const userInfo = async () => {
     try {
       const res = await userApi.getUserInfoById(userId);
-
-      setIsFollow(res.data.user.is_follow);
-      setFollowerLength(res.data.follower);
       setUser(res.data);
-      setLinks(res.data.links);
     } catch (error) {
       console.log('error: ', error.res.data.message);
     }
   };
 
-  const followInfo = async () => {
+  const loginUserInfo = async () => {
     try {
-      const res = await userApi.follow(user._id);
-
-      setFollow(res.data.data);
-    } catch (error) {}
-  };
-
-  const [tabName, setTabName] = useState('profile');
-
-  const handleClickTab = (tabKey) => {
-    setTabName(tabKey);
-  };
-
-  useEffect(() => {
-    userId && userInfo();
-  }, [userId]);
-
-  useEffect(() => {
-    if (user._id) {
-      followInfo();
+      const res = await userApi.getLoginUserInfo();
+      setLoginUser(res.data.data);
+    } catch (error) {
+      console.log('error: ', error);
     }
-  }, [user]);
+  };
 
   const handleOnClickFollower = () => {
     navigate(`${ROUTER_LINK.FOLLOW.link}/follower`, {
@@ -79,22 +58,35 @@ const UserPage = () => {
 
   const handleOnClickFollow = async (e) => {
     e.preventDefault();
+    try {
+      if (user.user.is_follow) {
+        const response = await followApi.deleteFollowById(userId);
 
-    if (isFollow) {
-      const response = await followApi.deleteFollowById(userId);
-
-      if (response.status === 200) {
-        setIsFollow(false);
-        setFollowerLength((prev) => prev - 1);
+        if (response.status === 200) {
+          userInfo();
+        }
+      } else {
+        const response = await followApi.postFollow(userId);
+        if (response.status === 201) {
+          userInfo();
+        }
       }
-    } else {
-      const response = await followApi.postFollow(userId);
-      if (response.status === 201) {
-        setIsFollow(true);
-        setFollowerLength((prev) => prev + 1);
-      }
+    } catch (error) {
+      console.log('error: ', error);
     }
   };
+
+  // tab
+  const [tabName, setTabName] = useState('profile');
+
+  const handleClickTab = (tabKey) => {
+    setTabName(tabKey);
+  };
+
+  useEffect(() => {
+    userInfo();
+    loginUserInfo();
+  }, []);
 
   return (
     <>
@@ -127,8 +119,11 @@ const UserPage = () => {
             isEditable={false}
             profileSize={2}
             existFollow={true}
-            followers={followerLength}
+            followers={user.follower}
             followings={user.following}
+            existFollowBtn={userId !== loginUser?._id}
+            isFollow={user?.user?.is_follow}
+            handleOnClickFollow={handleOnClickFollow}
             style={{
               margin: 20,
               height: 'auto',
@@ -136,27 +131,6 @@ const UserPage = () => {
             onClickFollower={handleOnClickFollower}
             onClickFollowing={handleOnClickFollowing}
           />
-          <div
-            style={{
-              paddingTop: 30,
-              paddingRight: 20,
-            }}
-          >
-            <BasicButton
-              handleOnClickButton={handleOnClickFollow}
-              text={isFollow ? '팔로잉' : '팔로우'}
-              btnStyle={{
-                width: '70px',
-                height: '35px',
-                borderRadius: '4px',
-                backgroundColor: isFollow ? CS.color.primary : CS.color.accent,
-              }}
-              textStyle={{
-                font: CS.font.labelSmall,
-                color: CS.color.white,
-              }}
-            />
-          </div>
         </S.ProfileWrap>
 
         <S.TabWrap>
@@ -173,8 +147,8 @@ const UserPage = () => {
           <div style={{ background: CS.color.secondary, flex: 1 }}>
             <SkillLinkPage
               userId={user?.user?._id}
-              links={links}
-              setLinks={setLinks}
+              links={user?.user?.links}
+              // setLinks={setLinks}
               skills={user?.user?.skills}
               isMe={false}
             />
