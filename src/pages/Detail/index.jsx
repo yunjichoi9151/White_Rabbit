@@ -307,15 +307,20 @@ const Detail = () => {
         <InputBar
           value={inputData}
           placeholder={
-            user?.is_coach ? '댓글을 남겨보세요.' : '코치님만 답변 가능합니다.'
+            (post?.post?.category === 'QNA' && user?.is_coach) ||
+            post?.post?.category !== 'QNA'
+              ? '댓글을 남겨보세요.'
+              : '코치님만 답변 가능합니다.'
           }
           inputBarStyle={{
             height: '2.5rem',
             padding: '0.5rem 0.75rem',
             marginLeft: '0.75rem',
-            backgroundColor: user?.is_coach
-              ? CS.color.secondary
-              : CS.color.accent,
+            backgroundColor:
+              (post?.post?.category === 'QNA' && user?.is_coach) ||
+              post?.post?.category !== 'QNA'
+                ? CS.color.secondary
+                : CS.color.accent,
             borderRadius: '1rem',
             display: 'flex',
           }}
@@ -324,7 +329,10 @@ const Detail = () => {
             textAlign: 'left',
             alignItems: 'center',
           }}
-          isReadOnly={!user?.is_coach}
+          isReadOnly={
+            (post?.post?.category === 'QNA' && user?.is_coach) ||
+            post?.post?.category !== 'QNA'
+          }
           existRight={true}
           handleOnChangeValue={changeInputData}
           handleOnKeyDownValue={handleKeyPress}
