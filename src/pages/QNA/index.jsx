@@ -52,7 +52,6 @@ const QNA = () => {
         page,
         4,
       );
-
       if (res.data.data.posts.length > 0) {
         setPosts((prevPosts) => [...prevPosts, ...res.data.data.posts]);
         setPage((prevPage) => prevPage + 1);
@@ -163,7 +162,7 @@ const QNA = () => {
   }, []);
 
   useEffect(() => {
-    if (!isAllDataLoaded && searchKeyword === '' && inView) {
+    if (!isAllDataLoaded && searchKeyword === '') {
       fetchPosts();
     }
   }, [sort, searchKeyword, inView]);
@@ -285,7 +284,7 @@ const QNA = () => {
               />
             </S.PostWrap>
           ))}
-        <div ref={ref} />
+        {posts.length > 0 && <div ref={ref} />}
       </S.PostList>
       {isMoreModalOpen && (
         <BottomModal

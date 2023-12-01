@@ -249,7 +249,7 @@ const Recruitment = () => {
             />
           </S.PostWrap>
         ))}
-        <div ref={ref} />
+        {posts.length > 0 && <div ref={ref} />}
       </S.PostList>
       {isMoreModalOpen && (
         <BottomModal
