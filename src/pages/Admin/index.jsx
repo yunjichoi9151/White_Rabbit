@@ -214,6 +214,7 @@ const Admin = () => {
           {currentTabKey === '0' ? (
             <>
               <CheckBox
+                checked={isAdmittedOnly}
                 text={'승인 대기만 보기'}
                 textStyle={{
                   color: CS.color.contentSecondary,

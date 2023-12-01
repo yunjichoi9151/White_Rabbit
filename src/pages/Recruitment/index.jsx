@@ -22,8 +22,8 @@ const CategoryText = {
 const Recruitment = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState([]);
-  const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState('PROJECT');
+  const [posts, setPosts] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [ref, inView] = useInView();
   const [page, setPage] = useState(1);
@@ -40,7 +40,6 @@ const Recruitment = () => {
 
   const fetchPosts = async () => {
     try {
-      // const res = await postApi.getCategoryPosts(category, searchKeyword);
       const res = await postApi.getCategoryPostsByPage(
         category,
         searchKeyword,
@@ -54,7 +53,6 @@ const Recruitment = () => {
       } else {
         setIsAllDataLoaded(true);
       }
-      console.log(res.data.data.posts);
     } catch (error) {
       console.log('error: ', error);
     }
