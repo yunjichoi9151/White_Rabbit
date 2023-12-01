@@ -18,9 +18,9 @@ export const postApi = {
     ),
 
   // 카테고리별 게시물 조회(페이징) API
-  getCategoryPostsByPage: (category, sortBy, page, pageSize) =>
+  getCategoryPostsByPage: (category, keyword, sortBy, page, pageSize) =>
     api.get(
-      `/boards/categories/${category}?sortBy=${sortBy}&page=${page}&pageSize=${pageSize}`,
+      `/boards/categories/${category}?keyword=${keyword}&sortBy=${sortBy}&page=${page}&pageSize=${pageSize}`,
     ),
 
   // 인기 게시물 조회 API

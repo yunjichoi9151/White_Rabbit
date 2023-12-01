@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
-import NavBar from '../../components/common/NavBar';
 import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
-import BasicModal from '../../components/common/BasicModal';
+import BottomModal from '../../components/board/BottomModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
-import { followApi } from '../../../api/utils/Follow';
 import { SERVER_URL } from '../../../api';
 
 const CategoryText = {
@@ -21,13 +20,14 @@ const CategoryText = {
 };
 
 const Recruitment = () => {
-  const [userInfo, setUserInfo] = useState([]);
-  const [posts, setPosts] = useState([]);
-  const [category, setCategory] = useState('PROJECT');
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [clickedPostId, setClickedPostId] = useState('');
-
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState([]);
+  const [category, setCategory] = useState('PROJECT');
+  const [posts, setPosts] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [ref, inView] = useInView();
+  const [page, setPage] = useState(1);
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
 
   const fetchUserInfo = async () => {
     try {
@@ -40,8 +40,19 @@ const Recruitment = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category, searchKeyword);
-      setPosts(res.data.data.posts);
+      const res = await postApi.getCategoryPostsByPage(
+        category,
+        searchKeyword,
+        '',
+        page,
+        4,
+      );
+      if (res.data.data.posts.length > 0) {
+        setPosts((prevPosts) => [...prevPosts, ...res.data.data.posts]);
+        setPage((prevPage) => prevPage + 1);
+      } else {
+        setIsAllDataLoaded(true);
+      }
     } catch (error) {
       console.log('error: ', error);
     }
@@ -52,38 +63,31 @@ const Recruitment = () => {
   };
 
   const handleSearchClick = () => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
     fetchPosts();
   };
 
-  const handleCategoryClick = (category) => {
-    setCategory(category);
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      handleSearchClick();
+    }
   };
 
-  const handleFollowClick = async (clickedPost) => {
-    try {
-      let followId;
-      if (clickedPost.isFollowing) {
-        await followApi.deleteFollow(clickedPost.followList._id);
-      } else {
-        const res = await followApi.postFollow(clickedPost.author._id);
-        followId = res.data.followId;
-      }
+  const handleClearSearch = () => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
+    setSearchKeyword('');
+  };
 
-      const updatedPosts = posts.map((post) => {
-        if (post._id === clickedPost._id) {
-          return {
-            ...post,
-            isFollowing: !post.isFollowing,
-            followList: { _id: followId },
-          };
-        }
-        return post;
-      });
-
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.log('error: ', error);
-    }
+  const handleCategoryClick = (category) => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
+    setSearchKeyword('');
+    setCategory(category);
   };
 
   const handleLikeClick = async (clickedPost) => {
@@ -108,7 +112,9 @@ const Recruitment = () => {
     }
   };
 
+  // modal
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
+  const [clickedPostId, setClickedPostId] = useState('');
 
   const openModal = (postId) => {
     setClickedPostId(postId);
@@ -147,8 +153,10 @@ const Recruitment = () => {
   }, []);
 
   useEffect(() => {
-    fetchPosts();
-  }, [category]);
+    if (!isAllDataLoaded && searchKeyword === '') {
+      fetchPosts();
+    }
+  }, [category, searchKeyword, inView]);
 
   return (
     <S.RecruitmentWrap>
@@ -157,13 +165,12 @@ const Recruitment = () => {
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
         textLeft={`${CategoryText[category]} 모집`}
+        existXIcon={searchKeyword !== ''}
+        value={searchKeyword}
         rightOnClickEvent={handleSearchClick}
+        rightXOnClickEvent={handleClearSearch}
         inputChangeEvent={handleSearchKeywordChange}
-        handleKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            handleSearchClick();
-          }
-        }}
+        handleKeyPress={handleKeyPress}
       />
       <S.FilterBar>
         <BasicButton
@@ -221,8 +228,6 @@ const Recruitment = () => {
               createdAt={post.createdAt}
               title={post.title}
               content={post.content}
-              existFollowBtn={post.author._id !== userInfo._id}
-              isFollow={post.isFollowing}
               existMoreBtn={post.author._id === userInfo._id}
               contentLength={'LONG'}
               isHot={post.isPopular}
@@ -233,34 +238,24 @@ const Recruitment = () => {
               handleOnClickPost={() =>
                 navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
               }
-              // handleOnClickProfile={{}}
-              handleOnClickFollow={() => handleFollowClick(post)}
+              handleOnClickProfile={() =>
+                navigate(
+                  ROUTER_LINK.USERPAGE.path.replace(':userId', post.author._id),
+                )
+              }
               handleOnClickDots={() => openModal(post._id)}
               handleOnClickLikeBtn={() => handleLikeClick(post)}
               imgSrc={SERVER_URL + post.image_url}
             />
           </S.PostWrap>
         ))}
+        <div ref={ref} />
       </S.PostList>
       {isMoreModalOpen && (
-        <BasicModal
-          closeModal={closeModal}
-          children={
-            <>
-              <div style={{ paddingTop: '12px' }}>
-                <BasicButton
-                  text="수정"
-                  textStyle={{ padding: '12px' }}
-                  handleOnClickButton={editPost}
-                />
-                <BasicButton
-                  text="삭제"
-                  textStyle={{ padding: '12px' }}
-                  handleOnClickButton={deletePost}
-                />
-              </div>
-            </>
-          }
+        <BottomModal
+          onClose={closeModal}
+          onEdit={editPost}
+          onDelete={deletePost}
         />
       )}
       <WriteButton />

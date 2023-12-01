@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 import { ROUTER_LINK } from '../../router/routes';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
@@ -7,13 +8,14 @@ import Header from '../../components/common/Header';
 import BasicButton from '../../components/common/BasicButton';
 import WriteButton from '../../components/board/WriteButton';
 import CheckBox from '../../components/common/CheckBox';
-import BasicModal from '../../components/common/BasicModal';
+import BottomModal from '../../components/board/BottomModal';
 import Post from '../../components/board/Post';
 import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
-import { followApi } from '../../../api/utils/Follow';
 import { SERVER_URL } from '../../../api';
+
+const category = 'QNA';
 
 const sortType = {
   NEW: 'new',
@@ -21,16 +23,16 @@ const sortType = {
 };
 
 const QNA = () => {
-  const category = 'QNA';
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState([]);
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState(sortType.NEW);
   const [isMineOnly, setIsMineOnly] = useState(false);
-  const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [page, setPage] = useState(1);
+  const [ref, inView] = useInView();
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [clickedPostId, setClickedPostId] = useState('');
-
-  const navigate = useNavigate();
 
   const fetchUserInfo = async () => {
     try {
@@ -43,9 +45,20 @@ const QNA = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await postApi.getCategoryPosts(category, searchKeyword, sort);
-      setPosts(res.data.data.posts);
-      filterMyPosts(res.data.data.posts);
+      const res = await postApi.getCategoryPostsByPage(
+        category,
+        searchKeyword,
+        sort,
+        page,
+        4,
+      );
+
+      if (res.data.data.posts.length > 0) {
+        setPosts((prevPosts) => [...prevPosts, ...res.data.data.posts]);
+        setPage((prevPage) => prevPage + 1);
+      } else {
+        setIsAllDataLoaded(true);
+      }
     } catch (error) {
       console.log('error: ', error);
     }
@@ -56,9 +69,31 @@ const QNA = () => {
   };
 
   const handleSearchClick = () => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
     fetchPosts();
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      handleSearchClick();
+    }
+  };
+
+  const handleClearSearch = () => {
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
+    setSearchKeyword('');
+  };
+
   const handleSortClick = (sortBy) => {
+    setIsMineOnly(false);
+    setPosts([]);
+    setPage(1);
+    setIsAllDataLoaded(false);
+    setSearchKeyword('');
     setSort(sortBy);
   };
 
@@ -66,33 +101,29 @@ const QNA = () => {
     setIsMineOnly(e.target.checked);
   };
 
-  const handleFollowClick = async (clickedPost) => {
+  const handleLikeClick = async (clickedPost) => {
     try {
-      let followId;
-      if (clickedPost.isFollowing) {
-        await followApi.deleteFollow(clickedPost.followList._id);
-      } else {
-        const res = await followApi.postFollow(clickedPost.author._id);
-        followId = res.data.followId;
-      }
-
-      const updatedPosts = filteredPosts.map((post) => {
+      const res = await postApi.putLike(clickedPost._id);
+      const updatedPosts = posts.map((post) => {
         if (post._id === clickedPost._id) {
           return {
             ...post,
-            isFollowing: !post.isFollowing,
-            followList: { _id: followId },
+            isLiked: !post.isLiked,
+            like_count: post.isLiked
+              ? post.like_count - 1
+              : post.like_count + 1,
           };
         }
         return post;
       });
 
-      setFilteredPosts(updatedPosts);
+      setPosts(updatedPosts);
     } catch (error) {
-      console.log('error: ', error);
+      console.log('error: ', error.response.data);
     }
   };
 
+  // modal
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
 
   const openModal = (postId) => {
@@ -117,7 +148,7 @@ const QNA = () => {
       }
       alert('삭제 되었습니다.');
 
-      setFilteredPosts((prevPosts) =>
+      setPosts((prevPosts) =>
         prevPosts.filter((post) => post._id !== clickedPostId),
       );
     } catch (error) {
@@ -127,49 +158,15 @@ const QNA = () => {
     }
   };
 
-  const handleLikeClick = async (clickedPost) => {
-    try {
-      const res = await postApi.putLike(clickedPost._id);
-      const updatedPosts = filteredPosts.map((post) => {
-        if (post._id === clickedPost._id) {
-          return {
-            ...post,
-            isLiked: !post.isLiked,
-            like_count: post.isLiked
-              ? post.like_count - 1
-              : post.like_count + 1,
-          };
-        }
-        return post;
-      });
-
-      setFilteredPosts(updatedPosts);
-    } catch (error) {
-      console.log('error: ', error.response.data);
-    }
-  };
-
-  const filterMyPosts = (posts) => {
-    if (isMineOnly) {
-      setFilteredPosts(
-        posts.filter((post) => post.author._id === userInfo._id),
-      );
-    } else {
-      setFilteredPosts(posts);
-    }
-  };
-
   useEffect(() => {
     fetchUserInfo();
   }, []);
 
   useEffect(() => {
-    fetchPosts();
-  }, [sort]);
-
-  useEffect(() => {
-    filterMyPosts(posts);
-  }, [isMineOnly]);
+    if (!isAllDataLoaded && searchKeyword === '' && inView) {
+      fetchPosts();
+    }
+  }, [sort, searchKeyword, inView]);
 
   return (
     <S.QNAWrap>
@@ -178,13 +175,12 @@ const QNA = () => {
         typeCenter={'SEARCH'}
         typeRight={'SEARCH'}
         textLeft={'개발Q&A'}
+        existXIcon={searchKeyword !== ''}
+        value={searchKeyword}
         rightOnClickEvent={handleSearchClick}
+        rightXOnClickEvent={handleClearSearch}
         inputChangeEvent={handleSearchKeywordChange}
-        handleKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            handleSearchClick();
-          }
-        }}
+        handleKeyPress={handleKeyPress}
       />
       <S.FilterBar>
         <S.ButtonWrap>
@@ -231,6 +227,7 @@ const QNA = () => {
           />
         </S.ButtonWrap>
         <CheckBox
+          checked={isMineOnly}
           text={'내 질문만 보기'}
           textStyle={{
             color: CS.color.contentSecondary,
@@ -245,63 +242,58 @@ const QNA = () => {
         />
       </S.FilterBar>
       <S.PostList>
-        {filteredPosts.map((post, index) => (
-          <S.PostWrap key={index}>
-            <Post
-              key={index}
-              category={category}
-              src={
-                post.author.profile_url === ''
-                  ? '/assets/img/elice_icon.png'
-                  : post.author.profile_url
-              }
-              username={post.author.name}
-              rate={post.author.roles}
-              createdAt={post.createdAt}
-              title={post.title}
-              content={post.content}
-              contentLength={'LONG'}
-              existFollowBtn={post.author._id !== userInfo._id}
-              isFollow={post.isFollowing}
-              existMoreBtn={post.author._id === userInfo._id}
-              isHot={post.isPopular}
-              isLike={post.isLiked}
-              likes={post.like_count}
-              view={post.view_count}
-              comments={post.commentCount}
-              handleOnClickPost={() =>
-                navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
-              }
-              // handleOnClickProfile={{}}
-              handleOnClickFollow={() => handleFollowClick(post)}
-              handleOnClickDots={() => openModal(post._id)}
-              handleOnClickLikeBtn={() => handleLikeClick(post)}
-              imgSrc={SERVER_URL + post.image_url}
-            />
-          </S.PostWrap>
-        ))}
-        {isMoreModalOpen && (
-          <BasicModal
-            closeModal={closeModal}
-            children={
-              <>
-                <div style={{ paddingTop: '12px' }}>
-                  <BasicButton
-                    text="수정"
-                    textStyle={{ padding: '12px' }}
-                    handleOnClickButton={editPost}
-                  />
-                  <BasicButton
-                    text="삭제"
-                    textStyle={{ padding: '12px' }}
-                    handleOnClickButton={deletePost}
-                  />
-                </div>
-              </>
-            }
-          />
-        )}
+        {posts
+          .filter((post) =>
+            isMineOnly ? post.author._id === userInfo._id : true,
+          )
+          .map((post, index) => (
+            <S.PostWrap key={index}>
+              <Post
+                key={`post-${index}`}
+                category={category}
+                src={
+                  post.author.profile_url === ''
+                    ? '/assets/img/elice_icon.png'
+                    : post.author.profile_url
+                }
+                username={post.author.name}
+                rate={post.author.roles}
+                createdAt={post.createdAt}
+                title={post.title}
+                content={post.content}
+                contentLength={'LONG'}
+                existMoreBtn={post.author._id === userInfo._id}
+                isHot={post.isPopular}
+                isLike={post.isLiked}
+                likes={post.like_count}
+                view={post.view_count}
+                comments={post.commentCount}
+                handleOnClickPost={() =>
+                  navigate(ROUTER_LINK.DETAIL.path.replace(':postId', post._id))
+                }
+                handleOnClickProfile={() =>
+                  navigate(
+                    ROUTER_LINK.USERPAGE.path.replace(
+                      ':userId',
+                      post.author._id,
+                    ),
+                  )
+                }
+                handleOnClickDots={() => openModal(post._id)}
+                handleOnClickLikeBtn={() => handleLikeClick(post)}
+                imgSrc={SERVER_URL + post.image_url}
+              />
+            </S.PostWrap>
+          ))}
+        <div ref={ref} />
       </S.PostList>
+      {isMoreModalOpen && (
+        <BottomModal
+          onClose={closeModal}
+          onEdit={editPost}
+          onDelete={deletePost}
+        />
+      )}
       <WriteButton />
     </S.QNAWrap>
   );

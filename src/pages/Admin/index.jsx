@@ -8,7 +8,6 @@ import TabBar from '../../components/profile/TabBar';
 import CheckBox from '../../components/common/CheckBox';
 import BasicButton from '../../components/common/BasicButton';
 import BasicModal from '../../components/common/BasicModal';
-import SelectBar from '../../components/common/SelectBar';
 import TableHeader from '../../components/admin/TableHeader';
 import TableRow from '../../components/admin/TableRow';
 import { skillApi } from '../../../api/utils/Skill';
@@ -19,7 +18,7 @@ import InputBar from '../../components/common/InputBar';
 const Admin = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAdmittedOnly, setIsAdmittedOnly] = useState(false);
-  const [currentTabKey, setCurrentTabKey] = useState('1');
+  const [currentTabKey, setCurrentTabKey] = useState('0');
   const [members, setMembers] = useState([]);
   const [generations, setGenerations] = useState([]);
   const [skills, setSkills] = useState([]);
@@ -150,12 +149,34 @@ const Admin = () => {
     }
   };
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputGenType, setInputGenType] = useState('');
+  const [inputGenNumber, setInputGenNumber] = useState(0);
+
+  const addGeneration = () => {
+    try {
+      if (!inputGenType || !inputGenNumber) {
+        alert('모든 값을 입력 해주세요.');
+        return;
+      }
+      if (isNaN(inputGenNumber)) {
+        alert('기수는 숫자만 입력 가능합니다.');
+        return;
+      }
+      generationApi.postGeneration(inputGenType, inputGenNumber);
+      alert('추가 되었습니다.');
+      closeModal();
+      fetchGenerations();
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
+  const [inputSkillValue, setInputSkillValue] = useState('');
 
   const addSkill = () => {
     try {
-      skillApi.postSkill(inputValue);
-      alert('추가되었습니다.');
+      skillApi.postSkill(inputSkillValue);
+      alert('추가 되었습니다.');
       closeModal();
       fetchSkills();
     } catch (error) {
@@ -193,6 +214,7 @@ const Admin = () => {
           {currentTabKey === '0' ? (
             <>
               <CheckBox
+                checked={isAdmittedOnly}
                 text={'승인 대기만 보기'}
                 textStyle={{
                   color: CS.color.contentSecondary,
@@ -270,34 +292,18 @@ const Admin = () => {
                   children={
                     <>
                       <div style={{ paddingTop: '12px' }}>
-                        {/* <SelectBar
-                          value={genType}
-                          style={{
-                            display: 'flex',
-                            flex: 2,
-                            height: 50,
-
-                            font: CS.font.labelMedium,
-                            textAlign: 'left',
-                            outline: 'none',
-                            border: `1px solid ${CS.color.secondary}`,
-                            borderRadius: 10,
-                            marginBottom: 0,
-                            marginRight: 4,
-                            paddingBottom: 0,
-                            paddingLeft: 16,
+                        <InputBar
+                          placeholder={'트랙을 입력하세요.'}
+                          inputStyle={{ fontSize: '1.25rem' }}
+                          inputBarStyle={{
+                            padding: '4px',
+                            border: `solid 1px ${CS.color.borderTransparent}`,
+                            borderRadius: '4px',
                           }}
-                          options={[
-                            {
-                              key: 'trackChoice',
-                              value: '',
-                              name: '트랙 선택',
-                              style: { display: 'none' },
-                            },
-                            ...generationType,
-                          ]}
-                          onChange={handleChangegenType}
-                        /> */}
+                          handleOnChangeValue={(e) =>
+                            setInputGenType(e.target.value)
+                          }
+                        />
                         <InputBar
                           placeholder={'기수를 입력하세요.'}
                           inputStyle={{ fontSize: '1.25rem' }}
@@ -306,15 +312,15 @@ const Admin = () => {
                             border: `solid 1px ${CS.color.borderTransparent}`,
                             borderRadius: '4px',
                           }}
-                          handleOnChangeValue={(e) =>
-                            setInputValue(e.target.value)
-                          }
+                          handleOnChangeValue={(e) => {
+                            setInputGenNumber(e.target.value);
+                          }}
                         />
                         <BasicButton
                           text="추가"
                           textStyle={{ padding: '12px' }}
                           btnStyle={{ width: '100%' }}
-                          // handleOnClickButton={addSkill}
+                          handleOnClickButton={addGeneration}
                         />
                       </div>
                     </>
@@ -367,7 +373,7 @@ const Admin = () => {
                             borderRadius: '4px',
                           }}
                           handleOnChangeValue={(e) =>
-                            setInputValue(e.target.value)
+                            setInputSkillValue(e.target.value)
                           }
                         />
                         <BasicButton

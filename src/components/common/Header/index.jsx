@@ -52,7 +52,9 @@ const Header = ({
           ...(typeLeft === LeftType.TEXT &&
             textLeft === '개발Q&A' && { minWidth: '80px' }),
           ...(typeLeft === LeftType.TEXT &&
-            textLeft === '프로젝트 모집' && { minWidth: '104px' }),
+            (textLeft === '프로젝트 모집' || textLeft === '스터디 모집') && {
+              minWidth: '104px',
+            }),
           ...(typeLeft === LeftType.LOGO && { minWidth: '52px' }),
         }}
       >
