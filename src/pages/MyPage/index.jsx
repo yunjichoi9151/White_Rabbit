@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { userApi } from '../../../api/utils/user';
 import { ROUTER_LINK } from '../../router/routes';
 import { IoSettingsOutline } from 'react-icons/io5';
@@ -9,7 +9,6 @@ import ProfileBar from '../../components/profile/ProfileBar';
 import TabBar from '../../components/profile/TabBar';
 import SkillLinkPage from '../SkillLinkPage';
 import BasicButton from '../../components/common/BasicButton';
-import EmptyContent from '../EmptyContent';
 import Header from '../../components/common/Header';
 
 import MyContent from '../MyContent';
@@ -157,7 +156,6 @@ const MyPage = () => {
         )}
 
         {tabName === 'reply' && <MyContent type="reply" userId={user._id} />}
-        {/* <EmptyContent type={tabName} /> */}
         <S.LogoutBtn
           style={{
             backgroundColor: CS.color.secondary,

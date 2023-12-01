@@ -37,8 +37,5 @@ export const TabBar = styled.div`
   display: flex;
 `;
 export const ButtonWrap = styled.div`
-  display: flex;
-  padding: 8px 24px;
-  justify-content: center;
-  align-items: center;
+  height: 0;
 `;

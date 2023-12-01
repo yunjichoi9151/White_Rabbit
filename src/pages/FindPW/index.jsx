@@ -47,7 +47,7 @@ function FindPW() {
       });
 
       if (response.status === 200) {
-        alert(response.data.message);
+        alert('인증메일이 전송되었습니다.');
         setTimer(600);
         setIsVisible(false);
         setForm({
@@ -81,10 +81,11 @@ function FindPW() {
       });
 
       if (response.status === 200) {
+        alert('인증이 완료 되었습니다.');
         setIsVisible(true);
       }
     } catch (error) {
-      alert('인증 번호가 다릅니다.');
+      alert('인증 번호를 다시 확인해주세요.');
     }
   };
 
@@ -94,7 +95,10 @@ function FindPW() {
       code: form.code,
       password: form.password,
     });
-    navigate(ROUTER_LINK.LANDING.link);
+    if (response.status === 200) {
+      alert('비밀번호가 변경 되었습니다.');
+      navigate(ROUTER_LINK.LANDING.link);
+    }
   };
 
   const formatTime = (seconds) => {
