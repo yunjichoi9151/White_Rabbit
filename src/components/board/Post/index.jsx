@@ -157,7 +157,13 @@ const Post = ({
           <S.IconWrapper>
             <BasicButton
               existIcon={true}
-              children={isLike ? <BiSolidLike /> : <BiLike />}
+              children={
+                isLike ? (
+                  <BiSolidLike color={CS.color.black} />
+                ) : (
+                  <BiLike color={CS.color.black} />
+                )
+              }
               btnStyle={{ width: '16px' }}
               handleOnClickButton={handleOnClickLikeBtn}
             />
