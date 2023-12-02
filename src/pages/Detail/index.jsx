@@ -36,7 +36,6 @@ const Detail = () => {
     try {
       const res = await postApi.getPostByPostId(postId);
       setPost(res.data.data);
-      console.log(res.data.data);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -233,11 +232,7 @@ const Detail = () => {
                 ),
               )
             }
-            imgSrc={
-              post?.post?.image_url
-                ? SERVER_URL + post?.post?.image_url
-                : '/assets/img/elice_icon.png'
-            }
+            imgSrc={SERVER_URL + post?.post?.image_url}
             view={post?.post?.view_count}
             isDetail={true}
           />
