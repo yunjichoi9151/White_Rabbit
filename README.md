@@ -2,14 +2,14 @@
 
 ![white-rabbit](https://github.com/Elice-WhiteRabbit/Back-end/assets/39878215/2da60753-fc26-4930-8812-6ce3f112ec0c)
 
-신입 개발자가 되고싶은 레이서들의 커뮤니티, White Rabbit입니다 
+신입 개발자가 되고싶은 레이서들의 커뮤니티, White Rabbit입니다
 
 <br>
 
 ## 👩🏻‍💻 팀원 소개
-  
-| FRONTEND | BACKEND |
-| ----  | -------- |
+
+| FRONTEND               | BACKEND                |
+| ---------------------- | ---------------------- |
 | 이준영, 최윤지, 하지원 | 김보경, 유수빈, 장보근 |
 
 <br>
@@ -32,21 +32,25 @@
 
 ## ✨ 프로젝트 핵심 기능
 
-#### 💬 레이서들간의 커뮤니티 공간
+#### 💬 레이서들 간의 커뮤니티 공간
+
 - 인기 게시판, 자유 게시판, 취업 후기 게시판
+
   - 여러 게시판과 댓글을 통해 사용자들이 정보를 공유하고 소통할 수 있는 다양한 공간을 제공합니다
 
 - 팔로우 기능
   - 사용자들끼리 팔로잉 할 수 있는 기능을 제공합니다
 
-
 #### 🔎 Q&A 세션
+
 - Q&N 게시판을 통해 코치님들께 직접 질문하고, 답변을 받을 수 있습니다
 
 #### 🙌 프로젝트/스터디 모집 게시판
+
 - 프로젝트나 스터디를 함께 할 팀원을 찾거나 프로젝트 아이디어를 공유할 수 있는 공간을 제공합니다
 
-####  ⚔ 프로필 관리 
+#### ⚔ 프로필 관리
+
 - 사용자의 기술 스택, 경력, 교육 배경 등을 관리할 수 있는 개인 프로필 기능을 제공합니다
 
 <br>
@@ -98,6 +102,7 @@
 </div>
 
 **Backend**
+
 <div>
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white">
   <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white">
@@ -114,15 +119,19 @@
 <br>
 
 **Frontend - React 18.2.0**
+
 - 동적인 사용자 인터페이스를 위해 React를 사용.
 
 **Backend - Node.js, Express.js**
+
 - Node.js 및 Express.js를 활용한 RESTful API 개발.
 
 **Database - MongoDB**
+
 - MongoDB를 사용하여 유연한 데이터 스토리지와 관리 기능 제공.
 
 **Validation - Joi**
+
 - 데이터 유효성 검사를 위해 Joi 라이브러리 사용.
 
 <br>
@@ -151,7 +160,6 @@
 
 [➡️ API 명세서 링크](https://www.postman.com/lively-satellite-446209/workspace/elice-project-2-team-7/collection/31167550-8f75e739-9c7e-4565-b1f7-5f9fc79cc871?action=share&creator=31167550)
 
-
 ## ⚙️ 프로젝트 파일 구조
 
 **Front-end**
@@ -173,7 +181,7 @@
 
 ```bash
 ├─public
-│  ├─images      
+│  ├─images
 └─src
     ├─controllers
     ├─db
