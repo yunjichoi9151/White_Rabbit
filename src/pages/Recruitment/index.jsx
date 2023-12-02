@@ -13,6 +13,7 @@ import { FaCircle } from 'react-icons/fa';
 import { postApi } from '../../../api/utils/Post';
 import { userApi } from '../../../api/utils/user';
 import { SERVER_URL } from '../../../api';
+import Loading from '../../components/common/Loading';
 
 const CategoryText = {
   PROJECT: '프로젝트',
@@ -28,6 +29,7 @@ const Recruitment = () => {
   const [ref, inView] = useInView();
   const [page, setPage] = useState(1);
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchUserInfo = async () => {
     try {
@@ -53,6 +55,7 @@ const Recruitment = () => {
       } else {
         setIsAllDataLoaded(true);
       }
+      setLoading(false);
     } catch (error) {
       console.log('error: ', error);
     }
@@ -60,17 +63,22 @@ const Recruitment = () => {
 
   const handleSearchKeywordChange = (e) => {
     setSearchKeyword(e.target.value);
+    if (e.target.value === '') {
+      setLoading(false);
+    }
   };
 
   const handleSearchClick = () => {
     setPosts([]);
     setPage(1);
     setIsAllDataLoaded(false);
+    setLoading(true);
     fetchPosts();
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      setLoading(true);
       handleSearchClick();
     }
   };
@@ -87,6 +95,7 @@ const Recruitment = () => {
     setPage(1);
     setIsAllDataLoaded(false);
     setSearchKeyword('');
+    setLoading(true);
     setCategory(category);
   };
 
@@ -213,6 +222,7 @@ const Recruitment = () => {
         />
       </S.FilterBar>
       <S.PostList>
+        {loading && <Loading style={{ paddingTop: '5rem' }} />}
         {posts.map((post, index) => (
           <S.PostWrap key={index}>
             <Post

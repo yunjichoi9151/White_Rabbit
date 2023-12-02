@@ -9,6 +9,7 @@ import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Post from '../../components/board/Post';
 import Header from '../../components/common/Header';
+import Loading from '../../components/common/Loading';
 import BasicText from '../../components/common/BasicText';
 import BottomModal from '../../components/board/BottomModal';
 import WriteButton from '../../components/board/WriteButton';
@@ -23,6 +24,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [ref, inView] = useInView();
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // GET PostList(By Page)
   const postListByPage = async () => {
@@ -35,6 +37,7 @@ const Home = () => {
           setPosts([...posts, ...res.data.data.posts]);
           setPage((page) => page + 1);
         }
+        setLoading(false);
       } catch (error) {
         console.log('error: ', error);
       }
@@ -46,6 +49,7 @@ const Home = () => {
 
   // CLICK Category Btn
   const handleClick = (category) => {
+    setLoading(true);
     if (active === category) {
       setActive('all');
     } else {
@@ -64,6 +68,7 @@ const Home = () => {
           setPosts([...posts, ...res.data.data.posts]);
           setPage((page) => page + 1);
         }
+        setLoading(false);
       } catch (error) {
         console.log('error: ', error);
       }
@@ -87,6 +92,7 @@ const Home = () => {
           setPosts([...posts, ...res.data.data.posts]);
           setPage((page) => page + 1);
         }
+        setLoading(false);
       } catch (error) {
         console.log('error: ', error);
       }
@@ -178,6 +184,7 @@ const Home = () => {
           setPosts([...posts, ...res.data.data.posts]);
           setPage((page) => page + 1);
         }
+        setLoading(false);
       } catch (error) {
         console.log('error: ', error);
       }
@@ -186,14 +193,19 @@ const Home = () => {
 
   const handleSearchSubmit = () => {
     setNowSearch(true);
+    setLoading(true);
   };
 
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
+    if (e.target.value === '') {
+      setLoading(false);
+    }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && searchKeyword.length !== 0) {
+      setLoading(true);
       setNowSearch(true);
     }
   };
@@ -322,6 +334,7 @@ const Home = () => {
         </S.InfoTextWrap>
       </S.TopWrap>
       <S.BoardWrap $active={active}>
+        {loading && <Loading style={{ paddingTop: '5rem', width: '100%' }} />}
         {posts.map((post, index) => (
           <Post
             key={index}
