@@ -3,19 +3,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as S from './style';
 import * as CS from '../../styles/CommonStyles';
 import Post from '../../components/board/Post';
-import Header from '../../components/common/Header';
 import Reply from '../../components/board/Reply';
-import ProfileImg from '../../components/common/ProfileImg';
+import Header from '../../components/common/Header';
 import InputBar from '../../components/common/InputBar';
+import BasicText from '../../components/common/BasicText';
+import ProfileImg from '../../components/common/ProfileImg';
+import BottomModal from '../../components/board/BottomModal';
 import BasicButton from '../../components/common/BasicButton';
 import { postApi } from '../../../api/utils/Post';
 import { commentApi } from '../../../api/utils/comment';
 import { userApi } from '../../../api/utils/user';
 import { followApi } from '../../../api/utils/Follow';
-import BottomModal from '../../components/board/BottomModal';
 import { ROUTER_LINK } from '../../router/routes';
 import { SERVER_URL } from '../../../api';
-import BasicText from '../../components/common/BasicText';
 
 const labelText = {
   BOARD: '자유게시판',
