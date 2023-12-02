@@ -232,11 +232,7 @@ const Detail = () => {
                 ),
               )
             }
-            imgSrc={
-              post?.post?.image_url
-                ? SERVER_URL + post?.post?.image_url
-                : '/assets/img/elice_icon.png'
-            }
+            imgSrc={SERVER_URL + post?.post?.image_url}
             view={post?.post?.view_count}
             isDetail={true}
           />
@@ -333,8 +329,10 @@ const Detail = () => {
             alignItems: 'center',
           }}
           isReadOnly={
-            (post?.post?.category === 'QNA' && user?.is_coach) ||
-            post?.post?.category !== 'QNA'
+            !(
+              (post?.post?.category === 'QNA' && user?.is_coach) ||
+              post?.post?.category !== 'QNA'
+            )
           }
           existRight={true}
           handleOnChangeValue={changeInputData}

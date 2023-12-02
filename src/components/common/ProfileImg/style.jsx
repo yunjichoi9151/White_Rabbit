@@ -23,7 +23,6 @@ export const EditIconWrapper = styled.div`
   height: 2.5rem;
   top: 50%;
   left: 50%;
-  /* transform: translate(-50%, -50%); */
   border-radius: 50%;
   align-items: flex-end;
   justify-content: flex-end;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as S from './style';
 import BasicButton from '../BasicButton';
 import { IoCloseSharp } from 'react-icons/io5';

@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import * as S from './style';
 import * as CS from '../../../styles/CommonStyles';
 import BasicText from '../BasicText';
