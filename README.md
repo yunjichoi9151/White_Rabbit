@@ -1,6 +1,6 @@
 # 🐰 White Rabbit 🐰
 
-![white-rabbit](https://github.com/Elice-WhiteRabbit/Back-end/assets/39878215/2da60753-fc26-4930-8812-6ce3f112ec0c)
+![White_Rabbit](https://github.com/yunjichoi9151/White_Rabbit/assets/97906125/bd043e7e-2765-4366-b1f9-f06f3f1c1c17)
 
 신입 개발자가 되고싶은 레이서들의 커뮤니티, White Rabbit입니다
 
