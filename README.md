@@ -1,6 +1,6 @@
 # 🐰 White Rabbit 🐰
 
-![White_Rabbit](https://github.com/yunjichoi9151/White_Rabbit/assets/97906125/bd043e7e-2765-4366-b1f9-f06f3f1c1c17)
+![White_Rabbit](https://github.com/yunjichoi9151/White_Rabbit/assets/97906125/3df86ba9-ccb8-4314-9b6d-6f80a881c003)
 
 신입 개발자가 되고싶은 레이서들의 커뮤니티, White Rabbit입니다
 
