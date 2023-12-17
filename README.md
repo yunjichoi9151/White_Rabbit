@@ -6,6 +6,12 @@
 
 <br>
 
+## 🏆 Awards
+
+**Elice SW Engineer 트랙 프로젝트 ✨우수상✨**
+
+<br>
+
 ## 👩🏻‍💻 팀원 소개
 
 | FRONTEND               | BACKEND                |
